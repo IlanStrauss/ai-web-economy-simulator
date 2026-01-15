@@ -1153,7 +1153,10 @@
 </head>
 <body>
     <div class="container">
-        <header>
+        <header style="position: relative;">
+            <div style="position: absolute; top: 0; right: 0;">
+                <img id="project-logo" src="logo.png" alt="AI Disclosures Project" style="height: 50px;" onerror="this.style.display='none'">
+            </div>
             <h1>Who Wins Under AI?</h1>
             <p>An AI Web Economy Simulator <span style="opacity: 0.6; font-size: 0.85em;">v1.0</span></p>
             <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.25rem;">Explore how AI reshapes the web content economy</p>
@@ -3508,5 +3511,9 @@
             }, 100);
         });
     </script>
+
+    <footer style="text-align: center; padding: 2rem 1rem; margin-top: 2rem; border-top: 1px solid #27272a; color: #a1a1aa; font-size: 0.85rem;">
+        Built by the <strong style="color: #e4e4e7;">AI Disclosures Project</strong> | Ilan Strauss & Tim O'Reilly
+    </footer>
 </body>
 </html>

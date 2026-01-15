@@ -1938,6 +1938,65 @@
                         </div>
                     </section>
 
+                    <section class="panel" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.05), rgba(249, 115, 22, 0.05));">
+                        <h2>Three Regimes: Summary</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">The model identifies three distinct equilibrium regimes based on the compensation rate θ:</p>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(255,255,255,0.2);">
+                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Regime</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Compensation (θ)</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Creator Survival</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Quality Rewarded</th>
+                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Equilibrium Outcome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(248, 113, 113, 0.1);">
+                                    <td style="padding: 0.75rem; color: #f87171; font-weight: bold;">Regime 1: Collapse</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">θ < 15%</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators exit, quality crashes, AI faces data drought</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(251, 191, 36, 0.1);">
+                                    <td style="padding: 0.75rem; color: #fbbf24; font-weight: bold;">Regime 2: Low Quality</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">15% < θ < 25%</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators survive but produce low-quality content</td>
+                                </tr>
+                                <tr style="background: rgba(74, 222, 128, 0.1);">
+                                    <td style="padding: 0.75rem; color: #4ade80; font-weight: bold;">Regime 3: Sustainable</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">θ > 25%</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators thrive, quality content, sustainable growth</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <h3 style="color: #e4e4e7; font-size: 0.95rem; margin-bottom: 0.75rem;">Scenario Mapping</h3>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.85rem;">
+                                <div>
+                                    <div style="color: #f87171; font-weight: bold; margin-bottom: 0.25rem;">Regime 1 Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• Status Quo (θ=2%)</div>
+                                    <div style="color: #a1a1aa;">• Traffic Collapse (θ=1%)</div>
+                                    <div style="color: #a1a1aa;">• VC Mirage (θ=2%)</div>
+                                    <div style="color: #a1a1aa;">• Creator Churn (θ=5%)</div>
+                                </div>
+                                <div>
+                                    <div style="color: #fbbf24; font-weight: bold; margin-bottom: 0.25rem;">Regime 2 Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• Licensing (θ=18%)</div>
+                                </div>
+                                <div>
+                                    <div style="color: #4ade80; font-weight: bold; margin-bottom: 0.25rem;">Regime 3 Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• Fair Deal (θ=35%)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Real-World Case Studies -->
                     <section class="panel">
                         <h2>Real-World Precedents</h2>
@@ -1957,17 +2016,17 @@
                                 </div>
                             </div>
 
-                            <div class="case-card" data-case="stock-photo">
+                            <div class="case-card" data-case="youtube">
                                 <div class="case-header">
-                                    <span class="case-icon">📷</span>
-                                    <span class="case-title">Stock Photography</span>
-                                    <button class="run-case-btn small" data-run="stock-photo">▶</button>
+                                    <span class="case-icon">▶️</span>
+                                    <span class="case-title">YouTube Content ID</span>
+                                    <button class="run-case-btn small" data-run="youtube">▶</button>
                                 </div>
-                                <p class="case-description">Per-use licensing model. Clear property rights but race-to-bottom pricing. AI image generation now disrupting this market.</p>
+                                <p class="case-description">Automated content matching system pays rights holders when their content is used. ~55% revenue share to creators. Model for AI content licensing?</p>
                                 <div class="case-stats">
-                                    <span>θ = <span class="case-stat-value">25%</span></span>
-                                    <span>h = <span class="case-stat-value">20%</span></span>
-                                    <span>m = <span class="case-stat-value">15%</span></span>
+                                    <span>θ = <span class="case-stat-value">55%</span></span>
+                                    <span>h = <span class="case-stat-value">15%</span></span>
+                                    <span>m = <span class="case-stat-value">40%</span></span>
                                 </div>
                             </div>
 
@@ -2026,13 +2085,6 @@
                                     <span>m = <span class="case-stat-value">25%</span></span>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-
-                    <section class="panel">
-                        <h2>Comparative Equilibria</h2>
-                        <div class="chart-container" style="height: 350px;">
-                            <canvas id="caseComparisonChart"></canvas>
                         </div>
                     </section>
                 </div>

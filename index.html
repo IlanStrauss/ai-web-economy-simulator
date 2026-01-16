@@ -3000,8 +3000,8 @@
                 // Store baseline for comparison
                 this.initialValues = { C: 0.60, W: 0.50, Q: 0.55, revenue: 0.25 };
 
-                // Apply scenario parameters to model
-                this.model.setParams(scenario.params);
+                // Apply scenario parameters to model AND update UI sliders
+                this.applyParams(scenario.params);
 
                 // Reset state variables (keeps params)
                 this.model.reset();

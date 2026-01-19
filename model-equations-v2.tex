@@ -123,7 +123,7 @@ Define $D(A, \theta) \in [0,1]$ as the propensity for users to stay inside AI an
 \begin{equation}
 D(A, \theta) = \sigma\Big(k_A(A - a_0) - k_\theta(\theta - \theta_0)\Big)
 \end{equation}
-where $\sigma(x) = 1/(1+e^{-x})$ is the logistic function.
+where $\sigma(x) = 1/(1+e^{-x})$ is the logistic function, with $k_A, k_\theta > 0$.
 \end{definition}
 
 \textbf{Interpretation:}
@@ -224,7 +224,7 @@ This constraint is enforced by the entry/exit dynamics (Eq.\ 3). When $\pi_c < \
 \begin{definition}[Quality Incentive Constraint]
 High-quality content is incentive compatible when the quality premium exceeds additional costs:
 \begin{equation}
-\text{IC}: \quad \big(\theta \cdot p_L \cdot A \cdot \gamma + p_{sub}\big) \cdot \Delta Q \geq \Delta c
+\text{IC}: \quad (\theta \cdot p_L \cdot A \cdot \gamma + p_{sub}) \cdot \Delta Q \geq \Delta c
 \end{equation}
 where $\Delta c = c_{high} - c_{low}$ is the cost difference between high and low quality production, and $\Delta Q$ is the quality increment from low to high.
 \end{definition}
@@ -309,7 +309,7 @@ This is implicit in $A^*$. A first-order approximation when $A$ is small:
 \begin{equation}
 A^* \approx \frac{I}{\delta_A} \quad \text{(first-order, small-}A\text{ approximation)}
 \end{equation}
-Dependence on $Q$ enters through the endogenous term $r_A A(1+\gamma Q)$ at higher order.
+In the small-$A$ regime, $A^* \approx I/\delta_A$ and $Q$ affects $A^*$ only weakly; for larger $A$, $Q$ materially shifts $A^*$ through the endogenous growth term.
 
 \subsection{Equilibrium Types}
 
@@ -324,12 +324,7 @@ The system admits three qualitatively distinct equilibria:
 
 \subsection{Stability}
 
-For the 4-dimensional system $(C, A, W, Q)$, stability is determined by the eigenvalues of the Jacobian at equilibrium. The bounded forms ensure that:
-\begin{itemize}
-    \item All eigenvalues have bounded real parts
-    \item No trajectories escape $[0,1]^4$
-    \item Equilibria are either stable nodes, stable spirals, or saddle points
-\end{itemize}
+For the 4-dimensional system $(C, A, W, Q)$, the bounded gain--loss forms prevent state blow-ups and keep trajectories within $[0,1]^4$. Local stability at each equilibrium is determined by the eigenvalues of the Jacobian evaluated at that point.
 
 \section{Policy Implications}
 

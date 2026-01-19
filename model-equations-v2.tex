@@ -1,0 +1,368 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\title{Mathematical Foundations of the AI Web Economy Simulator\\[0.5em]\large A Lotka-Volterra Model with Mechanism Design Constraints\\[0.3em]\normalsize Version 2.0 (Revised)}
+\author{Ilan Strauss\\[0.5em]\small AI Disclosures Project}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note presents the mathematical foundations of an ecosystem model for AI platforms and web content creators. The model uses a ``one-mechanism-per-layer'' structure: each causal channel appears exactly once, making the system auditable and preventing double-counting. Creator dynamics respond to profitability, traffic responds to AI substitution pressure, quality responds to creator mass and reinvestment, and AI growth depends on content quality. All state variables are bounded in $[0,1]$ by construction.
+\end{abstract}
+
+\section{Model Structure}
+
+\subsection{Design Principle: One Mechanism Per Layer}
+
+The model follows a strict causal chain where each variable is responsible for one layer of the ecosystem:
+
+\begin{center}
+\begin{tabular}{ccccccccc}
+$A$ grows & $\rightarrow$ & $W$ drops & $\rightarrow$ & $\pi_c$ drops & $\rightarrow$ & $C$ drops & $\rightarrow$ & $Q$ drops \\
+& & & & & & & & $\downarrow$ \\
+& & & & & & & & feeds back to $A$
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+    \item $A$ does not directly hurt creators---it hurts them \textit{through} $W$ (traffic diversion)
+    \item $W$ does not directly change $C$---it changes $C$ \textit{through} $\pi_c$ (revenue)
+    \item $\pi_c$ does not directly change $C$---it changes $C$ \textit{through} the entry/exit decision
+    \item $C$ does not directly change $Q$---it changes $Q$ \textit{through} critical mass and reinvestment
+    \item $Q$ feeds back to $A$ \textit{through} the data advantage channel (better content $\rightarrow$ better AI)
+\end{itemize}
+
+No mechanism appears twice. Every effect can be traced through a single logical path.
+
+\subsection{State Variables}
+
+\begin{definition}[State Variables]
+The model tracks four state variables, all normalized to $[0,1]$:
+\begin{align}
+C(t) &: \text{Creator participation (active creator mass, normalized)} \\
+A(t) &: \text{AI platform capability/scale (normalized)} \\
+W(t) &: \text{Traffic share to original content (vs.\ staying in AI answers)} \\
+Q(t) &: \text{Original content quality index}
+\end{align}
+\end{definition}
+
+\begin{remark}
+$W = 1$ means all searches click through to original sources; $W = 0$ means AI answers all queries with no click-through. $Q$ refers exclusively to \emph{original} content quality, not AI output quality.
+\end{remark}
+
+\section{Core Dynamics}
+
+All equations use bounded ``gain--loss'' forms that keep state variables in $[0,1]$ by construction, without requiring ex post clamping.
+
+\subsection{Creator Revenue}
+
+\begin{equation}
+\boxed{
+\pi_c = \theta \cdot p_L \cdot A + p_{ad} \cdot W + p_{sub} \cdot Q
+}
+\end{equation}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item $\theta \cdot p_L \cdot A$: Licensing revenue from AI platforms (scales with compensation rate $\theta$ and AI scale $A$)
+    \item $p_{ad} \cdot W$: Advertising revenue (proportional to traffic reaching original content)
+    \item $p_{sub} \cdot Q$: Subscription/patronage revenue (scales with content quality)
+\end{itemize}
+
+\begin{remark}
+Traffic diversion affects revenue \emph{only} through $W$. There is no additional $(1-\alpha A)$ multiplier---that would double-count diversion.
+\end{remark}
+
+\subsection{Creator Dynamics (Entry/Exit)}
+
+Creators enter or exit based on whether profitability exceeds their outside option $\bar{u}$. We use a sigmoid response function:
+\begin{equation}
+S(x) = \frac{1}{1 + e^{-\beta x}}
+\end{equation}
+
+The bounded creator dynamics are:
+
+\begin{equation}
+\boxed{
+\frac{dC}{dt} = (1-C) \cdot \rho_C \cdot S(\pi_c - \bar{u}) - C \cdot \rho_C \cdot S(\bar{u} - \pi_c)
+}
+\end{equation}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item $(1-C) \cdot \rho_C \cdot S(\pi_c - \bar{u})$: Entry rate---new creators join when profitable
+    \item $C \cdot \rho_C \cdot S(\bar{u} - \pi_c)$: Exit rate---existing creators leave when unprofitable
+    \item The $(1-C)$ and $C$ terms ensure $C \in [0,1]$ by construction
+    \item The IR constraint emerges from the dynamics: when $\pi_c < \bar{u}$, exit dominates entry
+\end{itemize}
+
+\begin{remark}
+This replaces indicator-function regime penalties ($\kappa_1$, $\kappa_2$). The constraint is now \emph{operational} rather than bolted on.
+\end{remark}
+
+\subsection{Traffic Dynamics}
+
+Traffic to original content depends on AI substitution pressure, moderated by compensation:
+
+\begin{definition}[Diversion Propensity]
+Define $D(A, \theta) \in [0,1]$ as the propensity for users to stay inside AI answers:
+\begin{equation}
+D(A, \theta) = \sigma\Big(k_A(A - a_0) - k_\theta(\theta - \theta_0)\Big)
+\end{equation}
+where $\sigma(x) = 1/(1+e^{-x})$ is the logistic function.
+\end{definition}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item $D$ increases with AI scale $A$ (more capable AI $\rightarrow$ more substitution)
+    \item $D$ decreases with compensation $\theta$ (higher compensation $\rightarrow$ platforms link to sources)
+\end{itemize}
+
+The bounded traffic dynamics are:
+
+\begin{equation}
+\boxed{
+\frac{dW}{dt} = (1-W) \cdot \rho_W \cdot (1-D) - W \cdot \rho_W \cdot D
+}
+\end{equation}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item When $D$ is high (strong substitution), $W$ decreases toward 0
+    \item When $D$ is low (weak substitution), $W$ increases toward 1
+    \item The $(1-W)$ and $W$ terms ensure $W \in [0,1]$ by construction
+\end{itemize}
+
+\begin{remark}
+$Q$ does not appear in $dW/dt$. This is a design choice (Option A): traffic diversion depends only on AI capability and compensation, not on content quality. This keeps the causal chain maximally identifiable.
+\end{remark}
+
+\subsection{Content Quality Dynamics}
+
+Quality depends on creator mass (critical mass effect) and reinvestment from profitable creators:
+
+\begin{definition}[Reinvestment Signal]
+Define the reinvestment signal as a smooth function of excess profitability:
+\begin{equation}
+R(\pi_c) = \ln(1 + e^{\pi_c - \bar{\pi}})
+\end{equation}
+This is the softplus function, a smooth approximation to $\max(0, \pi_c - \bar{\pi})$.
+\end{definition}
+
+The bounded quality dynamics are:
+
+\begin{equation}
+\boxed{
+\frac{dQ}{dt} = (1-Q) \cdot \nu \cdot R(\pi_c) + \epsilon \cdot (C - C_{crit}) - Q \cdot \lambda_0
+}
+\end{equation}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item $(1-Q) \cdot \nu \cdot R(\pi_c)$: Quality improves when creators can reinvest (bounded by $(1-Q)$)
+    \item $\epsilon \cdot (C - C_{crit})$: Quality requires critical mass of creators; below $C_{crit}$, this term is negative
+    \item $Q \cdot \lambda_0$: Baseline quality decay without active maintenance
+\end{itemize}
+
+\begin{remark}
+There is no direct $\theta$ term in $dQ/dt$. The effect of low compensation on quality flows through the chain: low $\theta$ $\rightarrow$ low $\pi_c$ $\rightarrow$ low $R$ $\rightarrow$ quality doesn't improve $\rightarrow$ and low $\pi_c$ $\rightarrow$ creator exit $\rightarrow$ $C < C_{crit}$ $\rightarrow$ quality declines.
+\end{remark}
+
+\subsection{AI Platform Dynamics}
+
+AI platforms grow with investment and content availability. Quality enters here via the \textbf{data advantage channel}: better original content improves AI training and grounding.
+
+\begin{equation}
+\boxed{
+\frac{dA}{dt} = (1-A) \cdot \Big( I + r_A \cdot A \cdot (1 + \gamma Q) \Big) - A \cdot \delta_A
+}
+\end{equation}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item $I$: External investment (exogenous inflow)
+    \item $r_A \cdot A \cdot (1 + \gamma Q)$: Growth from existing capability, \emph{amplified} by content quality $Q$
+    \item $(1-A)$: Saturation as $A \rightarrow 1$
+    \item $A \cdot \delta_A$: Depreciation/competition
+\end{itemize}
+
+\begin{remark}
+The $(1 + \gamma Q)$ term is multiplicative on growth, not additive. This means low $Q$ genuinely throttles $A$ even with high $I$---encoding the claim that ``AI needs quality content.''
+\end{remark}
+
+\section{Mechanism Design Constraints}
+
+The IR and IC constraints are now \emph{emergent properties} of the dynamics rather than separate conditions.
+
+\subsection{Individual Rationality (IR)}
+
+\begin{definition}[Participation Constraint]
+Creators participate when expected revenue exceeds their outside option:
+\begin{equation}
+\text{IR}: \quad \pi_c \geq \bar{u}
+\end{equation}
+\end{definition}
+
+This constraint is enforced by the entry/exit dynamics (Eq.\ 3). When $\pi_c < \bar{u}$, exit rate exceeds entry rate, and $C$ declines.
+
+\subsection{Incentive Compatibility (IC)}
+
+\begin{definition}[Quality Incentive Constraint]
+High-quality content is incentive compatible when the quality premium exceeds additional costs:
+\begin{equation}
+\text{IC}: \quad \theta \cdot p_L \cdot A \cdot \gamma + p_{sub} \geq \Delta c
+\end{equation}
+where $\Delta c = c_{high} - c_{low}$ is the cost difference between high and low quality production.
+\end{definition}
+
+When IC is violated, the reinvestment signal $R(\pi_c)$ is low, and quality improvement stalls or reverses.
+
+\section{Parameters}
+
+\begin{center}
+\begin{tabular}{clll}
+\toprule
+Symbol & Description & Role & Units \\
+\midrule
+\multicolumn{4}{l}{\textit{Revenue parameters}} \\
+$\theta$ & Compensation rate & Policy lever & $[0,1]$ \\
+$p_L$ & Licensing price coefficient & AI willingness to pay & \$/unit \\
+$p_{ad}$ & Ad revenue coefficient & Revenue per traffic unit & \$/unit \\
+$p_{sub}$ & Subscription coefficient & Revenue per quality unit & \$/unit \\
+$\bar{u}$ & Outside option (reservation utility) & IR threshold & \$ \\
+$\bar{\pi}$ & Reinvestment threshold & IC proxy & \$ \\
+\midrule
+\multicolumn{4}{l}{\textit{Creator dynamics}} \\
+$\rho_C$ & Creator adjustment speed & Entry/exit rate & 1/time \\
+$\beta$ & Profitability response steepness & Sigmoid sharpness & 1/\$ \\
+\midrule
+\multicolumn{4}{l}{\textit{Traffic dynamics}} \\
+$\rho_W$ & Traffic adjustment speed & Diversion rate & 1/time \\
+$k_A$ & AI scale sensitivity & Diversion response to $A$ & dimensionless \\
+$k_\theta$ & Compensation sensitivity & Diversion response to $\theta$ & dimensionless \\
+$a_0, \theta_0$ & Baseline thresholds & Centering parameters & dimensionless \\
+\midrule
+\multicolumn{4}{l}{\textit{Quality dynamics}} \\
+$\nu$ & Quality improvement rate & Reinvestment response & 1/time \\
+$\epsilon$ & Critical mass sensitivity & Quality response to $C$ & 1/time \\
+$C_{crit}$ & Critical creator mass & Threshold parameter & dimensionless \\
+$\lambda_0$ & Baseline quality decay & Depreciation rate & 1/time \\
+\midrule
+\multicolumn{4}{l}{\textit{AI dynamics}} \\
+$I$ & External investment rate & Exogenous inflow & 1/time \\
+$r_A$ & AI growth rate & Endogenous scaling & 1/time \\
+$\gamma$ & Quality premium & Data advantage strength & dimensionless \\
+$\delta_A$ & AI depreciation rate & Competition/obsolescence & 1/time \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Equilibrium Analysis}
+
+\subsection{Steady State Conditions}
+
+At equilibrium, all time derivatives are zero. The system admits multiple equilibria depending on parameters.
+
+\textbf{Traffic equilibrium:} Setting $dW/dt = 0$:
+\begin{equation}
+W^* = 1 - D(A^*, \theta)
+\end{equation}
+Traffic share equals one minus diversion propensity.
+
+\textbf{Creator equilibrium:} Setting $dC/dt = 0$:
+\begin{equation}
+S(\pi_c^* - \bar{u}) = S(\bar{u} - \pi_c^*) \quad \Rightarrow \quad \pi_c^* = \bar{u}
+\end{equation}
+At interior equilibrium, creator revenue equals the outside option.
+
+\textbf{AI equilibrium:} Setting $dA/dt = 0$:
+\begin{equation}
+A^* = \frac{I + r_A A^* (1 + \gamma Q^*)}{I + r_A A^* (1 + \gamma Q^*) + \delta_A}
+\end{equation}
+This is an implicit equation; for small $I$, we get approximately:
+\begin{equation}
+A^* \approx \sqrt{\frac{I}{\delta_A}} \cdot \sqrt{1 + \gamma Q^*}
+\end{equation}
+
+\subsection{Equilibrium Types}
+
+\begin{proposition}[Possible Equilibria]
+The system admits three qualitatively distinct equilibria:
+\begin{enumerate}
+    \item \textbf{Sustainable Coexistence:} $C^* > C_{crit}$, $Q^* > 0$, $W^* > 0$. Both IR and IC effectively satisfied; stable ecosystem.
+    \item \textbf{Low-Quality Trap:} $C^* \approx C_{crit}$, $Q^* \rightarrow Q_{low}$. Creators survive but quality erodes.
+    \item \textbf{Collapse:} $C^* \rightarrow 0$, $Q^* \rightarrow 0$. Creator exodus, quality collapse, AI faces data drought.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Stability}
+
+For the 4-dimensional system $(C, A, W, Q)$, stability is determined by the eigenvalues of the Jacobian at equilibrium. The bounded forms ensure that:
+\begin{itemize}
+    \item All eigenvalues have bounded real parts
+    \item No trajectories escape $[0,1]^4$
+    \item Equilibria are either stable nodes, stable spirals, or saddle points
+\end{itemize}
+
+\section{Policy Implications}
+
+\subsection{Compensation as the Key Lever}
+
+The compensation rate $\theta$ affects the system through exactly two channels:
+\begin{enumerate}
+    \item \textbf{Revenue channel:} Higher $\theta$ increases $\pi_c$ directly via $\theta \cdot p_L \cdot A$
+    \item \textbf{Diversion channel:} Higher $\theta$ reduces $D(A, \theta)$, preserving traffic $W$
+\end{enumerate}
+
+Both channels reinforce each other: higher compensation both increases direct licensing revenue and preserves the ad-supported traffic channel.
+
+\subsection{Critical Thresholds}
+
+Two thresholds emerge from the dynamics:
+
+\begin{enumerate}
+    \item \textbf{Survival threshold} $\theta^{IR}$: The minimum compensation at which $\pi_c = \bar{u}$ can be achieved. Below this, creators cannot survive.
+
+    \item \textbf{Quality threshold} $\theta^{IC}$: The minimum compensation at which reinvestment is viable ($R(\pi_c) > 0$ meaningfully). Below this, quality erodes.
+\end{enumerate}
+
+These thresholds depend on the full parameter vector and must be computed numerically for specific calibrations.
+
+\section{Summary}
+
+The model implements a clean causal chain:
+\[
+A \uparrow \;\rightarrow\; W \downarrow \;\rightarrow\; \pi_c \downarrow \;\rightarrow\; C \downarrow \;\rightarrow\; Q \downarrow \;\rightarrow\; A \text{ (slows)}
+\]
+
+Each mechanism appears exactly once:
+\begin{itemize}
+    \item Diversion lives in $W$ (and only $W$)
+    \item Revenue depends on $W$ (and only $W$) for the traffic channel
+    \item Creator dynamics respond to profitability (and only profitability)
+    \item Quality responds to creator mass and reinvestment (and only those)
+    \item AI growth depends on quality (and only quality) for the feedback
+\end{itemize}
+
+This structure ensures the model is auditable, calibratable, and produces interpretable policy counterfactuals.
+
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+\textit{Version 2.0. Revised based on detailed review. Feedback welcome.}
+
+\end{document}

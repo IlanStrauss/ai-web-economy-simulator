@@ -596,8 +596,8 @@
         .scenario-dropdown {
             width: 100%;
             padding: 0.75rem 1rem;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.15);
+            background: #fef7ed;
+            border: 2px solid #fed7aa;
             border-radius: 8px;
             color: #333;
             font-size: 1rem;
@@ -611,17 +611,17 @@
         }
 
         .scenario-dropdown:hover {
-            border-color: rgba(96, 165, 250, 0.5);
+            border-color: #fb923c;
         }
 
         .scenario-dropdown:focus {
             outline: none;
-            border-color: #f97316;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+            border-color: #ea580c;
+            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
         }
 
         .scenario-dropdown option {
-            background: #2d3a52;
+            background: #fff;
             color: #333;
             padding: 0.5rem;
         }
@@ -1256,7 +1256,7 @@
                 <!-- Tab 1: Ecosystem Dynamics -->
                 <div class="tab-content active" id="tab-dynamics">
                     <!-- Scenario Selector -->
-                    <section class="panel" style="background: linear-gradient(135deg, rgba(96,165,250,0.1), rgba(167,139,250,0.1));">
+                    <section class="panel" style="background: linear-gradient(135deg, #fef7ed, #fff7ed);">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
                             <div style="flex: 1; min-width: 250px;">
                                 <label style="color: #666; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">Select Scenario</label>
@@ -2406,12 +2406,15 @@
             }
 
             // Diversion propensity D(A, θ) - probability users stay in AI answers
+            // LaTeX: D(A,θ) = σ(k_A(A-a₀) - k_θ(θ-θ₀))
+            // We use scenario's alpha to scale k_A (higher alpha = stronger AI diversion)
             diversion() {
                 const { theta, alpha } = this.params;
-                const kA = 3.0;  // AI scale sensitivity
-                const kTheta = 2.0;  // Compensation sensitivity
-                const a0 = 0.3;  // Baseline AI threshold
-                const theta0 = 0.15;  // Baseline compensation threshold
+                // Scale k_A by alpha: alpha=0.5 (zero-click) → strong; alpha=0.1 → weak
+                const kA = 2.0 + 6.0 * (alpha || 0.25);  // k_A ∈ [2, 5] based on alpha
+                const kTheta = 3.0;  // Compensation sensitivity
+                const a0 = 0.25;  // Baseline AI threshold
+                const theta0 = 0.10;  // Baseline compensation threshold
 
                 return this.sigmoid(kA * (this.A - a0) - kTheta * (theta - theta0));
             }

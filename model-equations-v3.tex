@@ -222,14 +222,14 @@ This constraint is enforced by the entry/exit dynamics in Section 2.2. When $\pi
 \subsection{Incentive Compatibility (IC)}
 
 \begin{definition}[Quality Incentive Constraint]
-High-quality content is incentive compatible when the quality premium exceeds additional costs:
+High-quality content is incentive compatible when the subscription/patronage premium exceeds additional costs:
 \begin{equation}
-\text{IC}: \quad (\theta \cdot p_L \cdot A \cdot \gamma + p_{sub}) \cdot \Delta Q \geq \Delta c
+\text{IC}: \quad p_{sub} \cdot \Delta Q \geq \Delta c
 \end{equation}
 where $\Delta c = c_{high} - c_{low}$ is the cost difference between high and low quality production, and $\Delta Q$ is the quality increment from low to high.
 \end{definition}
 
-Under the $[0,1]$ normalization, we take $\Delta Q = 1$ for the low-to-high quality shift.
+Under the $[0,1]$ normalization, we take $\Delta Q = 1$ for the low-to-high quality shift. This means IC simplifies to $p_{sub} \geq \Delta c$.
 
 When IC is violated, creators rationally choose low quality, reducing $Q$ (and thus $p_{sub} \cdot Q$ in $\pi_c$), which in turn lowers $R(\pi_c)$ and slows quality improvement.
 

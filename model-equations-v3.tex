@@ -66,6 +66,10 @@ $W = 1$ means all searches click through to original sources; $W = 0$ means AI a
 
 \section{Core Dynamics}
 
+\begin{assumption}[Nonnegative Rates]
+All rate parameters are nonnegative: $\rho_C, \rho_W, \nu, \epsilon, \lambda_0, I, r_A, \delta_A \geq 0$. This ensures the bounded gain--loss forms keep state variables in $[0,1]$ by construction.
+\end{assumption}
+
 All equations use bounded ``gain--loss'' forms that keep state variables in $[0,1]$ by construction, without requiring ex post clamping.
 
 \subsection{Creator Revenue}
@@ -93,6 +97,7 @@ Creators enter or exit based on whether profitability exceeds their outside opti
 \begin{equation}
 S(x) = \frac{1}{1 + e^{-\beta x}}
 \end{equation}
+where $\beta > 0$ controls response steepness. (We later use $\sigma(x) = 1/(1+e^{-x})$ for diversion dynamics; the distinction is that $S$ has adjustable slope $\beta$ for calibrating creator sensitivity, while $\sigma$ has unit slope with sensitivity absorbed into $k_A, k_\theta$.)
 
 The bounded creator dynamics are:
 
@@ -205,7 +210,7 @@ AI platforms grow with investment and content availability. Quality enters here 
 \end{itemize}
 
 \begin{remark}
-The $(1 + \gamma Q)$ term is multiplicative on growth, not additive. This means low $Q$ genuinely throttles $A$ even with high $I$---encoding the claim that ``AI needs quality content.''
+The $(1 + \gamma Q)$ term is multiplicative on \emph{endogenous} growth, not additive. This means low $Q$ throttles the endogenous growth component $r_A A(1+\gamma Q)$, though exogenous investment $I$ can still drive $A$ forward independently---encoding the claim that ``AI benefits from quality content'' while allowing for investment-driven growth.
 \end{remark}
 
 \section{Mechanism Design Constraints}
@@ -235,7 +240,9 @@ where $\Delta Q$ is the quality increment from low to high, and $\Delta c = c_{h
 
 Under the $[0,1]$ normalization, we take $\Delta Q = 1$ for the low-to-high quality shift. This means IC simplifies to $p_{sub} \geq \Delta c$: creators invest in quality only when the subscription premium exceeds the additional production cost.
 
-When IC is violated, creators rationally choose low quality, reducing $Q$ (and thus $p_{sub} \cdot Q$ in $\pi_c$), which in turn lowers $R(\pi_c)$ and slows quality improvement.
+\begin{remark}
+IC is a \textbf{reduced-form interpretation}, not an explicit regime switch in the ODEs. The dynamics do not contain a discrete ``quality choice'' variable. Instead, IC violation manifests through the revenue channel: when $p_{sub}$ is low, $Q$ contributes less to $\pi_c$, which reduces $R(\pi_c)$, which slows quality improvement in Eq.\ (11). The constraint thus operates implicitly through the continuous dynamics rather than as an explicit threshold.
+\end{remark}
 
 \section{Parameters}
 
@@ -321,7 +328,7 @@ In the small-$A$ regime, $A^* \approx I/\delta_A$ and $Q$ affects $A^*$ only wea
 The system admits three qualitatively distinct equilibria:
 \begin{enumerate}
     \item \textbf{Sustainable Coexistence:} $C^* > C_{crit}$, $Q^* > 0$, $W^* > 0$. Both IR and IC effectively satisfied; stable ecosystem.
-    \item \textbf{Low-Quality Trap:} $C^* \approx C_{crit}$, $Q^* \rightarrow Q_{low}$. Creators survive but quality erodes.
+    \item \textbf{Low-Quality Trap:} $C^* \approx C_{crit}$, $Q^*$ settles at a low level. Creators survive but quality erodes.
     \item \textbf{Collapse:} $C^* \rightarrow 0$, $Q^* \rightarrow 0$. Creator exodus, quality collapse, AI faces data drought.
 \end{enumerate}
 \end{proposition}

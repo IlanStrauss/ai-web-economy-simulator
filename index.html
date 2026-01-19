@@ -1160,7 +1160,7 @@
                 <img id="project-logo" src="logo.svg" alt="AI Disclosures Project" style="height: 70px;" onerror="this.style.display='none'">
             </div>
             <h1>Who Wins Under AI?</h1>
-            <p style="font-size: 1.3rem;">An AI Web Economy Simulator <span style="opacity: 0.6;">(v1.0)</span></p>
+            <p style="font-size: 1.3rem;">An AI Web Economy Simulator <span style="opacity: 0.6;">(v3.0)</span></p>
             <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.25rem;">Explore how AI reshapes the web content economy</p>
         </header>
 
@@ -1265,7 +1265,6 @@
                                                                         <option value="spotify-news">🎵 Spotify for News — Fair 30% revenue share</option>
                                     <option value="ai-winter">❄️ AI Winter 2.0 — Boom then data drought</option>
                                     <option value="substack-lifeboat">🛟 Substack Lifeboat — Subscription escape</option>
-                                                                        <option value="death-by-1000-cuts">🐸 Death by 1000 Cuts — Slow boiled frog</option>
                                     <option value="marshall-plan">🏛️ The Marshall Plan — Policy intervention</option>
                                                                     </select>
                             </div>
@@ -1961,25 +1960,6 @@
                                 </div>
                                 <div class="scenario-detail-outcome">
                                     <strong>Outcome:</strong> Quality-resilient creator economy
-                                </div>
-                            </div>
-
-                            <div class="scenario-detail-card" data-scenario="death-by-1000-cuts">
-                                <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">🐸</span>
-                                    <div>
-                                        <h3>Death by 1000 Cuts</h3>
-                                        <span class="scenario-tag partial">Slow Decline</span>
-                                    </div>
-                                    <button class="run-case-btn" data-run="death-by-1000-cuts">▶ Run</button>
-                                </div>
-                                <p class="scenario-detail-desc">Boiled frog: moderate λ₀, weak ν. Q erodes slowly; A climbs; only later does data constraint bite.</p>
-                                <div class="scenario-detail-params">
-                                    <div><strong>Moderate γ</strong>, slow decay</div>
-                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">Long lag then crisis</span></div>
-                                </div>
-                                <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Slow decline, delayed reckoning
                                 </div>
                             </div>
 
@@ -2906,21 +2886,6 @@
                             conclusion: `A lifeboat, not a cruise ship. Some escape; most still drown.`
                         }
                     },
-                    'death-by-1000-cuts': {
-                        // Boiled frog: D₀ just above 0.5, very slow decline
-                        params: { theta: 0.08, h: 0.35, m: 0.12, alpha: 0.20, r: 0.07, I: 0.04 },
-                        interpretation: {
-                            title: 'Death by 1000 Cuts',
-                            summary: `Quality erodes so gradually that no one notices. Each year slightly worse than the last.`,
-                            bullets: [
-                                `<span class="warning">Slow diversion increase</span>: AI Overviews roll out gradually`,
-                                `<span class="warning">Gradual quality decline</span>: Each article slightly less researched`,
-                                `<span class="warning">Boiled frog</span>: No single moment of crisis, just drift`,
-                                `<span class="danger">Sudden realization</span>: One day you notice there's no real journalism left`
-                            ],
-                            conclusion: `The most dangerous scenario: collapse disguised as normalcy.`
-                        }
-                    },
                     'marshall-plan': {
                         // Policy intervention: starts from genuinely damaged state, shows recovery
                         params: { theta: 0.42, h: 0.30, m: 0.30, alpha: 0.05, r: 0.12, I: 0.04 },
@@ -3059,7 +3024,6 @@
                     'spotify-news': 'Spotify for News',
                     'ai-winter': 'AI Winter 2.0',
                     'substack-lifeboat': 'The Substack Lifeboat',
-                    'death-by-1000-cuts': 'Death by 1000 Cuts',
                     'marshall-plan': 'The Marshall Plan'
                 };
                 var insights = {
@@ -3068,7 +3032,6 @@
                     'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
                     'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
                     'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
-                    'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
                     'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.'
                 };
 
@@ -3309,7 +3272,6 @@
                     'spotify-news': 'Spotify for News',
                     'ai-winter': 'AI Winter 2.0',
                     'substack-lifeboat': 'The Substack Lifeboat',
-                    'death-by-1000-cuts': 'Death by 1000 Cuts',
                     'marshall-plan': 'The Marshall Plan'
                 };
                 const scenarioInsights = {
@@ -3318,7 +3280,6 @@
                     'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
                     'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
                     'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
-                    'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
                     'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.'
                 };
 

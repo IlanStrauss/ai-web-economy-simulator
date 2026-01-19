@@ -1,0 +1,156 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\title{Scenario Parameter Verification\\
+\large AI Web Economy Simulator v3}
+\author{Verification Document}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{V3 Model Equations}
+
+The JavaScript simulation implements the following v3 equations:
+
+\subsection{Creator Revenue}
+\begin{equation}
+\pi_c = \theta \cdot p_L \cdot A + p_{ad} \cdot W + p_{sub} \cdot Q
+\end{equation}
+where:
+\begin{itemize}
+    \item $p_L = 0.3$ (licensing coefficient)
+    \item $p_{ad} = 0.4$ (ad revenue coefficient)
+    \item $p_{sub} = m$ (subscription coefficient from scenario)
+\end{itemize}
+
+\subsection{Creator Dynamics}
+\begin{equation}
+\frac{dC}{dt} = (1-C) \cdot \rho_C \cdot S(\pi_c - \bar{u}) - C \cdot \rho_C \cdot S(\bar{u} - \pi_c)
+\end{equation}
+where $S(x) = 1/(1+e^{-\beta x})$ with $\beta = 5$, $\rho_C = 0.15$, $\bar{u} = 0.15$.
+
+\subsection{Diversion Propensity}
+\begin{equation}
+D(A, \theta) = \sigma\Big(k_A(A - a_0) - k_\theta(\theta - \theta_0)\Big)
+\end{equation}
+where:
+\begin{itemize}
+    \item $k_A = 2.0 + 6.0 \cdot \alpha$ (scaled by scenario's $\alpha$)
+    \item $k_\theta = 3.0$
+    \item $a_0 = 0.25$, $\theta_0 = 0.10$
+\end{itemize}
+
+\subsection{Traffic Dynamics}
+\begin{equation}
+\frac{dW}{dt} = (1-W) \cdot \rho_W \cdot (1-D) - W \cdot \rho_W \cdot D
+\end{equation}
+where $\rho_W = 0.2$.
+
+\subsection{Quality Dynamics}
+\begin{equation}
+\frac{dQ}{dt} = (1-Q)\Big[\nu R(\pi_c) + \epsilon \max(C - C_{crit}, 0)\Big] - Q\Big[\lambda_0 + \epsilon \max(C_{crit} - C, 0)\Big]
+\end{equation}
+where $\nu = 0.1$, $\epsilon = 0.15$, $C_{crit} = 0.35$, $\lambda_0 = 0.05$, and $R(\pi_c) = \ln(1 + e^{\pi_c - \bar{\pi}})$ with $\bar{\pi} = 0.12$.
+
+\subsection{AI Dynamics}
+\begin{equation}
+\frac{dA}{dt} = (1-A) \cdot \Big(I + r_A \cdot A \cdot (1 + \gamma Q)\Big) - A \cdot \delta_A
+\end{equation}
+where $r_A = 0.2$, $\gamma = 0.4$, $\delta_A = 0.1$.
+
+\section{Parameter Mapping}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textbf{Scenario Param} & \textbf{Used in V3?} & \textbf{Where Used} & \textbf{Effect} \\
+\midrule
+$\theta$ & \checkmark & Revenue, Diversion & $\uparrow\theta \Rightarrow \uparrow\pi_c$, $\downarrow D$ \\
+$h$ & $\times$ & Not used & Legacy (extraction) \\
+$m$ & \checkmark & Revenue (as $p_{sub}$) & $\uparrow m \Rightarrow \uparrow\pi_c$ \\
+$\alpha$ & \checkmark & Diversion (scales $k_A$) & $\uparrow\alpha \Rightarrow$ stronger diversion \\
+$r$ & $\times$ & Not used & Legacy (logistic growth) \\
+$I$ & \checkmark & AI dynamics & $\uparrow I \Rightarrow \uparrow A$ growth \\
+\bottomrule
+\end{tabular}
+\caption{Scenario parameter mapping to v3 model}
+\end{table}
+
+\section{Scenario Verification}
+
+\subsection{scraping-era ($\theta=0.02$, $m=0.12$, $\alpha=0.25$, $I=0.08$)}
+\begin{itemize}
+    \item Initial: $C=0.60$, $A=0.40$, $Q=0.55$, $W=0.50$
+    \item $\pi_c = 0.02(0.3)(0.40) + 0.4(0.50) + 0.12(0.55) = 0.27$
+    \item $\pi_c > \bar{u}$ initially, but...
+    \item $k_A = 2 + 6(0.25) = 3.5$
+    \item $D = \sigma(3.5(0.40-0.25) - 3(0.02-0.10)) = \sigma(0.77) \approx 0.68$
+    \item High $D$ $\Rightarrow$ $W \downarrow$ $\Rightarrow$ $\pi_c \downarrow$ $\Rightarrow$ $C \downarrow$
+    \item \textbf{Expected}: Gradual decline $\rightarrow$ Collapse \checkmark
+\end{itemize}
+
+\subsection{zero-click ($\theta=0.01$, $m=0.08$, $\alpha=0.50$, $I=0.12$)}
+\begin{itemize}
+    \item $k_A = 2 + 6(0.50) = 5.0$ (very strong diversion)
+    \item $D \approx 0.73$ initially, grows as $A$ increases
+    \item High $I$ pushes $A$ up fast $\Rightarrow$ even higher $D$
+    \item $W \rightarrow 0$ $\Rightarrow$ ad revenue collapses
+    \item \textbf{Expected}: Severe collapse \checkmark
+\end{itemize}
+
+\subsection{spotify-news ($\theta=0.30$, $m=0.35$, $\alpha=0.10$, $I=0.06$)}
+\begin{itemize}
+    \item $k_A = 2 + 6(0.10) = 2.6$ (weak diversion)
+    \item $D = \sigma(2.6(0.40-0.25) - 3(0.30-0.10)) = \sigma(-0.21) \approx 0.45$
+    \item Moderate $D$ $\Rightarrow$ $W$ stable/recovering
+    \item $\pi_c = 0.30(0.3)(0.40) + 0.4(0.50) + 0.35(0.55) = 0.43$
+    \item Very high $\pi_c$ $\Rightarrow$ strong entry + reinvestment
+    \item \textbf{Expected}: Sustainable coexistence \checkmark
+\end{itemize}
+
+\subsection{journalism-graveyard ($\theta=0.05$, $m=0.10$, $\alpha=0.35$, $I=0.08$)}
+\begin{itemize}
+    \item \textbf{Special}: Starts below $C_{crit}$
+    \item Initial: $C=0.25 < C_{crit}=0.35$, $A=0.50$, $Q=0.30$, $W=0.35$
+    \item Quality equation: $\epsilon \max(C_{crit} - C, 0) = 0.15(0.10) = 0.015$ (decay boost)
+    \item Quality has headwinds: decays faster when $C < C_{crit}$
+    \item Even moderate $\theta$ can't overcome critical mass shortfall
+    \item \textbf{Expected}: Collapse despite compensation (hysteresis) \checkmark
+\end{itemize}
+
+\subsection{substack-lifeboat ($\theta=0.10$, $m=0.45$, $\alpha=0.40$, $I=0.06$)}
+\begin{itemize}
+    \item High $\alpha$ $\Rightarrow$ $k_A = 4.4$ (strong diversion)
+    \item $W$ will fall, BUT...
+    \item Very high $m=0.45$ $\Rightarrow$ $p_{sub} \cdot Q$ dominates revenue
+    \item $\pi_c = 0.10(0.3)(A) + 0.4(W) + 0.45(Q)$
+    \item As $W \downarrow$, subscription term ($0.45Q$) keeps $\pi_c$ viable
+    \item \textbf{Expected}: Survive via subscriptions despite traffic loss \checkmark
+\end{itemize}
+
+\subsection{ai-winter ($\theta=0.02$, $m=0.10$, $\alpha=0.35$, $I=0.15$)}
+\begin{itemize}
+    \item Very high $I=0.15$ $\Rightarrow$ $A$ grows fast initially
+    \item But low $\theta$ and high $\alpha$ $\Rightarrow$ $C \downarrow$, $Q \downarrow$
+    \item As $Q \downarrow$: $(1 + \gamma Q) \downarrow$ $\Rightarrow$ AI growth slows
+    \item AI depends on quality content; content dies; AI stagnates
+    \item \textbf{Expected}: Boom then stagnation (data drought) \checkmark
+\end{itemize}
+
+\section{Conclusion}
+
+All scenarios use the v3 equations correctly:
+\begin{enumerate}
+    \item Parameters $\theta$, $m$, $\alpha$, $I$ map to appropriate model components
+    \item Legacy parameters $h$, $r$ are unused (acceptable)
+    \item journalism-graveyard uses special initial conditions to demonstrate hysteresis
+    \item Expected dynamics match scenario narratives
+\end{enumerate}
+
+\end{document}

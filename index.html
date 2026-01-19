@@ -2646,11 +2646,13 @@
                 };
             }
 
-            reset() {
-                this.C = 0.60;
-                this.A = 0.40;
-                this.Q = 0.55;
-                this.W = 0.50;
+            reset(initialConditions = null) {
+                // Use provided initial conditions or defaults
+                const ic = initialConditions || {};
+                this.C = ic.C !== undefined ? ic.C : 0.60;
+                this.A = ic.A !== undefined ? ic.A : 0.40;
+                this.Q = ic.Q !== undefined ? ic.Q : 0.55;
+                this.W = ic.W !== undefined ? ic.W : 0.50;
                 this.t = 0;
                 this.history = {
                     t: [0],
@@ -2972,6 +2974,8 @@
                     'journalism-graveyard': {
                         // Tipping point: below critical mass, no recovery possible
                         params: { theta: 0.05, h: 0.45, m: 0.10, alpha: 0.35, r: 0.04, I: 0.08 },
+                        // Start below C_crit to demonstrate hysteresis
+                        initialConditions: { C: 0.25, A: 0.50, Q: 0.30, W: 0.35 },
                         interpretation: {
                             title: 'The Journalism Graveyard',
                             summary: `Once you fall below critical mass, recovery is nearly impossible. See: local news deserts across America.`,
@@ -3178,14 +3182,19 @@
                     if (content) content.textContent = insights[scenarioKey] || '';
                 }
 
-                // Store baseline for comparison
-                this.initialValues = { C: 0.60, W: 0.50, Q: 0.55, revenue: 0.25 };
-
                 // Apply scenario parameters to model AND update UI sliders
                 this.applyParams(scenario.params);
 
-                // Reset state variables (keeps params)
-                this.model.reset();
+                // Reset state variables with scenario-specific initial conditions (if any)
+                this.model.reset(scenario.initialConditions || null);
+
+                // Store baseline for comparison (use actual initial values)
+                this.initialValues = {
+                    C: this.model.C,
+                    W: this.model.W,
+                    Q: this.model.Q,
+                    revenue: this.model.creatorRevenue()
+                };
 
                 // Run simulation (200 steps = 10 years)
                 for (var i = 0; i < 200; i++) {

@@ -13,3 +13,14 @@ An interactive simulation modeling how AI platforms and web content creators int
 - Pre-built policy scenarios (Status Quo, Licensing Regime, Fair Deal, Traffic Collapse)
 - Mechanism design analysis (IR/IC constraints)
 - Calibrated to real-world data from AI licensing deals, journalism employment trends, and search diversion rates
+
+## Technical Documentation
+
+**[Model Equations (LaTeX)](model-equations.tex)** — Full mathematical specification including:
+- State variables and parameter definitions
+- Core differential equations (Lotka-Volterra dynamics)
+- Mechanism design constraints (IR/IC)
+- Equilibrium analysis and stability conditions
+- Critical threshold derivations
+
+To compile the PDF: `pdflatex model-equations.tex`

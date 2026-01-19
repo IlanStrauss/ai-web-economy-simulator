@@ -1,0 +1,331 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{proposition}{Proposition}
+
+\title{Mathematical Foundations of the AI Web Economy Simulator\\[0.5em]\large A Lotka-Volterra Model with Mechanism Design Constraints}
+\author{Work in Progress}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note presents the mathematical foundations of an ecosystem model for AI platforms and web content creators. The model combines Lotka-Volterra population dynamics with mechanism design constraints (individual rationality and incentive compatibility) to analyze how compensation rates affect ecosystem sustainability. We derive the core differential equations, identify equilibrium conditions, and characterize three distinct regimes based on whether incentive constraints are satisfied.
+\end{abstract}
+
+\section{Model Setup}
+
+\subsection{State Variables}
+
+\begin{definition}[State Variables]
+The model tracks four normalized state variables $\in [0,1]$, representing relative levels compared to a 2024 baseline:
+\begin{align}
+C(t) &: \text{Web content creator activity (journalists, bloggers, independent publishers)}\\
+A(t) &: \text{AI platform scale/market penetration}\\
+Q(t) &: \text{Content quality index (original research, fact-checking, depth)}\\
+W(t) &: \text{Web traffic to original content (vs. AI-generated answers)}
+\end{align}
+\end{definition}
+
+\subsection{Parameters}
+
+\begin{definition}[Model Parameters]
+The dynamics are governed by the following parameters:
+\begin{center}
+\begin{tabular}{cll}
+\toprule
+Symbol & Description & Calibrated Value \\
+\midrule
+$\theta$ & Compensation rate (AI revenue share to creators) & 0.02 (2\%)\\
+$h$ & Extraction intensity (AI dependence on web content) & 0.45\\
+$m$ & Mutualism benefit coefficient & 0.12\\
+$\alpha$ & Traffic diversion rate (searches answered by AI) & 0.25\\
+$r$ & Creator natural growth rate & 0.08\\
+$K$ & Carrying capacity & 1.0\\
+$\beta$ & AI value extraction from content & 0.35\\
+$\gamma$ & Quality premium for AI training & 0.40\\
+$\delta$ & AI platform depreciation/competition & 0.15\\
+$I$ & External AI investment rate & 0.08\\
+$\epsilon$ & Quality response to creator activity & 0.12\\
+$C^*$ & Critical creator mass for quality & 0.35\\
+$\lambda$ & Quality degradation rate from exploitation & 0.10\\
+$\phi_w$ & Creator dependence on web traffic & 0.60\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{definition}
+
+\subsection{Assumptions}
+
+\begin{assumption}[Lotka-Volterra Foundation]
+The interaction between AI platforms and content creators follows predator-prey dynamics, where AI platforms extract value from creator content. The relationship can be extractive or mutualistic depending on the compensation rate $\theta$.
+\end{assumption}
+
+\begin{assumption}[Mechanism Design]
+Creators are rational agents who:
+\begin{enumerate}[label=(\alph*)]
+\item Participate only if expected profit exceeds their outside option (Individual Rationality)
+\item Produce high-quality content only if the quality premium exceeds additional costs (Incentive Compatibility)
+\end{enumerate}
+\end{assumption}
+
+\begin{assumption}[Quality Dependence]
+AI model quality depends on the quality of training data. Better web content leads to more capable AI systems, creating potential for mutualism if compensation is adequate.
+\end{assumption}
+
+\section{Core Dynamics}
+
+\subsection{Creator Dynamics}
+
+\begin{equation}
+\boxed{
+\frac{dC}{dt} = \underbrace{rC\left(1 - \frac{C}{K}\right)}_{\text{logistic growth}} - \underbrace{h(1-\theta)AC}_{\text{extraction harm}} + \underbrace{m\theta AC}_{\text{mutualism benefit}} - \underbrace{\alpha\phi_w AC(1-\theta)}_{\text{traffic diversion}}
+}
+\end{equation}
+
+\textbf{Interpretation:} Creators grow logistically but face pressure from AI extraction (reduced by compensation $\theta$) and traffic diversion to AI answers. Mutualism benefits (AI tools, discovery) scale with compensation.
+
+\textbf{Simplified form:} Combining interaction terms:
+\begin{equation}
+\frac{dC}{dt} = rC\left(1 - \frac{C}{K}\right) + \Phi \cdot AC
+\end{equation}
+where $\Phi = m\theta - h(1-\theta) - \alpha\phi_w(1-\theta)$ is the \textit{net interaction effect}.
+
+\subsection{AI Platform Dynamics}
+
+\begin{equation}
+\boxed{
+\frac{dA}{dt} = \underbrace{\beta CA(1 + \gamma Q)}_{\text{value from content}} - \underbrace{\delta A^2}_{\text{competition/depreciation}} + \underbrace{I}_{\text{external investment}}
+}
+\end{equation}
+
+\textbf{Interpretation:} AI platforms grow by extracting value from creator content (quality-adjusted by factor $1+\gamma Q$). They face quadratic competition/depreciation. External investment provides baseline growth independent of content.
+
+\subsection{Web Traffic Dynamics}
+
+\begin{equation}
+\boxed{
+\frac{dW}{dt} = \underbrace{-\alpha AW}_{\text{AI diversion}} + \underbrace{\eta(1-Q)(1-W)}_{\text{quality-driven recovery}}
+}
+\end{equation}
+
+\textbf{Interpretation:} Traffic to original content declines as AI platforms grow (AI answers replace clicks). Traffic recovers somewhat if AI quality degrades (users return to sources). Here $\eta \approx 0.1$.
+
+\subsection{Content Quality Dynamics}
+
+\begin{equation}
+\boxed{
+\frac{dQ}{dt} = \underbrace{\epsilon(C - C^*)}_{\text{creator mass effect}} - \underbrace{\lambda(1-\theta)A}_{\text{exploitation degradation}} + \underbrace{\nu(\pi_c - \bar{\pi})}_{\text{revenue-quality link}}
+}
+\end{equation}
+
+\textbf{Interpretation:} Quality requires critical mass of creators ($C^*$). Degrades when exploitation is high (low $\theta$). Revenue above threshold $\bar{\pi}$ enables investment in quality. Here $\nu$ scales the revenue effect.
+
+\section{Mechanism Design Constraints}
+
+\subsection{Creator Revenue}
+
+Total creator revenue consists of three components:
+\begin{equation}
+\pi_c = \underbrace{\theta \cdot p \cdot A}_{\text{AI licensing}} + \underbrace{p_{ad} \cdot W \cdot (1-\alpha A)}_{\text{ad revenue}} + \underbrace{p_{sub} \cdot Q}_{\text{subscriptions}}
+\end{equation}
+where $p$ is the AI platform's willingness to pay per unit content, $p_{ad}$ is ad revenue potential, and $p_{sub}$ is subscription revenue coefficient.
+
+\subsection{Individual Rationality (IR) Constraint}
+
+\begin{definition}[Participation Constraint]
+Creators participate if and only if profit exceeds their outside option:
+\begin{equation}
+\boxed{
+\text{IR}: \quad \pi_c - c(q) \geq \bar{u}
+}
+\end{equation}
+where $c(q)$ is the cost of producing content at quality level $q$, and $\bar{u}$ is the reservation utility (alternative employment income).
+\end{definition}
+
+\textbf{Interpretation:} When IR is violated, creators exit to alternative employment, accelerating population decline.
+
+\subsection{Incentive Compatibility (IC) Constraint}
+
+\begin{definition}[Quality Incentive Constraint]
+High-quality content is incentive compatible if and only if:
+\begin{equation}
+\boxed{
+\text{IC}: \quad \theta \cdot p \cdot A \cdot \gamma \geq \Delta c = c_{high} - c_{low}
+}
+\end{equation}
+where $\gamma$ is the quality premium and $\Delta c$ is the cost difference between high and low quality production.
+\end{definition}
+
+\textbf{Interpretation:} When IC is violated, creators rationally shift to low-quality content (AI-assisted slop) because quality investment isn't rewarded.
+
+\section{Regime Switching}
+
+Based on constraint satisfaction, the system operates in one of three regimes:
+
+\begin{proposition}[Three Regimes]
+\begin{equation}
+\text{Regime} = \begin{cases}
+\textbf{COLLAPSE} & \text{if } \theta < \theta^{IR} \approx 15\% \quad (\text{IR violated})\\[0.5em]
+\textbf{LOW-QUALITY} & \text{if } \theta^{IR} \leq \theta < \theta^{IC} \approx 25\% \quad (\text{IC violated})\\[0.5em]
+\textbf{SUSTAINABLE} & \text{if } \theta \geq \theta^{IC} \approx 25\% \quad (\text{both satisfied})
+\end{cases}
+\end{equation}
+\end{proposition}
+
+\subsection{Modified Dynamics Under Constraint Violation}
+
+When IR is violated, creator exit accelerates:
+\begin{equation}
+\frac{dC}{dt}\bigg|_{\text{exit}} = \frac{dC}{dt}\bigg|_{\text{base}} - \kappa_1 \cdot C \cdot \mathbb{1}[\pi_c < \bar{u}]
+\end{equation}
+
+When IC is violated, quality degrades faster:
+\begin{equation}
+\frac{dQ}{dt}\bigg|_{\text{low-Q}} = \frac{dQ}{dt}\bigg|_{\text{base}} - \kappa_2 \cdot Q \cdot \mathbb{1}[\text{IC violated}]
+\end{equation}
+
+where $\kappa_1 \approx 0.15$ and $\kappa_2 \approx 0.12$ are regime penalty parameters.
+
+\section{Equilibrium Analysis}
+
+\subsection{Net Interaction Effect}
+
+\begin{definition}[Mutualism vs. Extraction]
+The net interaction effect determines ecosystem character:
+\begin{equation}
+\Phi = m\theta - h(1-\theta) - \alpha\phi_w(1-\theta)
+\end{equation}
+\begin{itemize}
+\item $\Phi > 0$: Mutualistic (creators benefit from AI)
+\item $\Phi < 0$: Extractive (AI harms creators)
+\end{itemize}
+\end{definition}
+
+\subsection{Critical Compensation Threshold}
+
+\begin{proposition}[Mutualism Threshold]
+The critical compensation rate where $\Phi = 0$ is:
+\begin{equation}
+\boxed{
+\theta^* = \frac{h + \alpha\phi_w}{h + \alpha\phi_w + m}
+}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Setting $\Phi = 0$:
+\begin{align}
+m\theta &= h(1-\theta) + \alpha\phi_w(1-\theta)\\
+m\theta &= (h + \alpha\phi_w)(1-\theta)\\
+m\theta &= (h + \alpha\phi_w) - (h + \alpha\phi_w)\theta\\
+\theta(m + h + \alpha\phi_w) &= h + \alpha\phi_w\\
+\theta^* &= \frac{h + \alpha\phi_w}{h + \alpha\phi_w + m}
+\end{align}
+\end{proof}
+
+\textbf{Note:} With calibrated parameters ($h=0.45$, $\alpha=0.25$, $\phi_w=0.60$, $m=0.12$), we get $\theta^* \approx 79\%$, far above the current status quo of $\sim$2\%.
+
+\subsection{Equilibrium Types}
+
+\begin{proposition}[Possible Equilibria]
+The system admits four types of equilibria:
+\begin{enumerate}
+\item \textbf{Sustainable Coexistence} $(C^*, A^*, Q^* > 0)$: Both IR and IC satisfied; stable if $\Phi > -0.1$
+\item \textbf{Low-Quality Trap} $(C > 0, Q \to Q_{low})$: IR satisfied, IC violated; creators exist but produce low quality
+\item \textbf{Creator Extinction} $(C \to 0)$: AI runs on legacy/synthetic content
+\item \textbf{Collapse} $(C \to 0, Q \to 0)$: Both collapse; AI faces ``data drought''
+\end{enumerate}
+\end{proposition}
+
+\subsection{Trivial Equilibrium}
+
+At the creator extinction equilibrium ($C = 0$), AI platform level satisfies:
+\begin{equation}
+0 = -\delta A^2 + I \implies A^* = \sqrt{\frac{I}{\delta}}
+\end{equation}
+
+This equilibrium is stable when $\Phi < 0$ (extractive regime).
+
+\subsection{Interior Equilibrium}
+
+For coexistence, setting $dC/dt = 0$:
+\begin{equation}
+r\left(1 - \frac{C^*}{K}\right) = -\Phi A^*
+\end{equation}
+
+If $\Phi < 0$: $C^* = K\left(1 + \frac{|\Phi| A^*}{r}\right)$ (bounded by 1)
+
+If $\Phi > 0$: $C^* = K\left(1 - \frac{\Phi A^*}{r}\right)$ (requires $\Phi A^* < r$)
+
+\subsection{Stability Analysis}
+
+Stability is determined by the Jacobian at equilibrium:
+\begin{equation}
+J = \begin{pmatrix}
+\frac{\partial \dot{C}}{\partial C} & \frac{\partial \dot{C}}{\partial A} \\[0.5em]
+\frac{\partial \dot{A}}{\partial C} & \frac{\partial \dot{A}}{\partial A}
+\end{pmatrix}
+\end{equation}
+
+\begin{proposition}[Stability Conditions]
+An equilibrium $(C^*, A^*)$ is:
+\begin{itemize}
+\item \textbf{Stable} if $\text{tr}(J) < 0$ and $\det(J) > 0$
+\item \textbf{Unstable} if $\det(J) < 0$ (saddle point)
+\item \textbf{Oscillatory} if $\text{tr}(J)^2 < 4\det(J)$ with $\det(J) > 0$
+\end{itemize}
+\end{proposition}
+
+The partial derivatives are:
+\begin{align}
+\frac{\partial \dot{C}}{\partial C} &= r\left(1 - \frac{2C}{K}\right) + \Phi A\\
+\frac{\partial \dot{C}}{\partial A} &= \Phi C\\
+\frac{\partial \dot{A}}{\partial C} &= \beta A(1 + \gamma Q)\\
+\frac{\partial \dot{A}}{\partial A} &= \beta C(1 + \gamma Q) - 2\delta A
+\end{align}
+
+\section{Parameter Calibration}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Parameter & Calibration Source & Notes\\
+\midrule
+$\theta = 2\%$ & AI licensing / AI market & Reddit-Google: \$60M vs \$100B market\\
+$h = 45\%$ & Training data dependence & 30-50\% of model capability from web\\
+$\alpha = 25\%$ & Google AI Overviews & $\sim$25\% queries answered without click\\
+$r = 8\%$ & Content growth rate & Journalism employment $-$70\% since 2000\\
+$m = 12\%$ & Productivity boost & AI tools $\sim$10-15\% (GitHub Copilot studies)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Summary: Policy Thresholds}
+
+The model identifies two critical thresholds:
+
+\begin{enumerate}
+\item \textbf{Survival threshold} $\theta^{IR} \approx 15\%$: Compensation below this violates IR; creators cannot survive and exit the market.
+
+\item \textbf{Quality threshold} $\theta^{IC} \approx 25\%$: Compensation below this violates IC; creators survive but shift to low-quality production.
+\end{enumerate}
+
+\textbf{Policy implication:} Sustainable AI-creator ecosystems require $\theta > 25\%$ to satisfy both constraints. The current status quo ($\theta \approx 2\%$) violates both, leading to creator exit and quality collapse.
+
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+\textit{Document version: Draft for review. Feedback welcome.}
+
+\end{document}

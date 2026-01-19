@@ -22,9 +22,9 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #2d3a52 0%, #3d4a62 100%);
+            background: linear-gradient(135deg, #faf7f2 0%, #f5f0e8 100%);
             min-height: 100vh;
-            color: #e4e4e7;
+            color: #2d2d2d;
             line-height: 1.6;
         }
 
@@ -47,7 +47,7 @@
         }
 
         header p {
-            color: #a1a1aa;
+            color: #666;
             font-size: 1rem;
         }
 
@@ -56,7 +56,7 @@
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
             padding-bottom: 0.5rem;
         }
 
@@ -64,7 +64,7 @@
             padding: 0.75rem 1.5rem;
             background: transparent;
             border: none;
-            color: #a1a1aa;
+            color: #666;
             font-size: 0.95rem;
             cursor: pointer;
             border-radius: 8px 8px 0 0;
@@ -72,13 +72,14 @@
         }
 
         .tab-btn:hover {
-            background: rgba(255,255,255,0.05);
-            color: #e4e4e7;
+            background: rgba(0,0,0,0.05);
+            color: #333;
         }
 
         .tab-btn.active {
-            background: rgba(96, 165, 250, 0.2);
-            color: #f97316;
+            background: rgba(234, 88, 12, 0.1);
+            color: #ea580c;
+            font-weight: 600;
         }
 
         .tab-content {
@@ -103,10 +104,11 @@
 
         /* Controls Panel */
         .controls-panel {
-            background: rgba(255, 255, 255, 0.05);
+            background: #fff;
             border-radius: 16px;
             padding: 1.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             height: fit-content;
             position: sticky;
             top: 1rem;
@@ -115,7 +117,7 @@
         .controls-panel h2 {
             font-size: 1.1rem;
             margin-bottom: 1.25rem;
-            color: #f4f4f5;
+            color: #333;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -128,7 +130,7 @@
         .control-group label {
             display: block;
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.4rem;
         }
 
@@ -150,7 +152,7 @@
             width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #e5e5e5;
             outline: none;
             -webkit-appearance: none;
             margin-top: 0.4rem;
@@ -174,27 +176,27 @@
             width: 100%;
             padding: 0.6rem;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e4e4e7;
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
             font-size: 0.9rem;
             cursor: pointer;
         }
 
         select option {
-            background: #2d3a52;
+            background: #fff;
         }
 
         /* Preset Buttons */
         .presets {
             margin-top: 1.25rem;
             padding-top: 1.25rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .presets h3 {
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.6rem;
         }
 
@@ -207,18 +209,18 @@
         .preset-btn {
             padding: 0.4rem 0.8rem;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: transparent;
-            color: #a1a1aa;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #666;
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .preset-btn:hover {
-            background: rgba(96, 165, 250, 0.2);
-            border-color: #f97316;
-            color: #f97316;
+            background: rgba(234, 88, 12, 0.1);
+            border-color: #ea580c;
+            color: #ea580c;
         }
 
         /* Simulation Controls */
@@ -227,7 +229,7 @@
             gap: 0.5rem;
             margin-top: 1rem;
             padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .sim-btn {
@@ -246,13 +248,13 @@
         }
 
         .sim-btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #a1a1aa;
+            background: #f5f5f5;
+            color: #666;
         }
 
         .sim-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         /* Visualization Panel */
@@ -263,16 +265,17 @@
         }
 
         .panel {
-            background: rgba(255, 255, 255, 0.05);
+            background: #fff;
             border-radius: 16px;
             padding: 1.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .panel h2 {
             font-size: 1.1rem;
             margin-bottom: 1rem;
-            color: #f4f4f5;
+            color: #333;
         }
 
         /* Equations Panel */
@@ -283,28 +286,28 @@
         }
 
         .equation-card {
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border-radius: 12px;
             padding: 1rem;
-            border-left: 3px solid #f97316;
+            border-left: 3px solid #ea580c;
         }
 
         .equation-card h3 {
             font-size: 0.9rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.75rem;
         }
 
         .equation-card .equation {
             font-size: 1.1rem;
-            color: #f4f4f5;
+            color: #333;
             margin-bottom: 0.75rem;
             overflow-x: auto;
         }
 
         .equation-card .interpretation {
             font-size: 0.8rem;
-            color: #71717a;
+            color: #666;
             line-height: 1.5;
         }
 
@@ -317,10 +320,10 @@
 
         .var-tag {
             padding: 0.2rem 0.5rem;
-            background: rgba(167, 139, 250, 0.2);
+            background: rgba(22, 163, 74, 0.1);
             border-radius: 4px;
             font-size: 0.75rem;
-            color: #22c55e;
+            color: #16a34a;
         }
 
         /* Charts */
@@ -337,7 +340,7 @@
         }
 
         .chart-container {
-            background: rgba(0, 0, 0, 0.2);
+            background: #fafafa;
             border-radius: 12px;
             padding: 1rem;
             height: 300px;
@@ -346,7 +349,7 @@
 
         .chart-container h3 {
             font-size: 0.9rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.5rem;
         }
 
@@ -364,19 +367,19 @@
         }
 
         .metric-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: #fafafa;
             border-radius: 10px;
             padding: 0.75rem;
             transition: all 0.3s;
         }
 
         .metric-card:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: #f5f5f5;
         }
 
         .metric-label {
             font-size: 0.8rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.3rem;
         }
 
@@ -386,13 +389,13 @@
             margin-bottom: 0.2rem;
         }
 
-        .metric-value.positive { color: #4ade80; }
-        .metric-value.negative { color: #f87171; }
-        .metric-value.neutral { color: #fbbf24; }
+        .metric-value.positive { color: #16a34a; }
+        .metric-value.negative { color: #dc2626; }
+        .metric-value.neutral { color: #d97706; }
 
         .metric-bar {
             height: 4px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #e5e5e5;
             border-radius: 2px;
             overflow: hidden;
         }
@@ -419,14 +422,14 @@
             align-items: center;
             gap: 1rem;
             padding: 0.75rem;
-            background: rgba(0,0,0,0.2);
+            background: #fafafa;
             border-radius: 10px;
             border-left: 3px solid;
         }
 
-        .equilibrium-card.stable { border-left-color: #4ade80; }
-        .equilibrium-card.unstable { border-left-color: #f87171; }
-        .equilibrium-card.saddle { border-left-color: #fbbf24; }
+        .equilibrium-card.stable { border-left-color: #16a34a; }
+        .equilibrium-card.unstable { border-left-color: #dc2626; }
+        .equilibrium-card.saddle { border-left-color: #d97706; }
 
         .eq-icon {
             font-size: 1.5rem;
@@ -434,13 +437,13 @@
 
         .eq-details h4 {
             font-size: 0.9rem;
-            color: #f4f4f5;
+            color: #333;
             margin-bottom: 0.2rem;
         }
 
         .eq-details p {
             font-size: 0.8rem;
-            color: #71717a;
+            color: #666;
         }
 
         .eq-values {
@@ -451,7 +454,7 @@
         .eq-values .coords {
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
-            color: #f97316;
+            color: #ea580c;
         }
 
         /* IC Constraints Panel */
@@ -469,13 +472,13 @@
 
         .constraint-card {
             padding: 1rem;
-            background: rgba(0,0,0,0.2);
+            background: #f5f5f5;
             border-radius: 10px;
         }
 
         .constraint-card h4 {
             font-size: 0.9rem;
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 0.5rem;
         }
 
@@ -528,8 +531,8 @@
         }
 
         .case-icon { font-size: 1.25rem; }
-        .case-title { font-weight: 600; color: #f4f4f5; font-size: 0.9rem; }
-        .case-description { font-size: 0.8rem; color: #a1a1aa; margin-bottom: 0.5rem; }
+        .case-title { font-weight: 600; color: #333; font-size: 0.9rem; }
+        .case-description { font-size: 0.8rem; color: #666; margin-bottom: 0.5rem; }
 
         .case-stats {
             display: flex;
@@ -546,7 +549,7 @@
         footer {
             text-align: center;
             padding: 1.5rem;
-            color: #71717a;
+            color: #666;
             font-size: 0.85rem;
         }
 
@@ -573,7 +576,7 @@
         .time-display {
             text-align: center;
             padding: 0.5rem;
-            background: rgba(0,0,0,0.3);
+            background: #fafafa;
             border-radius: 8px;
             margin-bottom: 1rem;
         }
@@ -586,7 +589,7 @@
 
         .time-display .time-label {
             font-size: 0.8rem;
-            color: #71717a;
+            color: #666;
         }
 
         /* Scenario Dropdown */
@@ -596,7 +599,7 @@
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.15);
             border-radius: 8px;
-            color: #e4e4e7;
+            color: #333;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.2s;
@@ -619,7 +622,7 @@
 
         .scenario-dropdown option {
             background: #2d3a52;
-            color: #e4e4e7;
+            color: #333;
             padding: 0.5rem;
         }
 
@@ -631,7 +634,7 @@
         }
 
         .scenario-card {
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1rem;
@@ -658,13 +661,13 @@
 
         .scenario-info h3 {
             font-size: 1rem;
-            color: #f4f4f5;
+            color: #333;
             margin-bottom: 0.25rem;
         }
 
         .scenario-info p {
             font-size: 0.8rem;
-            color: #a1a1aa;
+            color: #666;
             line-height: 1.4;
         }
 
@@ -672,7 +675,7 @@
             font-size: 0.75rem;
             color: #f97316;
             font-family: 'Courier New', monospace;
-            background: rgba(0,0,0,0.3);
+            background: #fafafa;
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             align-self: flex-start;
@@ -692,7 +695,7 @@
         }
 
         .outcome-card {
-            background: rgba(0, 0, 0, 0.2);
+            background: #f5f5f5;
             border-radius: 12px;
             padding: 1rem;
             text-align: center;
@@ -706,26 +709,26 @@
         .outcome-label {
             font-size: 0.9rem;
             font-weight: 600;
-            color: #f4f4f5;
+            color: #333;
             margin-bottom: 0.1rem;
         }
 
         .outcome-sublabel {
             font-size: 0.7rem;
-            color: #71717a;
+            color: #666;
             margin-bottom: 0.5rem;
         }
 
         .outcome-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #f4f4f5;
+            color: #333;
             line-height: 1;
         }
 
         .outcome-context {
             font-size: 0.7rem;
-            color: #a1a1aa;
+            color: #666;
             margin-top: 0.2rem;
         }
 
@@ -737,7 +740,7 @@
 
         .outcome-change.positive { color: #4ade80; }
         .outcome-change.negative { color: #f87171; }
-        .outcome-change.neutral { color: #a1a1aa; }
+        .outcome-change.neutral { color: #666; }
 
         .outcome-bar {
             height: 6px;
@@ -773,7 +776,7 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.8rem;
-            color: #a1a1aa;
+            color: #666;
         }
 
         .legend-color {
@@ -823,20 +826,20 @@
 
         /* Interpretation Box */
         .interpretation-box {
-            background: rgba(0, 0, 0, 0.2);
+            background: #f5f5f5;
             border-radius: 12px;
             padding: 1.25rem;
             line-height: 1.7;
         }
 
         .interpretation-box h3 {
-            color: #f4f4f5;
+            color: #333;
             font-size: 1rem;
             margin-bottom: 0.75rem;
         }
 
         .interpretation-box p {
-            color: #a1a1aa;
+            color: #666;
             font-size: 0.9rem;
             margin-bottom: 0.75rem;
         }
@@ -860,7 +863,7 @@
 
         .interpretation-box ul {
             margin: 0.5rem 0 0.5rem 1.5rem;
-            color: #a1a1aa;
+            color: #666;
         }
 
         .interpretation-box li {
@@ -892,12 +895,12 @@
 
         .run-btn.secondary {
             background: rgba(255, 255, 255, 0.1);
-            color: #a1a1aa;
+            color: #666;
         }
 
         .run-btn.secondary:hover {
             background: rgba(255, 255, 255, 0.15);
-            color: #f4f4f5;
+            color: #333;
             box-shadow: none;
         }
 
@@ -929,7 +932,7 @@
 
         /* Model Overview Diagram */
         .model-overview p {
-            color: #a1a1aa;
+            color: #666;
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
@@ -943,7 +946,7 @@
         }
 
         .diagram-box {
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1rem;
@@ -962,7 +965,7 @@
 
         .diagram-content {
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #666;
             line-height: 1.5;
         }
 
@@ -989,22 +992,22 @@
         .regime-effect {
             margin-top: 0.75rem;
             padding: 0.5rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border-radius: 6px;
             font-size: 0.8rem;
-            color: #a1a1aa;
+            color: #666;
         }
 
         /* Calibration Table */
         .calibration-table {
-            background: rgba(0, 0, 0, 0.2);
+            background: #f5f5f5;
             border-radius: 12px;
             padding: 1rem;
             overflow-x: auto;
         }
 
         .calibration-table table {
-            color: #e4e4e7;
+            color: #333;
         }
 
         /* Regime indicator in metrics */
@@ -1041,7 +1044,7 @@
         }
 
         .scenario-detail-card {
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.25rem;
@@ -1060,7 +1063,7 @@
 
         .scenario-detail-header h3 {
             font-size: 1.1rem;
-            color: #f4f4f5;
+            color: #333;
             margin: 0 0 0.25rem 0;
         }
 
@@ -1084,7 +1087,7 @@
 
         .scenario-detail-desc {
             font-size: 0.85rem;
-            color: #a1a1aa;
+            color: #666;
             line-height: 1.5;
             margin-bottom: 1rem;
         }
@@ -1095,10 +1098,10 @@
             gap: 0.75rem;
             margin-bottom: 1rem;
             padding: 0.75rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: #fafafa;
             border-radius: 8px;
             font-size: 0.8rem;
-            color: #a1a1aa;
+            color: #666;
         }
 
         .scenario-detail-params strong {
@@ -1107,7 +1110,7 @@
 
         .scenario-detail-outcome {
             font-size: 0.8rem;
-            color: #71717a;
+            color: #666;
             padding-top: 0.75rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -1178,7 +1181,7 @@
                         <span class="value-display" id="thetaValue">0.02</span>
                     </label>
                     <input type="range" id="theta" min="0" max="0.40" value="0.02" step="0.01">
-                    <small style="color: #71717a; font-size: 0.7rem;">Share of AI revenue to web creators (~2% today)</small>
+                    <small style="color: #666; font-size: 0.7rem;">Share of AI revenue to web creators (~2% today)</small>
                 </div>
 
                 <div class="control-group">
@@ -1187,7 +1190,7 @@
                         <span class="value-display" id="hValue">0.45</span>
                     </label>
                     <input type="range" id="h" min="0.1" max="0.8" value="0.45" step="0.02">
-                    <small style="color: #71717a; font-size: 0.7rem;">AI training dependence on web content</small>
+                    <small style="color: #666; font-size: 0.7rem;">AI training dependence on web content</small>
                 </div>
 
                 <div class="control-group">
@@ -1196,7 +1199,7 @@
                         <span class="value-display" id="mValue">0.12</span>
                     </label>
                     <input type="range" id="m" min="0" max="0.5" value="0.12" step="0.02">
-                    <small style="color: #71717a; font-size: 0.7rem;">AI tools/discovery benefits to creators</small>
+                    <small style="color: #666; font-size: 0.7rem;">AI tools/discovery benefits to creators</small>
                 </div>
 
                 <div class="control-group">
@@ -1205,7 +1208,7 @@
                         <span class="value-display" id="alphaValue">0.25</span>
                     </label>
                     <input type="range" id="alpha" min="0" max="0.6" value="0.25" step="0.02">
-                    <small style="color: #71717a; font-size: 0.7rem;">AI answers replacing web clicks (~25%)</small>
+                    <small style="color: #666; font-size: 0.7rem;">AI answers replacing web clicks (~25%)</small>
                 </div>
 
                 <div class="control-group">
@@ -1214,7 +1217,7 @@
                         <span class="value-display" id="rValue">0.08</span>
                     </label>
                     <input type="range" id="r" min="0.02" max="0.25" value="0.08" step="0.01">
-                    <small style="color: #71717a; font-size: 0.7rem;">Natural growth rate (journalism -70%)</small>
+                    <small style="color: #666; font-size: 0.7rem;">Natural growth rate (journalism -70%)</small>
                 </div>
 
                 <div class="control-group">
@@ -1223,7 +1226,7 @@
                         <span class="value-display" id="IValue">0.08</span>
                     </label>
                     <input type="range" id="I" min="0" max="0.2" value="0.08" step="0.01">
-                    <small style="color: #71717a; font-size: 0.7rem;">External AI investment rate</small>
+                    <small style="color: #666; font-size: 0.7rem;">External AI investment rate</small>
                 </div>
 
                 <div class="presets">
@@ -1256,7 +1259,7 @@
                     <section class="panel" style="background: linear-gradient(135deg, rgba(96,165,250,0.1), rgba(167,139,250,0.1));">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
                             <div style="flex: 1; min-width: 250px;">
-                                <label style="color: #a1a1aa; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">Select Scenario</label>
+                                <label style="color: #666; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">Select Scenario</label>
                                 <select id="scenarioSelect" class="scenario-dropdown">
                                     <option value="scraping-era">📉 2024: The Scraping Era — Where we are now</option>
                                     <option value="zero-click">🚨 Zero-Click Future — AI answers everything, no clicks</option>
@@ -1274,21 +1277,21 @@
                                 <button class="run-btn" id="runScenarioBtn">▶ Run Simulation</button>
                             </div>
                         </div>
-                        <div id="scenarioDescription" class="scenario-desc" style="margin-top: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); border-radius: 8px; border-left: 3px solid #f97316;">
+                        <div id="scenarioDescription" class="scenario-desc" style="margin-top: 1rem; padding: 0.75rem; background: #f5f5f5; border-radius: 8px; border-left: 3px solid #f97316;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #e4e4e7;"><strong>Status Quo:</strong> Current reality with minimal creator compensation, high content extraction, and growing traffic diversion to AI answers.</span>
-                                <span class="scenario-params-inline" style="color: #71717a; font-size: 0.8rem; white-space: nowrap; margin-left: 1rem;">θ=2%, α=25%</span>
+                                <span style="color: #333;"><strong>Status Quo:</strong> Current reality with minimal creator compensation, high content extraction, and growing traffic diversion to AI answers.</span>
+                                <span class="scenario-params-inline" style="color: #666; font-size: 0.8rem; white-space: nowrap; margin-left: 1rem;">θ=2%, α=25%</span>
                             </div>
                         </div>
                         <div class="time-slider-container" style="margin-top: 1rem;">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <label style="color: #a1a1aa; font-size: 0.85rem;">Simulation Progress</label>
-                                <span id="currentYear" style="color: #71717a; font-size: 0.85rem;">—</span>
+                                <label style="color: #666; font-size: 0.85rem;">Simulation Progress</label>
+                                <span id="currentYear" style="color: #666; font-size: 0.85rem;">—</span>
                             </div>
                             <div class="progress-bar-container">
                                 <div class="progress-bar" id="simProgressBar" style="width: 0%"></div>
                             </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #71717a;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #666;">
                                 <span>Year 0 (Today)</span>
                                 <span>Year 10</span>
                             </div>
@@ -1299,11 +1302,11 @@
                     <section class="panel">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                             <h2 style="margin: 0;">Projected Outcomes (10 Years)</h2>
-                            <div class="sim-status" id="simStatus" style="font-size: 0.85rem; color: #71717a;">
+                            <div class="sim-status" id="simStatus" style="font-size: 0.85rem; color: #666;">
                                 Select scenario and click Run
                             </div>
                         </div>
-                        <p style="color: #71717a; font-size: 0.8rem; margin-bottom: 1rem;">All values relative to 2024 baseline (100% = today's level)</p>
+                        <p style="color: #666; font-size: 0.8rem; margin-bottom: 1rem;">All values relative to 2024 baseline (100% = today's level)</p>
                         <div class="outcomes-grid">
                             <div class="outcome-card">
                                 <div class="outcome-icon">👥</div>
@@ -1347,7 +1350,7 @@
                     <!-- Main Visualization -->
                     <section class="panel">
                         <h2>Ecosystem Dynamics: <span id="chartScenarioTitle" style="color: #f97316;">Select a scenario</span></h2>
-                        <p style="color: #a1a1aa; font-size: 0.85rem; margin-bottom: 1rem;">
+                        <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">
                             Watch how creators, AI platforms, and web traffic interact over time
                         </p>
                         <div class="chart-container" style="height: 350px; position: relative;">
@@ -1376,7 +1379,7 @@
                     <!-- Equilibrium Summary -->
                     <section class="panel">
                         <h2>Long-term Equilibrium</h2>
-                        <p style="color: #a1a1aa; font-size: 0.85rem; margin-bottom: 1rem;">Where does the ecosystem stabilize?</p>
+                        <p style="color: #666; font-size: 0.85rem; margin-bottom: 1rem;">Where does the ecosystem stabilize?</p>
                         <div class="equilibria-list" id="equilibriaList">
                             <!-- Populated by JS -->
                         </div>
@@ -1387,68 +1390,68 @@
                         <h2 style="color: #4ade80;">Two Critical Thresholds</h2>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
                             <div>
-                                <p style="color: #e4e4e7; line-height: 1.7; margin-bottom: 1rem;">
+                                <p style="color: #333; line-height: 1.7; margin-bottom: 1rem;">
                                     The model identifies <strong style="color: #f97316;">two mechanism design thresholds</strong>:
                                 </p>
-                                <div style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <div style="background: #fafafa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
                                     <div style="margin-bottom: 0.75rem;">
                                         <span style="color: #fbbf24; font-weight: bold;">θ ≈ 15%</span>
-                                        <span style="color: #a1a1aa;"> — Creator survival threshold</span>
+                                        <span style="color: #666;"> — Creator survival threshold</span>
                                     </div>
                                     <div>
                                         <span style="color: #4ade80; font-weight: bold;">θ ≈ 25%</span>
-                                        <span style="color: #a1a1aa;"> — Output quality threshold</span>
+                                        <span style="color: #666;"> — Output quality threshold</span>
                                     </div>
                                 </div>
-                                <ul style="color: #a1a1aa; line-height: 1.8; padding-left: 1.2rem; font-size: 0.9rem;">
+                                <ul style="color: #666; line-height: 1.8; padding-left: 1.2rem; font-size: 0.9rem;">
                                     <li><strong style="color: #f87171;">θ < 15%</strong>: Can't survive + no quality incentive → exit + slop</li>
                                     <li><strong style="color: #fbbf24;">15% < θ < 25%</strong>: Can survive but no quality incentive → low quality</li>
                                     <li><strong style="color: #4ade80;">θ > 25%</strong>: Can survive + quality rewarded → sustainable growth</li>
                                 </ul>
                             </div>
                             <div>
-                                <p style="color: #a1a1aa; font-size: 0.9rem; margin-bottom: 0.75rem;"><strong style="color: #e4e4e7;">Three Regimes</strong></p>
+                                <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.75rem;"><strong style="color: #333;">Three Regimes</strong></p>
                                 <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
                                     <thead>
                                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
-                                            <th style="text-align: left; padding: 0.5rem; color: #a1a1aa;">Scenario</th>
-                                            <th style="text-align: center; padding: 0.5rem; color: #a1a1aa;">θ</th>
-                                            <th style="text-align: center; padding: 0.5rem; color: #a1a1aa;">IR</th>
-                                            <th style="text-align: center; padding: 0.5rem; color: #a1a1aa;">IC</th>
-                                            <th style="text-align: left; padding: 0.5rem; color: #a1a1aa;">Outcome</th>
+                                            <th style="text-align: left; padding: 0.5rem; color: #666;">Scenario</th>
+                                            <th style="text-align: center; padding: 0.5rem; color: #666;">θ</th>
+                                            <th style="text-align: center; padding: 0.5rem; color: #666;">IR</th>
+                                            <th style="text-align: center; padding: 0.5rem; color: #666;">IC</th>
+                                            <th style="text-align: left; padding: 0.5rem; color: #666;">Outcome</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                            <td style="padding: 0.5rem; color: #e4e4e7;">Status Quo</td>
+                                            <td style="padding: 0.5rem; color: #333;">Status Quo</td>
                                             <td style="padding: 0.5rem; text-align: center;">2%</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; color: #f87171;">Exit + Slop</td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                            <td style="padding: 0.5rem; color: #e4e4e7;">Licensing</td>
+                                            <td style="padding: 0.5rem; color: #333;">Licensing</td>
                                             <td style="padding: 0.5rem; text-align: center;">18%</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #4ade80;">✓</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; color: #fbbf24;">Survive, Low Q</td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                            <td style="padding: 0.5rem; color: #e4e4e7;">Fair Deal</td>
+                                            <td style="padding: 0.5rem; color: #333;">Fair Deal</td>
                                             <td style="padding: 0.5rem; text-align: center;">35%</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #4ade80;">✓</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #4ade80;">✓</td>
                                             <td style="padding: 0.5rem; color: #4ade80;">Growth</td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                            <td style="padding: 0.5rem; color: #e4e4e7;">VC Mirage</td>
+                                            <td style="padding: 0.5rem; color: #333;">VC Mirage</td>
                                             <td style="padding: 0.5rem; text-align: center;">2%</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; color: #fbbf24;">AI ↑ (masked)</td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 0.5rem; color: #e4e4e7;">Creator Churn</td>
+                                            <td style="padding: 0.5rem; color: #333;">Creator Churn</td>
                                             <td style="padding: 0.5rem; text-align: center;">5%</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
                                             <td style="padding: 0.5rem; text-align: center; color: #f87171;">✗</td>
@@ -1458,7 +1461,7 @@
                                 </table>
                             </div>
                         </div>
-                        <p style="color: #71717a; font-size: 0.85rem; margin-top: 1.5rem; text-align: center; font-style: italic;">
+                        <p style="color: #666; font-size: 0.85rem; margin-top: 1.5rem; text-align: center; font-style: italic;">
                             Policy implication: θ > 15% keeps creators in the market. θ > 25% incentivizes quality. Both are needed for sustainability.
                         </p>
                     </section>
@@ -1507,20 +1510,20 @@
                     <section class="panel" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.2);">
                         <h2>Foundational Literature</h2>
                         <div class="literature-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-                            <div class="lit-card" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 3px solid #f472b6;">
+                            <div class="lit-card" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; border-left: 3px solid #f472b6;">
                                 <h3 style="color: #f472b6; margin: 0 0 0.5rem 0; font-size: 1rem;">Lotka-Volterra Dynamics</h3>
-                                <p style="color: #a1a1aa; font-size: 0.85rem; margin-bottom: 0.75rem;">Classic predator-prey model extended for economic ecosystems with potential mutualism.</p>
-                                <div class="lit-refs" style="font-size: 0.8rem; color: #71717a;">
+                                <p style="color: #666; font-size: 0.85rem; margin-bottom: 0.75rem;">Classic predator-prey model extended for economic ecosystems with potential mutualism.</p>
+                                <div class="lit-refs" style="font-size: 0.8rem; color: #666;">
                                     <div style="margin-bottom: 0.5rem;"><strong>Lotka, A.J.</strong> (1925). <em>Elements of Physical Biology</em>. Williams & Wilkins.</div>
                                     <div style="margin-bottom: 0.5rem;"><strong>Volterra, V.</strong> (1926). "Fluctuations in the abundance of a species considered mathematically." <em>Nature</em>, 118, 558-560.</div>
                                     <div style="margin-bottom: 0.5rem;"><strong>Hofbauer, J. & Sigmund, K.</strong> (1998). <em>Evolutionary Games and Population Dynamics</em>. Cambridge University Press.</div>
                                     <div><a href="https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations" target="_blank" style="color: #f97316;">Wikipedia: Lotka-Volterra equations</a></div>
                                 </div>
                             </div>
-                            <div class="lit-card" style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border-left: 3px solid #4ade80;">
+                            <div class="lit-card" style="background: #f5f5f5; padding: 1rem; border-radius: 8px; border-left: 3px solid #4ade80;">
                                 <h3 style="color: #4ade80; margin: 0 0 0.5rem 0; font-size: 1rem;">Mechanism Design Theory</h3>
-                                <p style="color: #a1a1aa; font-size: 0.85rem; margin-bottom: 0.75rem;">Mathematical framework for designing incentive-compatible systems under asymmetric information.</p>
-                                <div class="lit-refs" style="font-size: 0.8rem; color: #71717a;">
+                                <p style="color: #666; font-size: 0.85rem; margin-bottom: 0.75rem;">Mathematical framework for designing incentive-compatible systems under asymmetric information.</p>
+                                <div class="lit-refs" style="font-size: 0.8rem; color: #666;">
                                     <div style="margin-bottom: 0.5rem;"><strong>Hurwicz, L.</strong> (1960). "Optimality and informational efficiency in resource allocation processes." <em>Mathematical Methods in the Social Sciences</em>.</div>
                                     <div style="margin-bottom: 0.5rem;"><strong>Myerson, R.B.</strong> (1981). "Optimal auction design." <em>Mathematics of Operations Research</em>, 6(1), 58-73.</div>
                                     <div style="margin-bottom: 0.5rem;"><strong>Bolton, P. & Dewatripont, M.</strong> (2005). <em>Contract Theory</em>. MIT Press. [IR/IC constraints - Ch. 2-4]</div>
@@ -1534,7 +1537,7 @@
                     <!-- Core Dynamics -->
                     <section class="panel">
                         <h2>1. Core Dynamics (v3: One Mechanism Per Layer)</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem;">The model follows a strict causal chain where each mechanism appears exactly once: A→W→π<sub>c</sub>→C→Q→A. All state variables bounded in [0,1] by construction.</p>
+                        <p style="color: #666; margin-bottom: 1rem;">The model follows a strict causal chain where each mechanism appears exactly once: A→W→π<sub>c</sub>→C→Q→A. All state variables bounded in [0,1] by construction.</p>
                         <div class="equations-grid">
                             <div class="equation-card">
                                 <h3>Creator Revenue (π<sub>c</sub>)</h3>
@@ -1619,7 +1622,7 @@
                     <!-- Mechanism Design Integration -->
                     <section class="panel">
                         <h2>2. Mechanism Design Constraints</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem;">IR and IC are now <strong>emergent properties</strong> of the dynamics rather than separate regime switches.</p>
+                        <p style="color: #666; margin-bottom: 1rem;">IR and IC are now <strong>emergent properties</strong> of the dynamics rather than separate regime switches.</p>
                         <div class="equations-grid">
                             <div class="equation-card" style="border-left-color: #4ade80;">
                                 <h3>Individual Rationality (IR)</h3>
@@ -1702,7 +1705,7 @@
                             <div class="equation-card">
                                 <h3>Three Qualitative Equilibria</h3>
                                 <div class="interpretation" style="margin-bottom: 0.5rem;">The system admits three qualitatively distinct equilibria:</div>
-                                <ul style="color: #a1a1aa; font-size: 0.85rem; margin-left: 1rem;">
+                                <ul style="color: #666; font-size: 0.85rem; margin-left: 1rem;">
                                     <li><strong style="color: #4ade80;">Sustainable Coexistence:</strong> C* > C<sub>crit</sub>, Q* > 0, W* > 0. Both IR and IC effectively satisfied; stable ecosystem.</li>
                                     <li><strong style="color: #fbbf24;">Low-Quality Trap:</strong> C* ≈ C<sub>crit</sub>, Q* settles low. Creators survive but quality erodes.</li>
                                     <li><strong style="color: #f87171;">Collapse:</strong> C* → 0, Q* → 0. Creator exodus, quality collapse, AI faces "data drought."</li>
@@ -1724,38 +1727,38 @@
                     <!-- Parameter Calibration -->
                     <section class="panel">
                         <h2>5. Parameter Calibration</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem;">Parameters are calibrated to real-world web content economics data.</p>
+                        <p style="color: #666; margin-bottom: 1rem;">Parameters are calibrated to real-world web content economics data.</p>
                         <div class="calibration-table">
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                    <th style="text-align: left; padding: 0.5rem; color: #a1a1aa;">Parameter</th>
-                                    <th style="text-align: left; padding: 0.5rem; color: #a1a1aa;">Value</th>
-                                    <th style="text-align: left; padding: 0.5rem; color: #a1a1aa;">Calibration Source</th>
+                                    <th style="text-align: left; padding: 0.5rem; color: #666;">Parameter</th>
+                                    <th style="text-align: left; padding: 0.5rem; color: #666;">Value</th>
+                                    <th style="text-align: left; padding: 0.5rem; color: #666;">Calibration Source</th>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <td style="padding: 0.5rem; color: #f97316;">θ (compensation)</td>
                                     <td style="padding: 0.5rem;">2%</td>
-                                    <td style="padding: 0.5rem; color: #71717a;">AI licensing deals ($500M) / AI market ($100B)</td>
+                                    <td style="padding: 0.5rem; color: #666;">AI licensing deals ($500M) / AI market ($100B)</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <td style="padding: 0.5rem; color: #f97316;">h (extraction)</td>
                                     <td style="padding: 0.5rem;">45%</td>
-                                    <td style="padding: 0.5rem; color: #71717a;">Estimated % of model capability from web training data</td>
+                                    <td style="padding: 0.5rem; color: #666;">Estimated % of model capability from web training data</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <td style="padding: 0.5rem; color: #f97316;">α (traffic diversion)</td>
                                     <td style="padding: 0.5rem;">25%</td>
-                                    <td style="padding: 0.5rem; color: #71717a;">Google AI Overviews: ~25% queries answered without click</td>
+                                    <td style="padding: 0.5rem; color: #666;">Google AI Overviews: ~25% queries answered without click</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                                     <td style="padding: 0.5rem; color: #f97316;">r (creator growth)</td>
                                     <td style="padding: 0.5rem;">8%</td>
-                                    <td style="padding: 0.5rem; color: #71717a;">Quality content growth rate; journalism employment -70% since 2000</td>
+                                    <td style="padding: 0.5rem; color: #666;">Quality content growth rate; journalism employment -70% since 2000</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 0.5rem; color: #f97316;">m (mutualism)</td>
                                     <td style="padding: 0.5rem;">12%</td>
-                                    <td style="padding: 0.5rem; color: #71717a;">AI writing tools ~10-15% productivity boost (GitHub Copilot studies)</td>
+                                    <td style="padding: 0.5rem; color: #666;">AI writing tools ~10-15% productivity boost (GitHub Copilot studies)</td>
                                 </tr>
                             </table>
                         </div>
@@ -1766,7 +1769,7 @@
                 <div class="tab-content" id="tab-mechanism">
                     <section class="panel">
                         <h2>Incentive Compatibility Analysis (v3)</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">In v3, IR and IC are <strong>emergent properties</strong> of the dynamics, not separate regime switches.</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">In v3, IR and IC are <strong>emergent properties</strong> of the dynamics, not separate regime switches.</p>
                         <div class="equations-grid">
                             <div class="equation-card">
                                 <h3>Individual Rationality (IR)</h3>
@@ -1857,7 +1860,7 @@
 
                     <section class="panel">
                         <h2>Policy Implications</h2>
-                        <div id="policyImplications" style="color: #a1a1aa; font-size: 0.9rem; line-height: 1.8;">
+                        <div id="policyImplications" style="color: #666; font-size: 0.9rem; line-height: 1.8;">
                             Adjust parameters to see how they affect incentive compatibility...
                         </div>
                     </section>
@@ -1868,7 +1871,7 @@
                     <!-- Policy Scenarios Section -->
                     <section class="panel">
                         <h2>Scenario Library</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">These scenarios model different trajectories for the AI-web content ecosystem based on the v3 model dynamics. Click "Run" to simulate.</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">These scenarios model different trajectories for the AI-web content ecosystem based on the v3 model dynamics. Click "Run" to simulate.</p>
                         <div class="scenario-detail-grid">
                             <div class="scenario-detail-card" data-scenario="scraping-era">
                                 <div class="scenario-detail-header">
@@ -2064,15 +2067,15 @@
 
                     <section class="panel" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.05), rgba(249, 115, 22, 0.05));">
                         <h2>Three Equilibrium Types (v3)</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">The system admits three qualitatively distinct long-run outcomes based on parameter configuration:</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">The system admits three qualitatively distinct long-run outcomes based on parameter configuration:</p>
                         <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
                             <thead>
                                 <tr style="border-bottom: 2px solid rgba(255,255,255,0.2);">
-                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Equilibrium</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Key Condition</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">C*</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Q*</th>
-                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Outcome</th>
+                                    <th style="text-align: left; padding: 0.75rem; color: #333;">Equilibrium</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #333;">Key Condition</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #333;">C*</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #333;">Q*</th>
+                                    <th style="text-align: left; padding: 0.75rem; color: #333;">Outcome</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -2081,45 +2084,45 @@
                                     <td style="padding: 0.75rem; text-align: center; color: #4ade80;">C* > C<sub>crit</sub>, high θ</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #4ade80;">High</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #4ade80;">High</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators thrive, quality content, stable ecosystem</td>
+                                    <td style="padding: 0.75rem; color: #666;">Creators thrive, quality content, stable ecosystem</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(251, 191, 36, 0.1);">
                                     <td style="padding: 0.75rem; color: #fbbf24; font-weight: bold;">Low-Quality Trap</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">C* ≈ C<sub>crit</sub>, π<sub>c</sub> ≈ ū</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">Medium</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #f87171;">Low</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators survive, quality erodes, R(π<sub>c</sub>) ≈ 0</td>
+                                    <td style="padding: 0.75rem; color: #666;">Creators survive, quality erodes, R(π<sub>c</sub>) ≈ 0</td>
                                 </tr>
                                 <tr style="background: rgba(248, 113, 113, 0.1);">
                                     <td style="padding: 0.75rem; color: #f87171; font-weight: bold;">Collapse</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #f87171;">C* < C<sub>crit</sub>, π<sub>c</sub> < ū</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #f87171;">→ 0</td>
                                     <td style="padding: 0.75rem; text-align: center; color: #f87171;">→ 0</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creator exodus, quality collapse, AI data drought</td>
+                                    <td style="padding: 0.75rem; color: #666;">Creator exodus, quality collapse, AI data drought</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                            <h3 style="color: #e4e4e7; font-size: 0.95rem; margin-bottom: 0.75rem;">Scenario → Equilibrium Mapping</h3>
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+                            <h3 style="color: #333; font-size: 0.95rem; margin-bottom: 0.75rem;">Scenario → Equilibrium Mapping</h3>
                             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.85rem;">
                                 <div>
                                     <div style="color: #f87171; font-weight: bold; margin-bottom: 0.25rem;">Collapse Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• 2024: The Scraping Era</div>
-                                    <div style="color: #a1a1aa;">• Zero-Click Future</div>
-                                    <div style="color: #a1a1aa;">• Journalism Graveyard</div>
+                                    <div style="color: #666;">• 2024: The Scraping Era</div>
+                                    <div style="color: #666;">• Zero-Click Future</div>
+                                    <div style="color: #666;">• Journalism Graveyard</div>
                                 </div>
                                 <div>
                                     <div style="color: #fbbf24; font-weight: bold; margin-bottom: 0.25rem;">Low-Q Trap Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• The Reddit Deal</div>
-                                    <div style="color: #a1a1aa;">• Death by 1000 Cuts</div>
-                                    <div style="color: #a1a1aa;">• AI Winter 2.0</div>
-                                    <div style="color: #a1a1aa;">• Boom-Bust Cycle</div>
+                                    <div style="color: #666;">• The Reddit Deal</div>
+                                    <div style="color: #666;">• Death by 1000 Cuts</div>
+                                    <div style="color: #666;">• AI Winter 2.0</div>
+                                    <div style="color: #666;">• Boom-Bust Cycle</div>
                                 </div>
                                 <div>
                                     <div style="color: #4ade80; font-weight: bold; margin-bottom: 0.25rem;">Coexistence Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• Spotify for News</div>
-                                    <div style="color: #a1a1aa;">• Substack Lifeboat</div>
-                                    <div style="color: #a1a1aa;">• The Marshall Plan</div>
+                                    <div style="color: #666;">• Spotify for News</div>
+                                    <div style="color: #666;">• Substack Lifeboat</div>
+                                    <div style="color: #666;">• The Marshall Plan</div>
                                 </div>
                             </div>
                         </div>
@@ -2128,7 +2131,7 @@
                     <!-- Real-World Case Studies -->
                     <section class="panel">
                         <h2>Real-World Precedents</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">Historical and current examples of creator-platform ecosystems. Click "Run" to simulate their dynamics.</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Historical and current examples of creator-platform ecosystems. Click "Run" to simulate their dynamics.</p>
                         <div class="case-grid">
                             <div class="case-card" data-case="spotify">
                                 <div class="case-header">
@@ -2351,21 +2354,18 @@
                 return (h + alpha * phi_w) / (h + alpha * phi_w + m);
             }
 
-            // Creator revenue (for IC analysis)
+            // Creator revenue (v3 formula): π_c = θ·p_L·A + p_ad·W + p_sub·Q
             creatorRevenue() {
-                const { theta, alpha } = this.params;
-                const { p_ad, p_sub, p_ai } = this.icParams;
+                const { theta, m } = this.params;
+                const pL = 0.3;   // Licensing price coefficient
+                const pAd = 0.4;  // Ad revenue coefficient
+                const pSub = m || 0.12;   // Subscription coefficient (from mutualism param)
 
-                // Ad revenue declines with traffic diversion
-                const adRev = p_ad * this.W * (1 - alpha * this.A);
-
-                // Subscription relatively stable
-                const subRev = p_sub * this.Q;
-
-                // AI compensation scales with theta and AI scale
-                const aiRev = theta * this.A * 0.5; // 0.5 = share of AI value to content
-
-                return adRev + subRev + aiRev;
+                // v3: Simple additive revenue model
+                // - Licensing revenue: θ·p_L·A
+                // - Ad revenue: p_ad·W (traffic-dependent)
+                // - Subscription revenue: p_sub·Q (quality-dependent)
+                return theta * pL * this.A + pAd * this.W + pSub * this.Q;
             }
 
             // ====== REGIME DETECTION ======
@@ -2383,122 +2383,111 @@
                 }
             }
 
-            // ====== DYNAMICS (Lotka-Volterra with Economic Foundations) ======
+            // ====== V3 DYNAMICS (One Mechanism Per Layer) ======
             //
-            // Key economic insight: theta (compensation rate) determines whether
-            // the AI-creator interaction is extractive or mutualistic.
+            // Causal chain: A → W → π_c → C → Q → A (feedback)
+            // Each mechanism appears exactly once
+            // All state variables bounded in [0,1] by construction
             //
-            // Critical threshold: θ* = h/(h+m)
-            // - Below θ*: extraction dominates, creators decline
-            // - Above θ*: mutualism dominates, creators grow
-            //
-            // Equilibrium analysis:
-            // At dC/dt = 0: C* = K[1 - (net_extraction_rate)/r]
-            // Higher theta → lower net extraction → higher C*
+            // Key parameters from scenarios:
+            // - theta: compensation rate (policy lever)
+            // - alpha: traffic diversion intensity
+            // - I: AI investment rate
+            // - m: mutualism coefficient (subscriptions, direct support)
 
-            // Creator activity dynamics
+            // Sigmoid function for entry/exit dynamics
+            sigmoid(x, beta = 5) {
+                return 1 / (1 + Math.exp(-beta * x));
+            }
+
+            // Softplus function for reinvestment signal
+            softplus(x) {
+                return Math.log(1 + Math.exp(x));
+            }
+
+            // Diversion propensity D(A, θ) - probability users stay in AI answers
+            diversion() {
+                const { theta, alpha } = this.params;
+                const kA = 3.0;  // AI scale sensitivity
+                const kTheta = 2.0;  // Compensation sensitivity
+                const a0 = 0.3;  // Baseline AI threshold
+                const theta0 = 0.15;  // Baseline compensation threshold
+
+                return this.sigmoid(kA * (this.A - a0) - kTheta * (theta - theta0));
+            }
+
+            // Creator dynamics (v3 bounded form)
+            // dC/dt = (1-C)·ρ_C·S(π_c - ū) - C·ρ_C·S(ū - π_c)
             dC() {
-                const { r, K, h, theta, m, alpha } = this.params;
+                const rhoC = 0.15;  // Creator adjustment speed
+                const uBar = 0.15;  // Outside option (reservation utility)
 
-                // Natural logistic growth
-                const logistic = r * this.C * (1 - this.C / K);
+                const pi_c = this.creatorRevenue();
+                const profitMargin = pi_c - uBar;
 
-                // Net AI interaction effect:
-                // Extraction harm: h*(1-θ) - creators lose value when not compensated
-                // Mutualism benefit: m*θ - AI tools help when relationship is fair
-                // Combined: interaction = [m*θ - h*(1-θ)] * A * C
-                //                        = [(m+h)*θ - h] * A * C
-                //
-                // This is positive (mutualistic) when θ > h/(m+h)
-                const netInteraction = ((m + h) * theta - h) * this.A * this.C;
+                // Entry when profitable, exit when unprofitable
+                const entry = (1 - this.C) * rhoC * this.sigmoid(profitMargin);
+                const exit = this.C * rhoC * this.sigmoid(-profitMargin);
 
-                // Traffic diversion effect (separate from extraction)
-                // Higher alpha = more AI answers replacing clicks
-                // Partially offset by theta (licensing often includes attribution)
-                const trafficEffect = -alpha * (1 - theta) * this.A * this.W * this.C;
-
-                // ===== IR CONSTRAINT EFFECT =====
-                // When Individual Rationality is violated (profit < outside option),
-                // creators exit to alternative employment
-                const ic = this.checkIC();
-                const irSatisfaction = ic.profit / ic.outsideOption;
-                // Exit pressure when IR violated (irSatisfaction < 1)
-                const irPressure = -0.15 * this.C * Math.max(0, 1 - irSatisfaction);
-
-                return logistic + netInteraction + trafficEffect + irPressure;
+                return entry - exit;
             }
 
-            // AI platform dynamics
-            // dA/dt = growth_from_content - competition/depreciation + investment
+            // AI platform dynamics (v3 bounded form)
+            // dA/dt = (1-A)·(I + r_A·A·(1+γQ)) - A·δ_A
             dA() {
-                const { beta, gamma, delta, I } = this.params;
+                const { I } = this.params;
+                const rA = 0.2;    // AI growth rate
+                const gamma = 0.4; // Data advantage strength
+                const deltaA = 0.1; // AI depreciation rate
 
-                // Growth from content (quality-adjusted)
-                // AI platforms need fresh, quality content to train and improve
-                const growth = beta * this.C * this.A * (1 + gamma * this.Q);
+                // Growth: external investment + endogenous growth amplified by quality
+                const growth = (1 - this.A) * (I + rA * this.A * (1 + gamma * this.Q));
 
-                // Competition and depreciation (models become obsolete)
-                const competition = delta * this.A * this.A;
+                // Depreciation
+                const depreciation = this.A * deltaA;
 
-                // External investment (keeps platforms alive even without content)
-                let dAdt = growth - competition + I;
-
-                // ===== REGIME EFFECT: Data Drought =====
-                // If creator activity or quality drops too low, AI growth slows
-                if (this.C < 0.3 || this.Q < 0.3) {
-                    const dataScarcity = 0.05 * this.A * (0.3 - Math.min(this.C, this.Q));
-                    dAdt -= dataScarcity;
-                }
-
-                return dAdt;
+                return growth - depreciation;
             }
 
-            // Content quality dynamics
-            // Economic logic: Quality depends on creator investment in content
-            // When theta is low, creators can't afford quality → race to bottom
-            // When theta is high, creators can invest in research/editing
+            // Quality dynamics (v3 bounded form with critical mass)
+            // dQ/dt = (1-Q)[ν·R(π_c) + ε·max(C-C_crit,0)] - Q[λ_0 + ε·max(C_crit-C,0)]
             dQ() {
-                const { theta } = this.params;
+                const nu = 0.1;      // Reinvestment rate
+                const epsilon = 0.15; // Critical mass sensitivity
+                const Ccrit = 0.35;   // Critical creator mass
+                const lambda0 = 0.05; // Baseline quality decay
+                const piBar = 0.12;   // Reinvestment threshold
 
-                // Quality production: proportional to creator activity
-                // Quality approaches creator level over time
-                const production = 0.1 * this.C * (1 - this.Q / this.C);
+                const pi_c = this.creatorRevenue();
+                const R = this.softplus(pi_c - piBar); // Reinvestment signal
 
-                // Quality degradation from AI competition
-                // Low theta → creators cut corners to compete with AI slop
-                // High theta → creators can maintain quality standards
-                const degradation = 0.05 * (1 - theta) * this.A * this.Q;
+                // Gain terms (bounded by 1-Q)
+                const reinvestment = nu * R;
+                const criticalMassBonus = epsilon * Math.max(this.C - Ccrit, 0);
+                const gain = (1 - this.Q) * (reinvestment + criticalMassBonus);
 
-                // Quality naturally decays without active maintenance
-                const decay = 0.02 * this.Q;
+                // Loss terms (bounded by Q)
+                const decay = lambda0;
+                const criticalMassShortfall = epsilon * Math.max(Ccrit - this.C, 0);
+                const loss = this.Q * (decay + criticalMassShortfall);
 
-                // ===== IC CONSTRAINT EFFECT =====
-                // When Incentive Compatibility is violated (quality premium < cost),
-                // creators shift to low-quality content (no incentive for quality)
-                const ic = this.checkIC();
-                const icSatisfaction = ic.qualityPremium / (ic.deltaCost + 0.001);
-                // Quality erosion when IC violated (icSatisfaction < 1)
-                const icPressure = -0.12 * this.Q * Math.max(0, 1 - icSatisfaction);
-
-                return production - degradation - decay + icPressure;
+                return gain - loss;
             }
 
-            // Web traffic dynamics (traffic to original content vs AI)
+            // Traffic dynamics (v3 bounded form)
+            // dW/dt = (1-W)·ρ_W·(1-D) - W·ρ_W·D
             dW() {
-                const { alpha, theta } = this.params;
+                const rhoW = 0.2;  // Traffic adjustment speed
 
-                // Traffic declines as AI grows (AI answers replace clicks)
-                // theta reduces diversion (licensing includes attribution/links)
-                const diversionRate = alpha * (1 - theta * 0.7);
-                const diversion = -diversionRate * this.A * this.W * 0.3;
+                const D = this.diversion();
 
-                // Traffic recovery: quality content attracts visitors
-                const recovery = 0.08 * this.Q * (1 - this.W);
+                // Traffic recovery when diversion low
+                const recovery = (1 - this.W) * rhoW * (1 - D);
 
-                // Some baseline traffic always exists
-                const baseline = 0.02 * (0.3 - this.W);
+                // Traffic loss when diversion high
+                const loss = this.W * rhoW * D;
 
-                return diversion + recovery + baseline;
+                return recovery - loss;
             }
 
             // ====== SIMULATION ======
@@ -2609,37 +2598,36 @@
                 return equilibria;
             }
 
-            // Incentive compatibility checks for web content creators
+            // Incentive compatibility checks (v3)
             checkIC() {
-                const { theta, gamma, alpha } = this.params;
-                const { p_ad, p_sub, w0, c_high, c_low, uBar } = this.icParams;
+                const { theta, m } = this.params;
+                const uBar = 0.15;  // Outside option (reservation utility)
+                const deltac = 0.10; // Incremental cost of quality
+                const pSub = m || 0.12; // Subscription coefficient
 
-                // Total revenue for creator
+                // Total revenue for creator (v3)
                 const revenue = this.creatorRevenue();
 
-                // IR: Creator participates iff revenue - cost ≥ outside option
-                // π_c = revenue - c(q) ≥ w0 (outside option)
-                const profit = revenue - c_low;
-                const irSatisfied = profit >= w0;
+                // IR (v3): π_c ≥ ū
+                const profit = revenue;
+                const irSatisfied = profit >= uBar;
 
-                // IC: High quality preferred iff quality premium > cost difference
-                // Revenue_high - c_high ≥ Revenue_low - c_low
-                // Quality premium from subscriptions + AI inference quality bonus
-                // AI systems with quality sources produce better outputs (fewer hallucinations)
-                const qualityPremium = p_sub * gamma + theta * this.A * 1.2;
-                const deltaCost = c_high - c_low;
+                // IC (v3): p_sub · ΔQ ≥ Δc
+                // Under [0,1] normalization, ΔQ = 1, so: p_sub ≥ Δc
+                const qualityPremium = pSub;
+                const deltaCost = deltac;
                 const icSatisfied = qualityPremium >= deltaCost;
 
-                // Minimum θ for participation (solving IR constraint)
-                // Need: θ*A*0.5 + p_ad*W*(1-α*A) + p_sub*Q - c_low ≥ w0
-                const nonAiRevenue = this.icParams.p_ad * this.W * (1 - alpha * this.A) + p_sub * this.Q - c_low;
-                const thetaMin = Math.max(0, (w0 - nonAiRevenue) / (this.A * 0.5 + 0.001));
+                // Creator equilibrium: C* = S(π_c - ū)
+                const profitMargin = profit - uBar;
+                const creatorEquilibrium = 1 / (1 + Math.exp(-5 * profitMargin));
 
-                // Minimum θ for quality production
-                const thetaIC = Math.max(0, (deltaCost - p_sub * gamma) / (this.A * 1.2 + 0.001));
+                // Reinvestment signal: R(π_c) = softplus(π_c - π̄)
+                const piBar = 0.12;
+                const reinvestment = Math.log(1 + Math.exp(profit - piBar));
 
-                // Traffic impact on viability
-                const trafficViability = this.W > 0.3 ? 'Viable' : this.W > 0.15 ? 'Stressed' : 'Critical';
+                // Traffic viability
+                const trafficViability = this.W > 0.4 ? 'Viable' : this.W > 0.2 ? 'Stressed' : 'Critical';
 
                 return {
                     revenue,
@@ -2648,10 +2636,10 @@
                     qualityPremium,
                     deltaCost,
                     icSatisfied,
-                    thetaMin,
-                    thetaIC,
+                    thetaMin: creatorEquilibrium,  // Now shows C* equilibrium
+                    thetaIC: reinvestment,         // Now shows R(π_c) reinvestment
                     trafficViability,
-                    outsideOption: w0
+                    outsideOption: uBar
                 };
             }
 
@@ -3327,8 +3315,8 @@
                 if (container && desc) {
                     container.innerHTML = `
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #e4e4e7;"><strong>${desc.title}:</strong> ${desc.text}</span>
-                            <span class="scenario-params-inline" style="color: #71717a; font-size: 0.8rem; white-space: nowrap; margin-left: 1rem;">${desc.params}</span>
+                            <span style="color: #333;"><strong>${desc.title}:</strong> ${desc.text}</span>
+                            <span class="scenario-params-inline" style="color: #666; font-size: 0.8rem; white-space: nowrap; margin-left: 1rem;">${desc.params}</span>
                         </div>
                     `;
                 }
@@ -3782,15 +3770,15 @@
                 MathJax.typesetPromise();
             }
 
-            // Auto-run Status Quo scenario on page load
+            // Auto-run Scraping Era scenario on page load
             setTimeout(() => {
-                ui.runScenario('status-quo');
+                ui.runScenario('scraping-era');
             }, 100);
         });
     </script>
 
-    <footer style="text-align: center; padding: 2rem 1rem; margin-top: 2rem; border-top: 1px solid #27272a; color: #a1a1aa; font-size: 0.85rem;">
-        Built by the <strong style="color: #e4e4e7;">AI Disclosures Project</strong> | Tim O'Reilly & Ilan Strauss
+    <footer style="text-align: center; padding: 2rem 1rem; margin-top: 2rem; border-top: 1px solid #27272a; color: #666; font-size: 0.85rem;">
+        Built by the <strong style="color: #333;">AI Disclosures Project</strong> | Tim O'Reilly & Ilan Strauss
         <br><span style="font-size: 0.85rem; opacity: 0.7; font-style: italic;">Formal modeling of win-win ecosystems for AI content markets</span>
         <br><span style="font-size: 0.8rem; opacity: 0.8;">Contact: <a href="mailto:ilan@aidisclosures.org" style="color: #f97316;">ilan@aidisclosures.org</a></span>
         <br><span style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.5rem; display: inline-block;"><a href="https://github.com/IlanStrauss/ai-web-economy-simulator" target="_blank" style="color: #f97316;">GitHub</a> | <a href="https://github.com/IlanStrauss/ai-web-economy-simulator/blob/main/model-equations-v3.pdf" target="_blank" style="color: #f97316;">Technical Note (PDF)</a></span>

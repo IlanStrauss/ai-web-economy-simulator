@@ -22,7 +22,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #2d3a52 0%, #3d4a62 100%);
             min-height: 100vh;
             color: #e4e4e7;
             line-height: 1.6;
@@ -182,7 +182,7 @@
         }
 
         select option {
-            background: #1a1a2e;
+            background: #2d3a52;
         }
 
         /* Preset Buttons */
@@ -618,7 +618,7 @@
         }
 
         .scenario-dropdown option {
-            background: #1a1a2e;
+            background: #2d3a52;
             color: #e4e4e7;
             padding: 0.5rem;
         }
@@ -1229,10 +1229,12 @@
                 <div class="presets">
                     <h3>Policy Scenarios</h3>
                     <div class="preset-buttons">
-                        <button class="preset-btn" data-preset="status-quo">Status Quo</button>
-                        <button class="preset-btn" data-preset="licensing">Licensing Regime</button>
-                        <button class="preset-btn" data-preset="traffic-collapse">Traffic Collapse</button>
-                        <button class="preset-btn" data-preset="fair-deal">Fair Deal</button>
+                        <button class="preset-btn" data-preset="scraping-era">2024: Scraping Era</button>
+                        <button class="preset-btn" data-preset="zero-click">Zero-Click Future</button>
+                        <button class="preset-btn" data-preset="reddit-deal">Reddit Deal</button>
+                        <button class="preset-btn" data-preset="spotify-news">Spotify for News</button>
+                        <button class="preset-btn" data-preset="ai-winter">AI Winter 2.0</button>
+                        <button class="preset-btn" data-preset="substack-lifeboat">Substack Lifeboat</button>
                     </div>
                 </div>
 
@@ -1256,12 +1258,16 @@
                             <div style="flex: 1; min-width: 250px;">
                                 <label style="color: #a1a1aa; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">Select Scenario</label>
                                 <select id="scenarioSelect" class="scenario-dropdown">
-                                    <option value="status-quo">📉 Status Quo — Current reality: minimal compensation (2%), high extraction</option>
-                                    <option value="traffic-collapse">🚨 Traffic Collapse — AI answers dominate, web traffic crashes 50%+</option>
-                                    <option value="licensing">📜 Licensing Regime — Collective licensing introduces meaningful compensation</option>
-                                    <option value="fair-deal">🤝 Fair Deal — Win-win: adequate compensation, preserved traffic</option>
-                                    <option value="high-investment">💰 High Investment Extraction — Massive AI funding masks unsustainable extraction</option>
-                                    <option value="creator-resilience">🌱 Creator Resilience — High creator entry rate offsets extraction</option>
+                                    <option value="scraping-era">📉 2024: The Scraping Era — Where we are now</option>
+                                    <option value="zero-click">🚨 Zero-Click Future — AI answers everything, no clicks</option>
+                                    <option value="reddit-deal">💵 The Reddit Deal — Token licensing, survival money</option>
+                                    <option value="spotify-news">🎵 Spotify for News — Fair 30% revenue share</option>
+                                    <option value="ai-winter">❄️ AI Winter 2.0 — Boom then data drought</option>
+                                    <option value="substack-lifeboat">🛟 Substack Lifeboat — Subscription escape</option>
+                                    <option value="journalism-graveyard">⚰️ Journalism Graveyard — Point of no return</option>
+                                    <option value="death-by-1000-cuts">🐸 Death by 1000 Cuts — Slow boiled frog</option>
+                                    <option value="marshall-plan">🏛️ The Marshall Plan — Policy intervention</option>
+                                    <option value="boom-bust-cycle">📈 Boom-Bust Cycle — Oscillating dynamics</option>
                                 </select>
                             </div>
                             <div class="run-controls">
@@ -1527,69 +1533,84 @@
 
                     <!-- Core Dynamics -->
                     <section class="panel">
-                        <h2>1. Lotka-Volterra Core Dynamics</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem;">The ecosystem evolves according to coupled differential equations, similar to predator-prey models but with potential for mutualism.</p>
+                        <h2>1. Core Dynamics (v3: One Mechanism Per Layer)</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem;">The model follows a strict causal chain where each mechanism appears exactly once: A→W→π<sub>c</sub>→C→Q→A. All state variables bounded in [0,1] by construction.</p>
                         <div class="equations-grid">
+                            <div class="equation-card">
+                                <h3>Creator Revenue (π<sub>c</sub>)</h3>
+                                <div class="equation">
+                                    $$\pi_c = \underbrace{\theta \cdot p_L \cdot A}_{\text{AI licensing}} + \underbrace{p_{ad} \cdot W}_{\text{ad revenue}} + \underbrace{p_{sub} \cdot Q}_{\text{subscriptions}}$$
+                                </div>
+                                <div class="interpretation">
+                                    <strong>Interpretation:</strong> Creator revenue has three channels: licensing payments from AI platforms (scales with θ and A), advertising revenue (proportional to traffic W), and subscription/patronage (scales with quality Q).
+                                </div>
+                                <div class="var-list">
+                                    <span class="var-tag">θ = compensation rate</span>
+                                    <span class="var-tag">p<sub>L</sub> = licensing price</span>
+                                    <span class="var-tag">p<sub>ad</sub> = ad revenue coefficient</span>
+                                    <span class="var-tag">p<sub>sub</sub> = subscription coefficient</span>
+                                </div>
+                            </div>
+
                             <div class="equation-card">
                                 <h3>Creator Dynamics (dC/dt)</h3>
                                 <div class="equation">
-                                    $$\frac{dC}{dt} = \underbrace{rC\left(1 - \frac{C}{K}\right)}_{\text{logistic growth}} - \underbrace{h(1-\theta)AC}_{\text{extraction harm}} + \underbrace{m\theta AC}_{\text{mutualism benefit}} - \underbrace{\alpha\phi_w AC(1-\theta)}_{\text{traffic diversion}}$$
+                                    $$\frac{dC}{dt} = \underbrace{(1-C) \cdot \rho_C \cdot S(\pi_c - \bar{u})}_{\text{entry when profitable}} - \underbrace{C \cdot \rho_C \cdot S(\bar{u} - \pi_c)}_{\text{exit when unprofitable}}$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Interpretation:</strong> Creators grow logistically, but face pressure from AI extraction (reduced by compensation θ) and traffic diversion to AI answers. Mutualism benefits (AI tools, discovery) scale with compensation.
+                                    <strong>Interpretation:</strong> Creators enter when π<sub>c</sub> > ū (outside option), exit when unprofitable. The (1-C) and C terms ensure C ∈ [0,1] by construction. IR constraint emerges from dynamics.
                                 </div>
                                 <div class="var-list">
-                                    <span class="var-tag">r = 0.08 (growth rate)</span>
-                                    <span class="var-tag">K = 1.0 (carrying capacity)</span>
-                                    <span class="var-tag">h = extraction intensity</span>
-                                    <span class="var-tag">θ = compensation rate</span>
-                                    <span class="var-tag">m = mutualism coefficient</span>
-                                    <span class="var-tag">α = traffic diversion rate</span>
+                                    <span class="var-tag">ρ<sub>C</sub> = adjustment speed</span>
+                                    <span class="var-tag">S(x) = sigmoid response</span>
+                                    <span class="var-tag">ū = outside option</span>
+                                </div>
+                            </div>
+
+                            <div class="equation-card">
+                                <h3>Traffic Dynamics (dW/dt)</h3>
+                                <div class="equation">
+                                    $$\frac{dW}{dt} = \underbrace{(1-W) \cdot \rho_W \cdot (1-D)}_{\text{traffic recovery}} - \underbrace{W \cdot \rho_W \cdot D}_{\text{AI diversion}}$$
+                                </div>
+                                <div class="interpretation">
+                                    <strong>Interpretation:</strong> W = traffic to original content. Diversion propensity D(A,θ) = σ(k<sub>A</sub>(A-a₀) - k<sub>θ</sub>(θ-θ₀)) increases with AI scale, decreases with compensation. W ∈ [0,1] by construction.
+                                </div>
+                                <div class="var-list">
+                                    <span class="var-tag">ρ<sub>W</sub> = traffic adjustment speed</span>
+                                    <span class="var-tag">D = diversion propensity</span>
+                                    <span class="var-tag">k<sub>A</sub>, k<sub>θ</sub> = sensitivity parameters</span>
+                                </div>
+                            </div>
+
+                            <div class="equation-card">
+                                <h3>Quality Dynamics (dQ/dt)</h3>
+                                <div class="equation" style="font-size: 0.85rem;">
+                                    $$\frac{dQ}{dt} = (1-Q)\Big[\underbrace{\nu R(\pi_c)}_{\text{reinvestment}} + \underbrace{\epsilon \max(C-C_{crit},0)}_{\text{critical mass}}\Big] - Q\Big[\underbrace{\lambda_0}_{\text{decay}} + \underbrace{\epsilon \max(C_{crit}-C,0)}_{\text{shortfall}}\Big]$$
+                                </div>
+                                <div class="interpretation">
+                                    <strong>Interpretation:</strong> Quality improves with reinvestment R(π<sub>c</sub>) = softplus(π<sub>c</sub> - π̄) and creator mass above C<sub>crit</sub>. Decays at baseline rate, faster if C < C<sub>crit</sub>. Q ∈ [0,1] by construction.
+                                </div>
+                                <div class="var-list">
+                                    <span class="var-tag">ν = reinvestment rate</span>
+                                    <span class="var-tag">ε = critical mass sensitivity</span>
+                                    <span class="var-tag">C<sub>crit</sub> = critical mass threshold</span>
+                                    <span class="var-tag">λ₀ = baseline decay</span>
                                 </div>
                             </div>
 
                             <div class="equation-card">
                                 <h3>AI Platform Dynamics (dA/dt)</h3>
                                 <div class="equation">
-                                    $$\frac{dA}{dt} = \underbrace{\beta CA(1 + \gamma Q)}_{\text{value from content}} - \underbrace{\delta A^2}_{\text{competition}} + \underbrace{I}_{\text{investment}}$$
+                                    $$\frac{dA}{dt} = \underbrace{(1-A) \cdot \Big( I + r_A A (1 + \gamma Q) \Big)}_{\text{growth (quality-amplified)}} - \underbrace{A \cdot \delta_A}_{\text{depreciation}}$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Interpretation:</strong> AI platforms grow by extracting value from creator content (quality-adjusted). Face quadratic competition/depreciation. External investment provides baseline growth independent of content.
+                                    <strong>Interpretation:</strong> AI grows from external investment I plus endogenous growth amplified by quality Q. Low Q throttles endogenous growth but not investment. A ∈ [0,1] by construction.
                                 </div>
                                 <div class="var-list">
-                                    <span class="var-tag">β = 0.35 (value extraction)</span>
-                                    <span class="var-tag">γ = 0.40 (quality premium)</span>
-                                    <span class="var-tag">δ = 0.15 (depreciation)</span>
-                                    <span class="var-tag">I = investment rate</span>
-                                </div>
-                            </div>
-
-                            <div class="equation-card">
-                                <h3>Web Traffic Dynamics (dW/dt)</h3>
-                                <div class="equation">
-                                    $$\frac{dW}{dt} = \underbrace{-\alpha AW}_{\text{AI diversion}} + \underbrace{0.1(1-Q)(1-W)}_{\text{quality-driven recovery}}$$
-                                </div>
-                                <div class="interpretation">
-                                    <strong>Interpretation:</strong> Traffic to original content declines as AI platforms grow (AI answers replace clicks). Recovers somewhat if AI quality degrades (users return to sources).
-                                </div>
-                                <div class="var-list">
-                                    <span class="var-tag">α = traffic diversion rate</span>
-                                    <span class="var-tag">W = fraction clicking through to sources</span>
-                                </div>
-                            </div>
-
-                            <div class="equation-card">
-                                <h3>Content Quality Dynamics (dQ/dt)</h3>
-                                <div class="equation">
-                                    $$\frac{dQ}{dt} = \underbrace{\epsilon(C - C^*)}_{\text{creator mass effect}} - \underbrace{\lambda(1-\theta)A}_{\text{exploitation degradation}} + \underbrace{\eta(\pi - \bar{\pi})}_{\text{revenue-quality link}}$$
-                                </div>
-                                <div class="interpretation">
-                                    <strong>Interpretation:</strong> Quality requires critical mass of creators (C*). Degrades when exploitation is high. Revenue above threshold enables investment in quality.
-                                </div>
-                                <div class="var-list">
-                                    <span class="var-tag">ε = 0.12 (quality response)</span>
-                                    <span class="var-tag">C* = 0.35 (critical mass)</span>
-                                    <span class="var-tag">λ = 0.10 (degradation rate)</span>
+                                    <span class="var-tag">I = external investment</span>
+                                    <span class="var-tag">r<sub>A</sub> = growth rate</span>
+                                    <span class="var-tag">γ = data advantage strength</span>
+                                    <span class="var-tag">δ<sub>A</sub> = depreciation rate</span>
                                 </div>
                             </div>
                         </div>
@@ -1598,31 +1619,31 @@
                     <!-- Mechanism Design Integration -->
                     <section class="panel">
                         <h2>2. Mechanism Design Constraints</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem;">The dynamics are modified by incentive compatibility constraints that trigger regime switches.</p>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem;">IR and IC are now <strong>emergent properties</strong> of the dynamics rather than separate regime switches.</p>
                         <div class="equations-grid">
                             <div class="equation-card" style="border-left-color: #4ade80;">
                                 <h3>Individual Rationality (IR)</h3>
                                 <div class="equation">
-                                    $$\pi_c = \underbrace{\theta \cdot p \cdot A}_{\text{AI licensing}} + \underbrace{p_{ad} \cdot W}_{\text{ad revenue}} + \underbrace{p_{sub} \cdot Q}_{\text{subscriptions}} - c \geq \bar{u}$$
+                                    $$\text{IR}: \quad \pi_c \geq \bar{u}$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Participation constraint:</strong> Creators participate only if total revenue (AI licensing + ads + subscriptions) minus costs exceeds their outside option (alternative employment).
+                                    <strong>Participation constraint:</strong> Creators participate when expected revenue exceeds their outside option. Enforced by entry/exit dynamics: when π<sub>c</sub> < ū, exit rate exceeds entry rate, and C declines naturally.
                                 </div>
                                 <div class="regime-effect">
-                                    <strong>If violated:</strong> Triggers <span style="color: #f87171;">EXIT REGIME</span> — creator decline accelerates by factor of 3×
+                                    <strong>When violated:</strong> Exit dominates entry → C declines → Q falls → feedback loop
                                 </div>
                             </div>
 
                             <div class="equation-card" style="border-left-color: #fbbf24;">
                                 <h3>Incentive Compatibility (IC)</h3>
                                 <div class="equation">
-                                    $$\theta \cdot p \cdot A \cdot \gamma \geq \Delta c = c_{high} - c_{low}$$
+                                    $$\text{IC}: \quad p_{sub} \cdot \Delta Q \geq \Delta c$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Quality incentive:</strong> Creators produce high-quality content only if the premium from quality (better AI licensing terms, more subscribers) exceeds the additional cost.
+                                    <strong>Quality incentive:</strong> High-quality content is incentive compatible when the subscription/patronage premium exceeds additional costs Δc (research, fact-checking, editing). Under [0,1] normalization, ΔQ = 1 so IC simplifies to p<sub>sub</sub> ≥ Δc.
                                 </div>
                                 <div class="regime-effect">
-                                    <strong>If violated:</strong> Triggers <span style="color: #fbbf24;">LOW-QUALITY REGIME</span> — quality degrades 2× faster, "content farm" dynamics
+                                    <strong>When violated:</strong> Low p<sub>sub</sub> → Q contributes less to π<sub>c</sub> → R(π<sub>c</sub>) falls → quality improvement slows
                                 </div>
                             </div>
                         </div>
@@ -1630,52 +1651,45 @@
 
                     <!-- Key Thresholds -->
                     <section class="panel">
-                        <h2>3. Critical Thresholds & Regime Switching</h2>
+                        <h2>3. Critical Thresholds & Equilibrium Structure</h2>
                         <div class="equations-grid">
                             <div class="equation-card">
-                                <h3>Net Interaction Effect (Φ)</h3>
+                                <h3>Traffic Equilibrium</h3>
                                 <div class="equation">
-                                    $$\Phi = m\theta - h(1-\theta) - \alpha\phi_w(1-\theta)$$
+                                    $$W^* = 1 - D(A^*, \theta)$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Key indicator:</strong> When Φ > 0, the ecosystem is mutualistic (creators benefit from AI). When Φ < 0, it's extractive (AI harms creators).
+                                    <strong>Steady state:</strong> Traffic share equals one minus diversion propensity. Higher AI scale or lower compensation → lower W*.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Critical Compensation Threshold</h3>
+                                <h3>Creator Equilibrium</h3>
                                 <div class="equation">
-                                    $$\theta^* = \frac{h + \alpha\phi_w}{h + \alpha\phi_w + m}$$
+                                    $$C^* = S(\pi_c^* - \bar{u})$$
                                 </div>
                                 <div class="interpretation">
-                                    <strong>Policy target:</strong> Compensation must exceed θ* for sustainable coexistence. With current calibration: θ* ≈ 79%, far above status quo (~2%).
+                                    <strong>Steady state:</strong> Creator participation equals sigmoid of profitability vs outside option. When π<sub>c</sub>* > ū, majority participate; when π<sub>c</sub>* < ū, majority exit.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Regime Switching Rules</h3>
-                                <div class="equation" style="font-size: 0.95rem;">
-                                    $$\text{Regime} = \begin{cases}
-                                    \text{GROWTH} & \text{if IR satisfied and IC satisfied} \\
-                                    \text{EXIT} & \text{if IR violated (}\pi_c < \bar{u}\text{)} \\
-                                    \text{LOW-Q} & \text{if IC violated (quality unprofitable)}
-                                    \end{cases}$$
+                                <h3>AI Equilibrium (First-Order)</h3>
+                                <div class="equation">
+                                    $$A^* \approx \frac{I}{\delta_A} \quad \text{(small-}A\text{ approx.)}$$
                                 </div>
                                 <div class="interpretation">
-                                    The model switches between regimes based on whether incentive constraints are satisfied, creating non-linear dynamics and potential tipping points.
+                                    <strong>Steady state:</strong> In small-A regime, AI scale ≈ investment/depreciation. For larger A, quality materially affects A* through the endogenous growth term.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Modified Dynamics Under Regimes</h3>
-                                <div class="equation" style="font-size: 0.9rem;">
-                                    $$\frac{dC}{dt}\bigg|_{\text{exit}} = \frac{dC}{dt}\bigg|_{\text{base}} - \kappa_1 \cdot C \cdot \mathbb{1}[\pi_c < \bar{u}]$$
-                                </div>
-                                <div class="equation" style="font-size: 0.9rem; margin-top: 0.5rem;">
-                                    $$\frac{dQ}{dt}\bigg|_{\text{low-Q}} = \frac{dQ}{dt}\bigg|_{\text{base}} - \kappa_2 \cdot Q \cdot \mathbb{1}[\text{IC violated}]$$
+                                <h3>Critical Mass Threshold</h3>
+                                <div class="equation">
+                                    $$C_{crit}: \text{quality gains/losses hinge on } C \gtrless C_{crit}$$
                                 </div>
                                 <div class="interpretation">
-                                    Additional decay terms activate when constraints are violated, accelerating decline toward low-level equilibria.
+                                    <strong>Tipping point:</strong> Above C<sub>crit</sub>, quality has tailwinds (ecosystem thrives). Below C<sub>crit</sub>, quality has headwinds (decline accelerates). Creates path dependence and hysteresis.
                                 </div>
                             </div>
                         </div>
@@ -1683,26 +1697,25 @@
 
                     <!-- Equilibria -->
                     <section class="panel">
-                        <h2>4. Equilibrium Structure</h2>
+                        <h2>4. Equilibrium Types</h2>
                         <div class="equations-grid">
                             <div class="equation-card">
-                                <h3>Possible Equilibria</h3>
-                                <div class="interpretation" style="margin-bottom: 0.5rem;">The system can settle into one of several equilibria depending on parameters:</div>
+                                <h3>Three Qualitative Equilibria</h3>
+                                <div class="interpretation" style="margin-bottom: 0.5rem;">The system admits three qualitatively distinct equilibria:</div>
                                 <ul style="color: #a1a1aa; font-size: 0.85rem; margin-left: 1rem;">
-                                    <li><strong style="color: #4ade80;">Sustainable Coexistence:</strong> C*, A*, Q* all positive; IR and IC satisfied</li>
-                                    <li><strong style="color: #fbbf24;">Low-Quality Trap:</strong> Creators exist but produce low-quality content</li>
-                                    <li><strong style="color: #f87171;">Creator Extinction:</strong> C → 0; AI runs on legacy/synthetic content</li>
-                                    <li><strong style="color: #f87171;">Collapse:</strong> Both C and Q collapse; AI faces "data drought"</li>
+                                    <li><strong style="color: #4ade80;">Sustainable Coexistence:</strong> C* > C<sub>crit</sub>, Q* > 0, W* > 0. Both IR and IC effectively satisfied; stable ecosystem.</li>
+                                    <li><strong style="color: #fbbf24;">Low-Quality Trap:</strong> C* ≈ C<sub>crit</sub>, Q* settles low. Creators survive but quality erodes.</li>
+                                    <li><strong style="color: #f87171;">Collapse:</strong> C* → 0, Q* → 0. Creator exodus, quality collapse, AI faces "data drought."</li>
                                 </ul>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Stability via Jacobian</h3>
-                                <div class="equation">
-                                    $$J = \begin{pmatrix} \partial \dot{C}/\partial C & \partial \dot{C}/\partial A \\ \partial \dot{A}/\partial C & \partial \dot{A}/\partial A \end{pmatrix}$$
+                                <h3>Causal Chain Summary</h3>
+                                <div class="equation" style="font-size: 0.85rem;">
+                                    $$A \uparrow \;\rightarrow\; W \downarrow \;\rightarrow\; \pi_c \downarrow \;\rightarrow\; C \downarrow \;\rightarrow\; Q \downarrow \;\rightarrow\; A \text{ slows}$$
                                 </div>
                                 <div class="interpretation">
-                                    Equilibrium stability determined by eigenvalues of Jacobian. Stable if Tr(J) < 0 and det(J) > 0.
+                                    Each mechanism appears exactly once: diversion lives in W, revenue depends on W, creators respond to profitability, quality responds to critical mass, AI growth depends on quality.
                                 </div>
                             </div>
                         </div>
@@ -1752,57 +1765,58 @@
                 <!-- Tab 3: Mechanism Design -->
                 <div class="tab-content" id="tab-mechanism">
                     <section class="panel">
-                        <h2>Incentive Compatibility Analysis</h2>
+                        <h2>Incentive Compatibility Analysis (v3)</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">In v3, IR and IC are <strong>emergent properties</strong> of the dynamics, not separate regime switches.</p>
                         <div class="equations-grid">
                             <div class="equation-card">
-                                <h3>Individual Rationality (IR) Constraint</h3>
+                                <h3>Individual Rationality (IR)</h3>
                                 <div class="equation">
-                                    $$\pi_c = \theta \cdot p \cdot A + w_0 - c(q) \geq \bar{u}$$
+                                    $$\text{IR}: \quad \pi_c = \theta p_L A + p_{ad} W + p_{sub} Q \geq \bar{u}$$
                                 </div>
                                 <div class="interpretation">
-                                    Creators participate iff expected profit (compensation + alternative income - cost) exceeds reservation utility.
+                                    Creators participate when total revenue exceeds outside option. Enforced by entry/exit dynamics: when π<sub>c</sub> < ū, exit rate exceeds entry rate.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Incentive Compatibility (IC) Constraint</h3>
+                                <h3>Incentive Compatibility (IC)</h3>
                                 <div class="equation">
-                                    $$\theta \cdot p \cdot A \cdot \gamma \geq \Delta c = c(q_H) - c(q_L)$$
+                                    $$\text{IC}: \quad p_{sub} \cdot \Delta Q \geq \Delta c$$
                                 </div>
                                 <div class="interpretation">
-                                    High quality is incentive compatible iff the premium for quality exceeds the additional production cost.
+                                    Quality investment is incentive compatible when subscription premium exceeds incremental cost. Under [0,1] normalization: p<sub>sub</sub> ≥ Δc.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Critical Compensation Threshold</h3>
-                                <div class="equation">
-                                    $$\theta^{IC} = \frac{\Delta c}{p \cdot A \cdot \gamma}$$
+                                <h3>How Compensation Affects the System</h3>
+                                <div class="equation" style="font-size: 0.9rem;">
+                                    $$\theta \uparrow \;\Rightarrow\; \pi_c \uparrow \text{ (direct)} \;\land\; D \downarrow \;\Rightarrow\; W \uparrow \text{ (traffic)}$$
                                 </div>
                                 <div class="interpretation">
-                                    Below this threshold, creators rationally produce low quality. As A increases, threshold drops (scale helps).
+                                    θ affects two channels: (1) direct licensing revenue θp<sub>L</sub>A, and (2) diversion D(A,θ) which preserves traffic W. Both reinforce each other.
                                 </div>
                             </div>
 
                             <div class="equation-card">
-                                <h3>Mechanism Design Objective</h3>
-                                <div class="equation">
-                                    $$\max_{\theta, \text{rules}} W = \alpha \cdot CS + (1-\alpha) \cdot \Pi_A + \beta \cdot \Pi_C$$
+                                <h3>Policy Thresholds</h3>
+                                <div class="equation" style="font-size: 0.9rem;">
+                                    $$\theta^{IR}: \pi_c = \bar{u} \quad\quad \theta^{IC}: p_{sub} = \Delta c$$
                                 </div>
                                 <div class="interpretation">
-                                    Social welfare trades off consumer surplus (CS), platform profit (Π_A), and creator welfare (Π_C).
+                                    Two critical thresholds: θ<sup>IR</sup> (survival threshold) and θ<sup>IC</sup> (quality threshold). Below θ<sup>IR</sup>, creators exit. Below θ<sup>IC</sup>, quality erodes. Both depend on full parameter vector.
                                 </div>
                             </div>
                         </div>
                     </section>
 
                     <section class="panel">
-                        <h2>Constraint Status</h2>
+                        <h2>Live Constraint Status</h2>
                         <div class="ic-panel">
                             <div class="constraint-card">
                                 <h4>Individual Rationality (IR)</h4>
                                 <div class="equation" style="font-size: 0.9rem; margin: 0.5rem 0;">
-                                    π_c = <span id="irProfit">0.00</span> ≥ ū = 0.15
+                                    π<sub>c</sub> = <span id="irProfit">0.00</span> ≥ ū = 0.15
                                 </div>
                                 <div class="constraint-status" id="irStatus">
                                     <span>●</span> Checking...
@@ -1812,7 +1826,7 @@
                             <div class="constraint-card">
                                 <h4>Incentive Compatibility (IC)</h4>
                                 <div class="equation" style="font-size: 0.9rem; margin: 0.5rem 0;">
-                                    θ·p·A·γ = <span id="icBenefit">0.00</span> ≥ Δc = 0.10
+                                    p<sub>sub</sub>·ΔQ = <span id="icBenefit">0.00</span> ≥ Δc = 0.10
                                 </div>
                                 <div class="constraint-status" id="icStatus">
                                     <span>●</span> Checking...
@@ -1820,9 +1834,9 @@
                             </div>
 
                             <div class="constraint-card">
-                                <h4>Participation Threshold</h4>
+                                <h4>Creator Equilibrium</h4>
                                 <div class="equation" style="font-size: 0.9rem; margin: 0.5rem 0;">
-                                    θ<sup>min</sup> = <span id="thetaMin">0.00</span> (current: <span id="thetaCurrent">0.00</span>)
+                                    C* = S(π<sub>c</sub>* - ū) = <span id="thetaMin">0.00</span>
                                 </div>
                                 <div class="constraint-status" id="participationStatus">
                                     <span>●</span> Checking...
@@ -1830,9 +1844,9 @@
                             </div>
 
                             <div class="constraint-card">
-                                <h4>Quality Threshold</h4>
+                                <h4>Quality Reinvestment</h4>
                                 <div class="equation" style="font-size: 0.9rem; margin: 0.5rem 0;">
-                                    θ<sup>IC</sup> = <span id="thetaIC">0.00</span> (current: <span id="thetaCurrentIC">0.00</span>)
+                                    R(π<sub>c</sub>) = softplus(π<sub>c</sub> - π̄) = <span id="thetaIC">0.00</span>
                                 </div>
                                 <div class="constraint-status" id="qualityStatus">
                                     <span>●</span> Checking...
@@ -1853,145 +1867,259 @@
                 <div class="tab-content" id="tab-cases">
                     <!-- Policy Scenarios Section -->
                     <section class="panel">
-                        <h2>Policy Scenarios</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">These scenarios model different policy interventions for the AI-web content ecosystem. Click "Run" to simulate 10-year outcomes.</p>
+                        <h2>Scenario Library</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">These scenarios model different trajectories for the AI-web content ecosystem based on the v3 model dynamics. Click "Run" to simulate.</p>
                         <div class="scenario-detail-grid">
-                            <div class="scenario-detail-card" data-scenario="status-quo">
+                            <div class="scenario-detail-card" data-scenario="scraping-era">
                                 <div class="scenario-detail-header">
                                     <span class="scenario-detail-icon">📉</span>
                                     <div>
-                                        <h3>Status Quo</h3>
-                                        <span class="scenario-tag extractive">Regime 1</span>
+                                        <h3>2024: The Scraping Era</h3>
+                                        <span class="scenario-tag extractive">Collapse</span>
                                     </div>
-                                    <button class="run-case-btn" data-run="status-quo">▶ Run</button>
+                                    <button class="run-case-btn" data-run="scraping-era">▶ Run</button>
                                 </div>
-                                <p class="scenario-detail-desc">Current reality: AI companies scrape web content with minimal compensation. Both mechanism design constraints violated.</p>
+                                <p class="scenario-detail-desc">Where we are now: AI scrapes web content with ~2% compensation. π<sub>c</sub> < ū triggers exit dynamics.</p>
                                 <div class="scenario-detail-params">
-                                    <div><strong>θ = 2%</strong> compensation</div>
-                                    <div><strong>Survival:</strong> <span style="color: #f87171;">✗ Can't survive</span></div>
-                                    <div><strong>Quality:</strong> <span style="color: #f87171;">✗ Not rewarded</span></div>
+                                    <div><strong>θ = 2%</strong>, <strong>α = 25%</strong></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #f87171;">C↓, Q↓, W↓</span></div>
                                 </div>
                                 <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Creators exit + quality collapses
+                                    <strong>Outcome:</strong> Gradual decline toward collapse
                                 </div>
                             </div>
 
-                            <div class="scenario-detail-card" data-scenario="traffic-collapse">
+                            <div class="scenario-detail-card" data-scenario="zero-click">
                                 <div class="scenario-detail-header">
                                     <span class="scenario-detail-icon">🚨</span>
                                     <div>
-                                        <h3>Traffic Collapse</h3>
-                                        <span class="scenario-tag crisis">Regime 1 (Severe)</span>
+                                        <h3>Zero-Click Future</h3>
+                                        <span class="scenario-tag crisis">Severe Collapse</span>
                                     </div>
-                                    <button class="run-case-btn" data-run="traffic-collapse">▶ Run</button>
+                                    <button class="run-case-btn" data-run="zero-click">▶ Run</button>
                                 </div>
-                                <p class="scenario-detail-desc">Worst-case: AI answers replace 50%+ of clicks. Ad-supported web breaks down completely.</p>
+                                <p class="scenario-detail-desc">AI answers everything—no clicks to sources. D(A,θ) → 1 drives W → 0, collapsing ad revenue channel.</p>
                                 <div class="scenario-detail-params">
-                                    <div><strong>θ = 1%</strong>, <strong>α = 50%</strong></div>
-                                    <div><strong>Survival:</strong> <span style="color: #f87171;">✗ Impossible</span></div>
-                                    <div><strong>Quality:</strong> <span style="color: #f87171;">✗ Not rewarded</span></div>
+                                    <div><strong>θ = 1%</strong>, <strong>α = 55%</strong></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #f87171;">W→0, π<sub>c</sub>→0</span></div>
                                 </div>
                                 <div class="scenario-detail-outcome">
                                     <strong>Outcome:</strong> Death spiral, ecosystem collapse
                                 </div>
                             </div>
 
-                            <div class="scenario-detail-card" data-scenario="licensing">
+                            <div class="scenario-detail-card" data-scenario="reddit-deal">
                                 <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">📜</span>
+                                    <span class="scenario-detail-icon">💵</span>
                                     <div>
-                                        <h3>Licensing Regime</h3>
-                                        <span class="scenario-tag partial">Regime 2</span>
+                                        <h3>The Reddit Deal</h3>
+                                        <span class="scenario-tag partial">Low-Q Trap</span>
                                     </div>
-                                    <button class="run-case-btn" data-run="licensing">▶ Run</button>
+                                    <button class="run-case-btn" data-run="reddit-deal">▶ Run</button>
                                 </div>
-                                <p class="scenario-detail-desc">Collective licensing provides survival-level compensation. Creators stay but no incentive for quality investment.</p>
+                                <p class="scenario-detail-desc">Token licensing ($60M deals). π<sub>c</sub> ≈ ū so creators survive, but R(π<sub>c</sub>) ≈ 0 means no reinvestment.</p>
                                 <div class="scenario-detail-params">
-                                    <div><strong>θ = 18%</strong> compensation</div>
-                                    <div><strong>Survival:</strong> <span style="color: #4ade80;">✓ Can survive</span></div>
-                                    <div><strong>Quality:</strong> <span style="color: #f87171;">✗ Not rewarded</span></div>
+                                    <div><strong>θ = 8%</strong>, low p<sub>sub</sub></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">C stable, Q↓</span></div>
                                 </div>
                                 <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Creators survive, quality erodes slowly
+                                    <strong>Outcome:</strong> Survival without quality investment
                                 </div>
                             </div>
 
-                            <div class="scenario-detail-card" data-scenario="fair-deal">
+                            <div class="scenario-detail-card" data-scenario="spotify-news">
                                 <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">🤝</span>
+                                    <span class="scenario-detail-icon">🎵</span>
                                     <div>
-                                        <h3>Fair Deal</h3>
-                                        <span class="scenario-tag sustainable">Regime 3</span>
+                                        <h3>Spotify for News</h3>
+                                        <span class="scenario-tag sustainable">Coexistence</span>
                                     </div>
-                                    <button class="run-case-btn" data-run="fair-deal">▶ Run</button>
+                                    <button class="run-case-btn" data-run="spotify-news">▶ Run</button>
                                 </div>
-                                <p class="scenario-detail-desc">Comprehensive framework: adequate compensation above both thresholds. Creators can survive and quality is rewarded.</p>
+                                <p class="scenario-detail-desc">Fair 30% revenue share like music streaming. High θ + high p<sub>sub</sub> enables reinvestment, quality improves.</p>
                                 <div class="scenario-detail-params">
-                                    <div><strong>θ = 35%</strong> compensation</div>
-                                    <div><strong>Survival:</strong> <span style="color: #4ade80;">✓ Can survive</span></div>
-                                    <div><strong>Quality:</strong> <span style="color: #4ade80;">✓ Rewarded</span></div>
+                                    <div><strong>θ = 30%</strong>, high p<sub>sub</sub></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #4ade80;">C↑, Q↑, stable</span></div>
                                 </div>
                                 <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Sustainable growth, quality incentivized
+                                    <strong>Outcome:</strong> Sustainable coexistence
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="ai-winter">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">❄️</span>
+                                    <div>
+                                        <h3>AI Winter 2.0</h3>
+                                        <span class="scenario-tag partial">Boom-Bust</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="ai-winter">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">High I drives A up, but Q collapse → (1+γQ) throttles growth. AI "data drought" when γ is large.</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>High I</strong>, <strong>high γ</strong></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">A↑ then A↓</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> AI growth stalls without fresh content
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="substack-lifeboat">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">🛟</span>
+                                    <div>
+                                        <h3>Substack Lifeboat</h3>
+                                        <span class="scenario-tag sustainable">Subscription</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="substack-lifeboat">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">Creators escape to subscriptions (high p<sub>sub</sub>). Less dependent on W, more on Q. IC satisfied via direct support.</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>High p<sub>sub</sub></strong>, low p<sub>ad</sub></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #4ade80;">Q matters more than W</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> Quality-resilient creator economy
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="journalism-graveyard">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">⚰️</span>
+                                    <div>
+                                        <h3>Journalism Graveyard</h3>
+                                        <span class="scenario-tag crisis">Collapse</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="journalism-graveyard">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">Starting below C<sub>crit</sub>: quality headwinds dominate. C → 0 regardless of compensation (hysteresis).</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>C₀ < C<sub>crit</sub></strong></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #f87171;">Path-dependent collapse</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> Point of no return
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="death-by-1000-cuts">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">🐸</span>
+                                    <div>
+                                        <h3>Death by 1000 Cuts</h3>
+                                        <span class="scenario-tag partial">Slow Decline</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="death-by-1000-cuts">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">Boiled frog: moderate λ₀, weak ν. Q erodes slowly; A climbs; only later does data constraint bite.</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>Moderate γ</strong>, slow decay</div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">Long lag then crisis</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> Slow decline, delayed reckoning
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="marshall-plan">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">🏛️</span>
+                                    <div>
+                                        <h3>The Marshall Plan</h3>
+                                        <span class="scenario-tag sustainable">Policy Shock</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="marshall-plan">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">θ step increase (policy reform). Immediate π<sub>c</sub>↑, D↓ → W↑. Push system above C<sub>crit</sub> into better basin.</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>θ jump</strong> to 25%+</div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #4ade80;">Basin transition</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> Recovery from low-Q trap
+                                </div>
+                            </div>
+
+                            <div class="scenario-detail-card" data-scenario="boom-bust-cycle">
+                                <div class="scenario-detail-header">
+                                    <span class="scenario-detail-icon">📈</span>
+                                    <div>
+                                        <h3>Boom-Bust Cycle</h3>
+                                        <span class="scenario-tag partial">Oscillations</span>
+                                    </div>
+                                    <button class="run-case-btn" data-run="boom-bust-cycle">▶ Run</button>
+                                </div>
+                                <p class="scenario-detail-desc">Fast ρ<sub>W</sub>, slow ρ<sub>C</sub>/ν, strong γ. Traffic moves fast; creators/quality respond with delay → overshoot dynamics.</p>
+                                <div class="scenario-detail-params">
+                                    <div><strong>Separated time scales</strong></div>
+                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">Cyclic behavior</span></div>
+                                </div>
+                                <div class="scenario-detail-outcome">
+                                    <strong>Outcome:</strong> Persistent oscillations
                                 </div>
                             </div>
                         </div>
                     </section>
 
                     <section class="panel" style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.05), rgba(249, 115, 22, 0.05));">
-                        <h2>Three Regimes: Summary</h2>
-                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">The model identifies three distinct equilibrium regimes based on the compensation rate θ:</p>
+                        <h2>Three Equilibrium Types (v3)</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">The system admits three qualitatively distinct long-run outcomes based on parameter configuration:</p>
                         <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
                             <thead>
                                 <tr style="border-bottom: 2px solid rgba(255,255,255,0.2);">
-                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Regime</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Compensation (θ)</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Creator Survival</th>
-                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Quality Rewarded</th>
-                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Equilibrium Outcome</th>
+                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Equilibrium</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Key Condition</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">C*</th>
+                                    <th style="text-align: center; padding: 0.75rem; color: #e4e4e7;">Q*</th>
+                                    <th style="text-align: left; padding: 0.75rem; color: #e4e4e7;">Outcome</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(248, 113, 113, 0.1);">
-                                    <td style="padding: 0.75rem; color: #f87171; font-weight: bold;">Regime 1: Collapse</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">θ < 15%</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators exit, quality crashes, AI faces data drought</td>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(74, 222, 128, 0.1);">
+                                    <td style="padding: 0.75rem; color: #4ade80; font-weight: bold;">Sustainable Coexistence</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">C* > C<sub>crit</sub>, high θ</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">High</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">High</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators thrive, quality content, stable ecosystem</td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(251, 191, 36, 0.1);">
-                                    <td style="padding: 0.75rem; color: #fbbf24; font-weight: bold;">Regime 2: Low Quality</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">15% < θ < 25%</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">✗ No</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators survive but produce low-quality content</td>
+                                    <td style="padding: 0.75rem; color: #fbbf24; font-weight: bold;">Low-Quality Trap</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">C* ≈ C<sub>crit</sub>, π<sub>c</sub> ≈ ū</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #fbbf24;">Medium</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">Low</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators survive, quality erodes, R(π<sub>c</sub>) ≈ 0</td>
                                 </tr>
-                                <tr style="background: rgba(74, 222, 128, 0.1);">
-                                    <td style="padding: 0.75rem; color: #4ade80; font-weight: bold;">Regime 3: Sustainable</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">θ > 25%</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
-                                    <td style="padding: 0.75rem; text-align: center; color: #4ade80;">✓ Yes</td>
-                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creators thrive, quality content, sustainable growth</td>
+                                <tr style="background: rgba(248, 113, 113, 0.1);">
+                                    <td style="padding: 0.75rem; color: #f87171; font-weight: bold;">Collapse</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">C* < C<sub>crit</sub>, π<sub>c</sub> < ū</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">→ 0</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f87171;">→ 0</td>
+                                    <td style="padding: 0.75rem; color: #a1a1aa;">Creator exodus, quality collapse, AI data drought</td>
                                 </tr>
                             </tbody>
                         </table>
                         <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                            <h3 style="color: #e4e4e7; font-size: 0.95rem; margin-bottom: 0.75rem;">Scenario Mapping</h3>
+                            <h3 style="color: #e4e4e7; font-size: 0.95rem; margin-bottom: 0.75rem;">Scenario → Equilibrium Mapping</h3>
                             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.85rem;">
                                 <div>
-                                    <div style="color: #f87171; font-weight: bold; margin-bottom: 0.25rem;">Regime 1 Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• Status Quo (θ=2%)</div>
-                                    <div style="color: #a1a1aa;">• Traffic Collapse (θ=1%)</div>
-                                    <div style="color: #a1a1aa;">• VC Mirage (θ=2%)</div>
-                                    <div style="color: #a1a1aa;">• Creator Churn (θ=5%)</div>
+                                    <div style="color: #f87171; font-weight: bold; margin-bottom: 0.25rem;">Collapse Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• 2024: The Scraping Era</div>
+                                    <div style="color: #a1a1aa;">• Zero-Click Future</div>
+                                    <div style="color: #a1a1aa;">• Journalism Graveyard</div>
                                 </div>
                                 <div>
-                                    <div style="color: #fbbf24; font-weight: bold; margin-bottom: 0.25rem;">Regime 2 Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• Licensing (θ=18%)</div>
+                                    <div style="color: #fbbf24; font-weight: bold; margin-bottom: 0.25rem;">Low-Q Trap Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• The Reddit Deal</div>
+                                    <div style="color: #a1a1aa;">• Death by 1000 Cuts</div>
+                                    <div style="color: #a1a1aa;">• AI Winter 2.0</div>
+                                    <div style="color: #a1a1aa;">• Boom-Bust Cycle</div>
                                 </div>
                                 <div>
-                                    <div style="color: #4ade80; font-weight: bold; margin-bottom: 0.25rem;">Regime 3 Scenarios:</div>
-                                    <div style="color: #a1a1aa;">• Fair Deal (θ=35%)</div>
+                                    <div style="color: #4ade80; font-weight: bold; margin-bottom: 0.25rem;">Coexistence Scenarios:</div>
+                                    <div style="color: #a1a1aa;">• Spotify for News</div>
+                                    <div style="color: #a1a1aa;">• Substack Lifeboat</div>
+                                    <div style="color: #a1a1aa;">• The Marshall Plan</div>
                                 </div>
                             </div>
                         </div>
@@ -2757,103 +2885,157 @@
 
             initPresets() {
                 // Realistic policy scenarios with full metadata
-                // THREE REGIMES based on IR/IC constraints:
-                // Regime 1 (θ < 15%): IR violated + IC violated → creators exit + quality crashes
-                // Regime 2 (15% < θ < 25%): IR satisfied + IC violated → creators stay, quality erodes
-                // Regime 3 (θ > 25%): IR satisfied + IC satisfied → sustainable growth
+                // SIX SCENARIOS based on real-world dynamics
+                // Maps mathematical regimes to concrete, recognizable situations
                 this.scenarios = {
-                    'status-quo': {
-                        // REGIME 1: θ=2% → creators can't survive, quality not rewarded
-                        params: { theta: 0.02, h: 0.15, m: 0.60, alpha: 0.25, r: 0.08, I: 0.06 },
+                    'scraping-era': {
+                        // 2024 Reality: minimal compensation, moderate diversion
+                        params: { theta: 0.02, h: 0.45, m: 0.12, alpha: 0.25, r: 0.08, I: 0.08 },
                         interpretation: {
-                            title: 'Status Quo: Double Failure',
-                            summary: `θ=2% fails both tests: creators can't survive AND quality isn't rewarded.`,
+                            title: '2024: The Scraping Era',
+                            summary: `Where we are now. AI trained on web content with minimal compensation. Google AI Overviews diverting 25% of traffic.`,
                             bullets: [
-                                `<span class="danger">Can't survive</span>: Creator profit below what they'd earn elsewhere → exit`,
-                                `<span class="danger">Quality not rewarded</span>: No premium for quality → shift to AI-generated slop`,
-                                `<span class="danger">Creator exodus</span> accelerates as both survival AND quality fail`,
-                                `<span class="warning">AI faces data drought</span> as quality human content disappears`
+                                `<span class="danger">θ = 2%</span>: Reddit-OpenAI deal ($60M) vs $100B AI market`,
+                                `<span class="danger">Creator exodus accelerating</span>: Journalism employment down 70% since 2008`,
+                                `<span class="warning">Quality erosion</span>: SEO slop replacing original reporting`,
+                                `<span class="warning">AI training on AI</span>: Model collapse risk as human content disappears`
                             ],
-                            conclusion: `Both thresholds violated. The ecosystem enters decline.`
+                            conclusion: `Unsustainable extraction. The web is being strip-mined.`
                         }
                     },
-                    'traffic-collapse': {
-                        // REGIME 1 EXTREME: θ=1%, α=50% → catastrophic failure
-                        params: { theta: 0.01, h: 0.15, m: 0.60, alpha: 0.50, r: 0.05, I: 0.10 },
+                    'zero-click': {
+                        // Extreme diversion: AI answers everything
+                        params: { theta: 0.01, h: 0.50, m: 0.08, alpha: 0.50, r: 0.05, I: 0.12 },
                         interpretation: {
-                            title: 'Traffic Collapse: Catastrophic Failure',
-                            summary: `θ=1% with 50% traffic diversion. Complete collapse.`,
+                            title: 'Zero-Click Future',
+                            summary: `AI Overviews answer 50%+ of queries. Why click through when the AI already told you?`,
                             bullets: [
-                                `<span class="danger">Can't survive at all</span>: Ad revenue collapses → mass creator exit`,
-                                `<span class="danger">Quality impossible</span>: Only AI slop is economically viable`,
-                                `<span class="danger">Death spiral</span>: Less content → worse AI → less value → less compensation`,
-                                `<span class="danger">Ecosystem collapse</span> within years, not decades`
+                                `<span class="danger">Traffic collapse</span>: Publishers see 40-60% traffic decline`,
+                                `<span class="danger">Ad revenue death spiral</span>: No clicks = no ads = no revenue`,
+                                `<span class="danger">Only AI slop survives</span>: Human journalism economically impossible`,
+                                `<span class="danger">Information ecosystem collapse</span>: Who will investigate? Who will fact-check?`
                             ],
-                            conclusion: `Worst case: both thresholds catastrophically violated. AI destroys its own foundation.`
+                            conclusion: `The open web becomes a ghost town. AI answers everything but knows nothing new.`
                         }
                     },
-                    'licensing': {
-                        // REGIME 2: θ=18% → IR satisfied, IC violated
-                        // Creators survive but produce low-quality content
-                        params: { theta: 0.18, h: 0.15, m: 0.60, alpha: 0.20, r: 0.08, I: 0.06 },
+                    'reddit-deal': {
+                        // Token licensing: survival money, not thriving
+                        params: { theta: 0.08, h: 0.40, m: 0.15, alpha: 0.30, r: 0.08, I: 0.08 },
                         interpretation: {
-                            title: 'Licensing Regime: Survival Without Quality',
-                            summary: `θ=18% lets creators survive but doesn't reward quality content.`,
+                            title: 'The Reddit Deal',
+                            summary: `$60M/year sounds like a lot. It's 0.06% of AI revenue. Survival money, not fair compensation.`,
                             bullets: [
-                                `<span class="success">Creators can survive</span>: Licensing revenue keeps them in business`,
-                                `<span class="danger">Quality not rewarded</span>: Premium for quality still below production cost`,
-                                `<span class="highlight">Creators stay</span> but shift to cheaper, lower-quality output`,
-                                `<span class="warning">Slow quality erosion</span> as high-effort content isn't rewarded`
+                                `<span class="warning">θ = 8%</span>: Better than scraping, but still below survival threshold`,
+                                `<span class="success">Some creators survive</span>: Largest platforms get deals`,
+                                `<span class="danger">Small creators excluded</span>: No collective licensing = winner-take-all`,
+                                `<span class="warning">Quality still eroding</span>: Not enough revenue to invest in journalism`
                             ],
-                            conclusion: `Partial solution: creators stay but quality degrades. Need θ > 25% to reward quality.`
+                            conclusion: `A bandaid, not a solution. The few survive; the ecosystem still declines.`
                         }
                     },
-                    'fair-deal': {
-                        // REGIME 3: θ=35% → creators survive AND quality rewarded
-                        // Both constraints met: sustainable ecosystem
-                        params: { theta: 0.35, h: 0.15, m: 0.60, alpha: 0.10, r: 0.10, I: 0.05 },
+                    'spotify-news': {
+                        // Fair compensation model: what success looks like
+                        params: { theta: 0.30, h: 0.25, m: 0.35, alpha: 0.10, r: 0.10, I: 0.06 },
                         interpretation: {
-                            title: 'Fair Deal: Creators Thrive, Quality Rewarded',
-                            summary: `θ=35% lets creators survive AND rewards quality content production.`,
+                            title: 'Spotify for News',
+                            summary: `What if AI platforms paid 30% to content creators, like Spotify pays labels? And linked to sources?`,
                             bullets: [
-                                `<span class="success">Creators can thrive</span>: Revenue exceeds alternative employment options`,
-                                `<span class="success">Quality rewarded</span>: Premium for quality justifies investment in good content`,
-                                `<span class="success">Virtuous cycle</span>: Quality content → better AI → more value → fair compensation`,
-                                `<span class="success">Sustainable growth</span> for creators, AI platforms, and users`
+                                `<span class="success">θ = 30%</span>: Meaningful revenue share enables sustainable journalism`,
+                                `<span class="success">Low diversion (α = 10%)</span>: AI cites sources, users click through`,
+                                `<span class="success">Quality rewarded</span>: Investment in original reporting pays off`,
+                                `<span class="success">Virtuous cycle</span>: Better content → better AI → more value → fair split`
                             ],
-                            conclusion: `Win-win equilibrium. Both mechanism design constraints satisfied.`
+                            conclusion: `Win-win equilibrium. Creators thrive, AI improves, users get quality.`
                         }
                     },
-                    'high-investment': {
-                        // REGIME 1 with VC funding: θ=2%, I=15%
-                        // Both thresholds violated but AI growth masks it temporarily
-                        params: { theta: 0.02, h: 0.15, m: 0.60, alpha: 0.30, r: 0.06, I: 0.15 },
+                    'ai-winter': {
+                        // Boom then bust: AI grows on scraped data, quality dies, AI stagnates
+                        params: { theta: 0.02, h: 0.50, m: 0.10, alpha: 0.35, r: 0.06, I: 0.15 },
                         interpretation: {
-                            title: 'VC Mirage: Masked Failure',
-                            summary: `θ=2% fails both tests, but high AI investment (I=15%) masks the problem.`,
+                            title: 'AI Winter 2.0',
+                            summary: `$100B pours into AI. Models train on the web. The web dies. Then what?`,
                             bullets: [
-                                `<span class="danger">Creators can't survive</span>: Compensation too low despite AI "success"`,
-                                `<span class="danger">Quality not rewarded</span>: No incentive for quality despite AI growth`,
-                                `<span class="warning">False signal</span>: AI metrics surge while creator base quietly erodes`,
-                                `<span class="danger">Inevitable crash</span>: When investment slows, content drought hits`
+                                `<span class="success">AI booms initially</span>: High investment (I=15%) drives rapid capability growth`,
+                                `<span class="danger">Quality content disappears</span>: No compensation = creator exodus`,
+                                `<span class="danger">Training data degrades</span>: AI training on AI-generated slop`,
+                                `<span class="danger">Model collapse</span>: Without fresh human knowledge, AI stagnates`
                             ],
-                            conclusion: `VC funding delays but doesn't prevent failure. Unsustainable.`
+                            conclusion: `AI kills the goose that laid the golden eggs. Short-term gains, long-term stagnation.`
                         }
                     },
-                    'creator-resilience': {
-                        // REGIME 1 with high entry: θ=5%, r=15%
-                        // Both thresholds violated but churn masks exit
-                        params: { theta: 0.05, h: 0.15, m: 0.60, alpha: 0.25, r: 0.15, I: 0.06 },
+                    'substack-lifeboat': {
+                        // Subscription escape: direct payment insulates from traffic loss
+                        params: { theta: 0.10, h: 0.20, m: 0.45, alpha: 0.40, r: 0.12, I: 0.06 },
                         interpretation: {
-                            title: 'Creator Churn: Masked Quality Collapse',
-                            summary: `θ=5% fails both tests, but high creator entry (r=15%) masks the exit.`,
+                            title: 'The Substack Lifeboat',
+                            summary: `Forget traffic. Readers pay creators directly. High diversion doesn't matter if you have subscribers.`,
                             bullets: [
-                                `<span class="danger">Creators can't sustain</span>: They burn out and exit, but new ones enter`,
-                                `<span class="danger">Quality not rewarded</span>: No incentive → expertise never accumulates`,
-                                `<span class="warning">Treadmill effect</span>: Constant churn maintains numbers, destroys quality`,
-                                `<span class="danger">Hidden damage</span>: Aggregate creator count stable, but quality collapses`
+                                `<span class="warning">High diversion (α = 40%)</span>: AI still answers most queries`,
+                                `<span class="success">High mutualism (m = 45%)</span>: Direct reader relationships = stable revenue`,
+                                `<span class="success">Creators survive</span>: Subscription revenue independent of search traffic`,
+                                `<span class="warning">Limited scale</span>: Works for stars, not the long tail`
                             ],
-                            conclusion: `High entry masks failure. Numbers stable, quality collapses.`
+                            conclusion: `A lifeboat, not a cruise ship. Some escape; most still drown.`
+                        }
+                    },
+                    'journalism-graveyard': {
+                        // Tipping point: below critical mass, no recovery possible
+                        params: { theta: 0.05, h: 0.45, m: 0.10, alpha: 0.35, r: 0.04, I: 0.08 },
+                        interpretation: {
+                            title: 'The Journalism Graveyard',
+                            summary: `Once you fall below critical mass, recovery is nearly impossible. See: local news deserts across America.`,
+                            bullets: [
+                                `<span class="danger">Below C_crit</span>: Not enough creators to maintain quality ecosystem`,
+                                `<span class="danger">Hysteresis</span>: Even if θ increases later, creators don't return`,
+                                `<span class="danger">Institutional knowledge lost</span>: Experienced journalists moved on`,
+                                `<span class="danger">News deserts</span>: 2,500 newspapers closed since 2005`
+                            ],
+                            conclusion: `Point of no return. Some collapses can't be reversed.`
+                        }
+                    },
+                    'death-by-1000-cuts': {
+                        // Boiled frog: slow decline no one notices
+                        params: { theta: 0.04, h: 0.35, m: 0.15, alpha: 0.20, r: 0.07, I: 0.07 },
+                        interpretation: {
+                            title: 'Death by 1000 Cuts',
+                            summary: `Quality erodes so gradually that no one notices. Each year slightly worse than the last.`,
+                            bullets: [
+                                `<span class="warning">Slow diversion increase</span>: AI Overviews roll out gradually`,
+                                `<span class="warning">Gradual quality decline</span>: Each article slightly less researched`,
+                                `<span class="warning">Boiled frog</span>: No single moment of crisis, just drift`,
+                                `<span class="danger">Sudden realization</span>: One day you notice there's no real journalism left`
+                            ],
+                            conclusion: `The most dangerous scenario: collapse disguised as normalcy.`
+                        }
+                    },
+                    'marshall-plan': {
+                        // Policy intervention: temporary push tips system to good equilibrium
+                        params: { theta: 0.25, h: 0.30, m: 0.30, alpha: 0.15, r: 0.12, I: 0.05 },
+                        interpretation: {
+                            title: 'The Marshall Plan',
+                            summary: `A coordinated policy push—mandatory licensing, link taxes, disclosure requirements—tips the system into a sustainable basin.`,
+                            bullets: [
+                                `<span class="success">θ = 25%</span>: Mandatory compensation crosses the survival threshold`,
+                                `<span class="success">Low diversion</span>: Platforms required to link to sources`,
+                                `<span class="success">Creator recovery</span>: New entrants see viable career path`,
+                                `<span class="success">Quality rebounds</span>: Investment in journalism becomes rational again`
+                            ],
+                            conclusion: `Proof that policy can work. The EU's approach, if done right.`
+                        }
+                    },
+                    'boom-bust-cycle': {
+                        // Oscillations: cyclic dynamics from feedback delays
+                        params: { theta: 0.12, h: 0.40, m: 0.25, alpha: 0.30, r: 0.15, I: 0.10 },
+                        interpretation: {
+                            title: 'Boom-Bust Cycle',
+                            summary: `Fast AI growth, slow creator response, delayed quality feedback. The recipe for oscillations.`,
+                            bullets: [
+                                `<span class="warning">AI surges</span>: Investment drives rapid capability growth`,
+                                `<span class="warning">Creators lag</span>: Exit happens slowly, quality erodes gradually`,
+                                `<span class="warning">AI hits wall</span>: Quality content dries up, growth stalls`,
+                                `<span class="warning">Cycle repeats</span>: Investment pause → partial recovery → new boom`
+                            ],
+                            conclusion: `Unstable equilibrium. Constant lurching between boom and bust.`
                         }
                     }
                 };
@@ -2972,20 +3154,28 @@
 
                 // Update chart title
                 var titles = {
-                    'status-quo': 'Status Quo',
-                    'traffic-collapse': 'Traffic Collapse',
-                    'licensing': 'Licensing Regime',
-                    'fair-deal': 'Fair Deal',
-                    'high-investment': 'High Investment Extraction',
-                    'creator-resilience': 'Creator Resilience'
+                    'scraping-era': '2024: The Scraping Era',
+                    'zero-click': 'Zero-Click Future',
+                    'reddit-deal': 'The Reddit Deal',
+                    'spotify-news': 'Spotify for News',
+                    'ai-winter': 'AI Winter 2.0',
+                    'substack-lifeboat': 'The Substack Lifeboat',
+                    'journalism-graveyard': 'The Journalism Graveyard',
+                    'death-by-1000-cuts': 'Death by 1000 Cuts',
+                    'marshall-plan': 'The Marshall Plan',
+                    'boom-bust-cycle': 'Boom-Bust Cycle'
                 };
                 var insights = {
-                    'status-quo': 'Creators can\'t survive AND have no quality incentive. Watch all lines decline as creators exit and quality collapses.',
-                    'traffic-collapse': 'Catastrophic failure: Ad revenue collapses, creators flee, only AI slop remains. Death spiral.',
-                    'licensing': 'Creators can survive but still no quality incentive. Numbers stable, but quality slowly erodes.',
-                    'fair-deal': 'Creators can survive AND quality is rewarded. Watch all lines rise together—sustainable win-win!',
-                    'high-investment': 'Constraints violated but masked by VC funding. AI surges while creator base quietly erodes.',
-                    'creator-resilience': 'Constraints violated but masked by high entry. Churn maintains numbers while expertise disappears.'
+                    'scraping-era': 'Where we are now. AI scrapes the web with minimal compensation. Watch creators slowly exit.',
+                    'zero-click': 'AI answers everything. No clicks, no ad revenue, no journalism. The open web becomes a ghost town.',
+                    'reddit-deal': 'Token licensing keeps some alive, but it\'s survival money, not fair compensation. Quality still erodes.',
+                    'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
+                    'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
+                    'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
+                    'journalism-graveyard': 'Below critical mass, recovery is nearly impossible. The point of no return.',
+                    'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
+                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.',
+                    'boom-bust-cycle': 'Fast AI growth, slow creator response, delayed feedback. Constant lurching between boom and bust.'
                 };
 
                 var chartTitle = document.getElementById('chartScenarioTitle');
@@ -3199,7 +3389,7 @@
                 });
 
                 // Track current scenario
-                this.currentScenario = 'status-quo';
+                this.currentScenario = 'scraping-era';
             }
 
             startAnimation() {
@@ -3215,20 +3405,28 @@
 
                 // Update chart title and insight bubble
                 const scenarioTitles = {
-                    'status-quo': 'Status Quo',
-                    'traffic-collapse': 'Traffic Collapse',
-                    'licensing': 'Licensing Regime',
-                    'fair-deal': 'Fair Deal',
-                    'high-investment': 'High Investment Extraction',
-                    'creator-resilience': 'Creator Resilience'
+                    'scraping-era': '2024: The Scraping Era',
+                    'zero-click': 'Zero-Click Future',
+                    'reddit-deal': 'The Reddit Deal',
+                    'spotify-news': 'Spotify for News',
+                    'ai-winter': 'AI Winter 2.0',
+                    'substack-lifeboat': 'The Substack Lifeboat',
+                    'journalism-graveyard': 'The Journalism Graveyard',
+                    'death-by-1000-cuts': 'Death by 1000 Cuts',
+                    'marshall-plan': 'The Marshall Plan',
+                    'boom-bust-cycle': 'Boom-Bust Cycle'
                 };
                 const scenarioInsights = {
-                    'status-quo': 'Creators can\'t survive AND have no quality incentive. Watch all lines decline as creators exit and quality collapses.',
-                    'traffic-collapse': 'Catastrophic failure: Ad revenue collapses, creators flee, only AI slop remains. Death spiral.',
-                    'licensing': 'Creators can survive but still no quality incentive. Numbers stable, but quality slowly erodes.',
-                    'fair-deal': 'Creators can survive AND quality is rewarded. Watch all lines rise together—sustainable win-win!',
-                    'high-investment': 'Constraints violated but masked by VC funding. AI surges while creator base quietly erodes.',
-                    'creator-resilience': 'Constraints violated but masked by high entry. Churn maintains numbers while expertise disappears.'
+                    'scraping-era': 'Where we are now. AI scrapes the web with minimal compensation. Watch creators slowly exit.',
+                    'zero-click': 'AI answers everything. No clicks, no ad revenue, no journalism. The open web becomes a ghost town.',
+                    'reddit-deal': 'Token licensing keeps some alive, but it\'s survival money, not fair compensation. Quality still erodes.',
+                    'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
+                    'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
+                    'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
+                    'journalism-graveyard': 'Below critical mass, recovery is nearly impossible. The point of no return.',
+                    'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
+                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.',
+                    'boom-bust-cycle': 'Fast AI growth, slow creator response, delayed feedback. Constant lurching between boom and bust.'
                 };
 
                 const chartTitle = document.getElementById('chartScenarioTitle');

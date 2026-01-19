@@ -99,6 +99,8 @@ S(x) = \frac{1}{1 + e^{-\beta x}}
 \end{equation}
 where $\beta > 0$ controls response steepness. (We later use $\sigma(x) = 1/(1+e^{-x})$ for diversion dynamics; the distinction is that $S$ has adjustable slope $\beta$ for calibrating creator sensitivity, while $\sigma$ has unit slope with sensitivity absorbed into $k_A, k_\theta$.)
 
+\textbf{Implementation note:} The simulator uses $\beta = 15$ by default. This makes the IR constraint binding: when $\pi_c < \bar{u}$, creators decisively exit (C* can fall to $\approx 0.10$), enabling clean differentiation between ``collapse'' and ``coexistence'' scenarios. Lower $\beta$ (e.g., $\beta = 1$) makes participation barely responsive to profitability, collapsing all scenarios to similar steady states.
+
 The bounded creator dynamics are:
 
 \begin{equation}

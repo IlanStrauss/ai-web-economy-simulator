@@ -4,11 +4,14 @@
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{enumitem}
-\usepackage{longtable}
+\usepackage{pifont}
 
-\definecolor{green}{RGB}{22,163,74}
-\definecolor{red}{RGB}{220,38,38}
-\definecolor{orange}{RGB}{217,119,6}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\definecolor{mygreen}{RGB}{22,163,74}
+\definecolor{myred}{RGB}{220,38,38}
+\definecolor{myorange}{RGB}{217,119,6}
 
 \title{Scenario Parameter Verification\\
 \large AI Web Economy Simulator v3}
@@ -18,368 +21,331 @@
 \begin{document}
 \maketitle
 
-\section{V3 Model Equations (JavaScript Implementation)}
+\section{Implementation Notes}
 
-\subsection{Creator Revenue}
-\textbf{LaTeX:} $\pi_c = \theta \cdot p_L \cdot A + p_{ad} \cdot W + p_{sub} \cdot Q$
+\textbf{Important caveats for equation-to-code mapping:}
 
-\textbf{JavaScript:}
-\begin{verbatim}
-creatorRevenue() {
-    const { theta, m } = this.params;
-    const pL = 0.3;   // Licensing price coefficient
-    const pAd = 0.4;  // Ad revenue coefficient
-    const pSub = m || 0.12;   // Subscription coefficient
-    return theta * pL * this.A + pAd * this.W + pSub * this.Q;
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX exactly.
+\begin{enumerate}
+    \item \textbf{Creator sensitivity $\beta$:} The creator dynamics use $S(\beta x)$ where $\beta$ is a scenario parameter:
+    \[
+    S(x) = \frac{1}{1+e^{-x}}, \quad \text{applied as } S(\beta(\pi_c - \bar{u}))
+    \]
+    Default $\beta=15$ makes the IR constraint binding and produces clean regime separation:
+    \begin{itemize}
+        \item When $\pi_c = 0$: $C^* \approx 0.10$ (collapse possible)
+        \item When $\pi_c = \bar{u}$: $C^* = 0.50$ (neutral)
+        \item When $\pi_c \gg \bar{u}$: $C^* \to 1$ (full participation)
+    \end{itemize}
 
-\subsection{Creator Dynamics}
-\textbf{LaTeX:} $\frac{dC}{dt} = (1-C) \cdot \rho_C \cdot S(\pi_c - \bar{u}) - C \cdot \rho_C \cdot S(\bar{u} - \pi_c)$
+    The diversion function uses standard logistic ($\beta=1$).
 
-\textbf{JavaScript:}
-\begin{verbatim}
-dC() {
-    const rhoC = 0.15;  // Creator adjustment speed
-    const uBar = 0.15;  // Outside option
-    const pi_c = this.creatorRevenue();
-    const profitMargin = pi_c - uBar;
-    const entry = (1 - this.C) * rhoC * this.sigmoid(profitMargin);
-    const exit = this.C * rhoC * this.sigmoid(-profitMargin);
-    return entry - exit;
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX exactly with $\rho_C = 0.15$, $\bar{u} = 0.15$.
+    \item \textbf{Scenario parameterization:} The LaTeX treats $k_A$ as primitive. The JS maps scenario parameter $\alpha$ to $k_A$ via:
+    \[
+    k_A(\alpha) = 2.0 + 4.0\alpha
+    \]
+    This is a \textit{scenario family parameterization}, not part of the core model equations.
+
+    \item \textbf{Verification scope:} This document verifies \textit{structural consistency} (equations match code). Outcome claims (collapse, coexistence, etc.) are \textit{hypotheses consistent with parameter choices}; definitive verification requires numerical simulation.
+\end{enumerate}
+
+\section{Core Equations}
 
 \subsection{Diversion Propensity}
-\textbf{LaTeX:} $D(A, \theta) = \sigma(k_A(A - a_0) - k_\theta(\theta - \theta_0))$
+\[
+D(A, \theta) = \sigma(k_A(A - a_0) - k_\theta(\theta - \theta_0))
+\]
+where $\sigma(x) = 1/(1+e^{-x})$ is standard logistic ($\beta=1$).
 
-\textbf{JavaScript:}
-\begin{verbatim}
-diversion() {
-    const { theta, alpha } = this.params;
-    const kA = 2.0 + 6.0 * (alpha || 0.25);  // k_A scaled by alpha
-    const kTheta = 3.0;
-    const a0 = 0.25;
-    const theta0 = 0.10;
-    return this.sigmoid(kA * (this.A - a0) - kTheta * (theta - theta0));
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX. Note: $k_A$ is scaled by scenario's $\alpha$.
+Parameters: $k_A = 2.0 + 4.0\alpha$, $k_\theta = 6.0$, $a_0 = 0.30$, $\theta_0 = 0.10$.
 
-\subsection{Traffic Dynamics}
-\textbf{LaTeX:} $\frac{dW}{dt} = (1-W) \cdot \rho_W \cdot (1-D) - W \cdot \rho_W \cdot D$
+\subsection{Creator Dynamics}
+\[
+\frac{dC}{dt} = (1-C)\rho_C S(\beta(\pi_c - \bar{u})) - C\rho_C S(\beta(\bar{u} - \pi_c))
+\]
+where $S(x) = 1/(1+e^{-x})$, $\rho_C = 0.15$, $\bar{u} = 0.15$, and $\beta$ is a scenario parameter (default $\beta=15$).
 
-\textbf{JavaScript:}
-\begin{verbatim}
-dW() {
-    const rhoW = 0.2;
-    const D = this.diversion();
-    const recovery = (1 - this.W) * rhoW * (1 - D);
-    const loss = this.W * rhoW * D;
-    return recovery - loss;
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX exactly with $\rho_W = 0.2$.
+\textbf{Note on equilibrium:} At equilibrium:
+\[
+(1-C^*)S(\beta(\pi_c - \bar{u})) = C^* S(\beta(\bar{u} - \pi_c))
+\]
+With $\beta=15$, creators respond sharply to profitability around the $\pi_c = \bar{u}$ threshold.
+The sign of $dC/dt$ depends on both $\pi_c$ relative to $\bar{u}$ AND current $C$ relative to $C^*$.
 
-\subsection{Quality Dynamics}
-\textbf{LaTeX:} $\frac{dQ}{dt} = (1-Q)[\nu R(\pi_c) + \epsilon \max(C - C_{crit}, 0)] - Q[\lambda_0 + \epsilon \max(C_{crit} - C, 0)]$
+\subsection{Other Equations}
+\begin{align*}
+\text{Revenue:} \quad & \pi_c = \theta \cdot 0.3 \cdot A + 0.4 \cdot W + m \cdot Q \\
+\text{Traffic:} \quad & \frac{dW}{dt} = (1-W)\rho_W(1-D) - W\rho_W D \quad \Rightarrow \quad W^* = 1 - D \\
+\text{Quality:} \quad & \frac{dQ}{dt} = (1-Q)[\nu R + \epsilon\max(C-C_{crit},0)] - Q[\lambda_0 + \epsilon\max(C_{crit}-C,0)] \\
+\text{AI:} \quad & \frac{dA}{dt} = (1-A)(I + r_A A(1+\gamma Q)) - A\delta_A
+\end{align*}
 
-\textbf{JavaScript:}
-\begin{verbatim}
-dQ() {
-    const nu = 0.1;
-    const epsilon = 0.15;
-    const Ccrit = 0.35;
-    const lambda0 = 0.05;
-    const piBar = 0.12;
-    const pi_c = this.creatorRevenue();
-    const R = this.softplus(pi_c - piBar);
-    const reinvestment = nu * R;
-    const criticalMassBonus = epsilon * Math.max(this.C - Ccrit, 0);
-    const gain = (1 - this.Q) * (reinvestment + criticalMassBonus);
-    const decay = lambda0;
-    const criticalMassShortfall = epsilon * Math.max(Ccrit - this.C, 0);
-    const loss = this.Q * (decay + criticalMassShortfall);
-    return gain - loss;
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX with $\nu=0.1$, $\epsilon=0.15$, $C_{crit}=0.35$, $\lambda_0=0.05$.
+\section{Final Scenario Parameters}
 
-\subsection{AI Dynamics}
-\textbf{LaTeX:} $\frac{dA}{dt} = (1-A) \cdot (I + r_A \cdot A \cdot (1 + \gamma Q)) - A \cdot \delta_A$
+All scenarios use default $\beta=15$ for creator sensitivity unless otherwise specified.
 
-\textbf{JavaScript:}
-\begin{verbatim}
-dA() {
-    const { I } = this.params;
-    const rA = 0.2;
-    const gamma = 0.4;
-    const deltaA = 0.1;
-    const growth = (1 - this.A) * (I + rA * this.A * (1 + gamma * this.Q));
-    const depreciation = this.A * deltaA;
-    return growth - depreciation;
-}
-\end{verbatim}
-\textcolor{green}{\checkmark} \textbf{Verified:} Matches LaTeX with $r_A=0.2$, $\gamma=0.4$, $\delta_A=0.1$.
-
-\section{Parameter Mapping Summary}
-
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
-\begin{tabular}{llll}
+\small
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Scenario Param} & \textbf{Used?} & \textbf{Where} & \textbf{Effect} \\
+\textbf{Scenario} & $\theta$ & $\alpha$ & $I$ & $m$ & \textbf{ICs} & $k_A$ & $D_0$ & $W^*$ & $\pi_{c,0}$ \\
 \midrule
-$\theta$ & \textcolor{green}{\checkmark} & \texttt{creatorRevenue()}, \texttt{diversion()} & $\uparrow\theta \Rightarrow \uparrow\pi_c$, $\downarrow D$ \\
-$h$ & \textcolor{red}{$\times$} & Not used & Legacy param \\
-$m$ & \textcolor{green}{\checkmark} & \texttt{creatorRevenue()} as $p_{sub}$ & $\uparrow m \Rightarrow \uparrow\pi_c$ \\
-$\alpha$ & \textcolor{green}{\checkmark} & \texttt{diversion()} scales $k_A$ & $\uparrow\alpha \Rightarrow$ stronger $D$ \\
-$r$ & \textcolor{red}{$\times$} & Not used & Legacy param \\
-$I$ & \textcolor{green}{\checkmark} & \texttt{dA()} & $\uparrow I \Rightarrow$ faster AI growth \\
+scraping-era & 0.10 & 0.35 & 0.08 & 0.10 & default & 3.4 & 0.58 & 0.42 & 0.27 \\
+zero-click & 0.02 & 0.90 & 0.14 & 0.05 & default & 5.6 & 0.79 & 0.21 & 0.23 \\
+low-quality-trap & 0.18 & 0.25 & 0.06 & 0.12 & custom & 3.0 & 0.46 & 0.54 & 0.25 \\
+spotify-news & 0.40 & 0.05 & 0.05 & 0.35 & default & 2.2 & 0.36 & 0.64 & 0.44 \\
+ai-winter & 0.02 & 0.70 & 0.15 & 0.06 & default & 4.8 & 0.76 & 0.24 & 0.24 \\
+substack-lifeboat & 0.06 & 0.70 & 0.05 & 0.50 & default & 4.8 & 0.74 & 0.26 & 0.48 \\
+journalism-graveyard & 0.08 & 0.60 & 0.08 & 0.08 & custom & 4.4 & 0.77 & 0.23 & 0.065 \\
+death-by-1000-cuts & 0.08 & 0.20 & 0.04 & 0.12 & default & 2.8 & 0.60 & 0.40 & 0.26 \\
+marshall-plan & 0.42 & 0.05 & 0.04 & 0.30 & damaged & 2.2 & 0.38 & 0.62 & 0.25 \\
+boom-bust & 0.22 & 0.15 & 0.10 & 0.18 & custom & 2.6 & 0.55 & 0.45 & 0.29 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Scenario-by-Scenario Verification}
+\textbf{Initial Conditions:}
+\begin{itemize}
+    \item Default: $C=0.60$, $A=0.40$, $Q=0.55$, $W=0.50$
+    \item low-quality-trap: $C=0.40$, $A=0.40$, $Q=0.40$, $W=0.45$
+    \item journalism-graveyard: $C=0.20$, $A=0.55$, $Q=0.15$, $W=0.10$
+    \item marshall-plan (damaged): $C=0.30$, $A=0.45$, $Q=0.30$, $W=0.25$
+    \item boom-bust: $C=0.35$, $A=0.45$, $Q=0.45$, $W=0.45$
+\end{itemize}
+
+\section{Scenario-by-Scenario Analysis}
 
 \subsection{Scenario 1: scraping-era}
-\textbf{Parameters:} $\theta=0.02$, $m=0.12$, $\alpha=0.25$, $I=0.08$
+\textbf{Parameters:} $\theta=0.10$, $\alpha=0.35$, $I=0.08$, $m=0.10$
 
-\textbf{Initial Conditions:} Default ($C=0.60$, $A=0.40$, $Q=0.55$, $W=0.50$)
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.35) = 3.4$
+    \item $D_0 = \sigma(3.4 \times 0.10 - 6.0 \times 0.0) = \sigma(0.34) \approx 0.58$, so $W^* \approx 0.42$
+    \item $\pi_{c,0} = 0.10 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.10 \times 0.55 = 0.267 > \bar{u} = 0.15$
+    \item Since $D_0 > 0.5$, traffic will decline ($dW < 0$)
+    \item As $W \downarrow$, $\pi_c \downarrow$, eventually pushing creators toward exit
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-\pi_c &= 0.02 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.12 \times 0.55 \\
-&= 0.0024 + 0.20 + 0.066 = 0.2684
-\end{align*}
-$\pi_c = 0.27 > \bar{u} = 0.15$ initially, so creators enter.
-
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.25 = 3.5 \\
-D &= \sigma(3.5(0.40 - 0.25) - 3.0(0.02 - 0.10)) \\
-&= \sigma(0.525 + 0.24) = \sigma(0.765) \approx 0.68
-\end{align*}
-
-High $D$ means $W$ will decline, reducing ad revenue, eventually pushing $\pi_c < \bar{u}$.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Gradual decline $\rightarrow$ Collapse. \textbf{Verified.}
+\textcolor{myorange}{\textbf{Hypothesis:}} Gradual collapse as traffic spiral reduces $\pi_c$ below $\bar{u}$. Quality support is modest. \textit{Requires simulation to confirm timing and trajectory.}
 
 \subsection{Scenario 2: zero-click}
-\textbf{Parameters:} $\theta=0.01$, $m=0.08$, $\alpha=0.50$, $I=0.12$
+\textbf{Parameters:} $\theta=0.02$, $\alpha=0.90$, $I=0.14$, $m=0.05$
 
-\textbf{Initial Conditions:} Default
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.90) = 5.6$ --- near maximum diversion sensitivity
+    \item $D_0 = \sigma(5.6 \times 0.10 - 6.0 \times (-0.08)) = \sigma(1.04) \approx 0.74$, so $W^* \approx 0.26$
+    \item $\pi_{c,0} = 0.02 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.05 \times 0.55 = 0.230 > \bar{u}$
+    \item Strong $I=0.14$ accelerates $A$ while traffic collapses
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.50 = 5.0 \text{ (very strong)} \\
-D &= \sigma(5.0(0.40 - 0.25) - 3.0(0.01 - 0.10)) \\
-&= \sigma(0.75 + 0.27) = \sigma(1.02) \approx 0.73
-\end{align*}
+\textcolor{myorange}{\textbf{Hypothesis:}} Severe, rapid collapse. Near-maximum initial diversion with strong AI growth. \textit{Distinct from scraping-era in severity (higher $\alpha$, higher $k_A$).}
 
-Very high $D$ + high $I$ means $A$ grows fast while $W \rightarrow 0$.
+\subsection{Scenario 3: low-quality-trap}
+\textbf{Parameters:} $\theta=0.18$, $\alpha=0.25$, $I=0.06$, $m=0.12$
 
-\begin{align*}
-\pi_c &= 0.01 \times 0.3 \times A + 0.4 \times W + 0.08 \times Q
-\end{align*}
-As $W \rightarrow 0$: $\pi_c \rightarrow 0.003A + 0.08Q < \bar{u} = 0.15$
+\textbf{Custom ICs:} $C=0.40$, $A=0.40$, $Q=0.40$, $W=0.45$
 
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Severe collapse. \textbf{Verified.}
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.25) = 3.0$
+    \item $D_0 = \sigma(3.0 \times 0.10 - 6.0 \times 0.08) = \sigma(-0.18) \approx 0.46$, so $W^* \approx 0.54$
+    \item $\pi_{c,0} = 0.18 \times 0.3 \times 0.40 + 0.4 \times 0.45 + 0.12 \times 0.40 = 0.250 > \bar{u}$
+    \item Starts near critical region, not ``healthy baseline''
+\end{itemize}
 
-\subsection{Scenario 3: reddit-deal}
-\textbf{Parameters:} $\theta=0.08$, $m=0.15$, $\alpha=0.30$, $I=0.08$
-
-\textbf{Initial Conditions:} Default
-
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.30 = 3.8 \\
-D &= \sigma(3.8(0.40 - 0.25) - 3.0(0.08 - 0.10)) \\
-&= \sigma(0.57 + 0.06) = \sigma(0.63) \approx 0.65
-\end{align*}
-
-$\pi_c = 0.08 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.15 \times 0.55 = 0.29$
-
-Moderate $\pi_c$, but $D$ still high $\Rightarrow$ $W$ declines $\Rightarrow$ $\pi_c$ settles near $\bar{u}$.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Low-quality trap (survival without growth). \textbf{Verified.}
+\textcolor{myorange}{\textbf{Hypothesis:}} Stabilizes at mediocre quality equilibrium. Moderate diversion, only moderate subscription support. System can stabilize with low $Q$ rather than exploding or instantly collapsing. \textit{Requires simulation to confirm stability.}
 
 \subsection{Scenario 4: spotify-news}
-\textbf{Parameters:} $\theta=0.30$, $m=0.35$, $\alpha=0.10$, $I=0.06$
+\textbf{Parameters:} $\theta=0.40$, $\alpha=0.05$, $I=0.05$, $m=0.35$
 
-\textbf{Initial Conditions:} Default
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.05) = 2.2$
+    \item $D_0 = \sigma(2.2 \times 0.10 - 6.0 \times 0.30) = \sigma(-1.58) \approx 0.17$, so $W^* \approx 0.83 > W_0$
+    \item $\pi_{c,0} = 0.40 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.35 \times 0.55 = 0.441 \gg \bar{u}$
+    \item Since $D_0 < 0.5$, traffic will \textit{increase} ($dW > 0$)
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.10 = 2.6 \text{ (weak diversion)} \\
-D &= \sigma(2.6(0.40 - 0.25) - 3.0(0.30 - 0.10)) \\
-&= \sigma(0.39 - 0.60) = \sigma(-0.21) \approx 0.45
-\end{align*}
-
-Low $D$ means $W$ stable/recovering.
-
-\begin{align*}
-\pi_c &= 0.30 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.35 \times 0.55 \\
-&= 0.036 + 0.20 + 0.19 = 0.426
-\end{align*}
-
-Very high $\pi_c \gg \bar{u}$ $\Rightarrow$ strong entry + high reinvestment $R(\pi_c)$.
-
-Also: $C = 0.60 > C_{crit} = 0.35$ so quality gets critical mass bonus.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Sustainable coexistence. \textbf{Verified.}
+\textcolor{mygreen}{\cmark} \textbf{Structurally consistent:} Genuinely low-diversion regime. High $\theta$ ensures strong revenue/reinvestment. Traffic grows toward equilibrium.
 
 \subsection{Scenario 5: ai-winter}
-\textbf{Parameters:} $\theta=0.02$, $m=0.10$, $\alpha=0.35$, $I=0.15$
+\textbf{Parameters:} $\theta=0.02$, $\alpha=0.70$, $I=0.15$, $m=0.06$
 
-\textbf{Initial Conditions:} Default
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.70) = 4.8$
+    \item $D_0 = \sigma(4.8 \times 0.10 - 6.0 \times (-0.08)) = \sigma(0.96) \approx 0.72$, so $W^* \approx 0.28$
+    \item $\pi_{c,0} = 0.02 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.06 \times 0.55 = 0.235 > \bar{u}$
+    \item Very high $I=0.15$ pushes $A$ hard while traffic collapses
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.35 = 4.1 \\
-\end{align*}
+\textbf{Mechanism:} High $\alpha$ causes severe traffic collapse. As $Q$ falls, $(1+\gamma Q)$ term weakens.
 
-Very high $I = 0.15$ pushes $A$ up fast. As $A$ grows:
-- $D$ increases (more AI substitution)
-- $W$ falls $\Rightarrow$ $\pi_c$ falls $\Rightarrow$ $C$ falls $\Rightarrow$ $Q$ falls
-- Then $(1 + \gamma Q)$ falls, throttling AI's endogenous growth
+\textbf{Caveat:} Exogenous $I=0.15$ continues pushing $A$ up even if $Q$ collapses. This produces ``AI boom + ecosystem collapse,'' not guaranteed ``AI winter'' unless $I$ is later dominated by depreciation.
 
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Boom then stagnation (data drought). \textbf{Verified.}
+\textcolor{myorange}{\textbf{Hypothesis:}} AI boom followed by ecosystem collapse; AI growth slows but may not fully stagnate. \textit{``Data drought'' effect requires simulation to quantify.}
 
 \subsection{Scenario 6: substack-lifeboat}
-\textbf{Parameters:} $\theta=0.10$, $m=0.45$, $\alpha=0.40$, $I=0.06$
+\textbf{Parameters:} $\theta=0.06$, $\alpha=0.70$, $I=0.05$, $m=0.50$
 
-\textbf{Initial Conditions:} Default
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.70) = 4.8$
+    \item $D_0 \approx 0.74$, so $W^* \approx 0.26$ (traffic loss is high)
+    \item $\pi_{c,0} = 0.06 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.50 \times 0.55 = 0.482 \gg \bar{u}$
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.40 = 4.4 \text{ (strong diversion)}
-\end{align*}
+\textbf{Key insight:} High $m=0.50$ means subscription term dominates revenue:
+\[
+\pi_c \approx 0.50 \times Q
+\]
+Even at $W=0.20$, $Q=0.40$: subscription term $= 0.20 > \bar{u}$.
 
-High $\alpha$ means $W$ will fall significantly. BUT:
-\begin{align*}
-\pi_c &= 0.10 \times 0.3 \times A + 0.4 \times W + 0.45 \times Q
-\end{align*}
-
-The $p_{sub} \cdot Q = 0.45 \times Q$ term dominates! Even as $W \rightarrow$ low:
-- If $Q = 0.5$: subscription term = $0.45 \times 0.5 = 0.225$
-- This alone exceeds $\bar{u} = 0.15$
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Survive via subscriptions despite traffic loss. \textbf{Verified.}
+\textcolor{mygreen}{\cmark} \textbf{Structurally consistent:} Diversion is high (traffic loss), but $m$ is so large that creators remain viable via $mQ$. The ``lifeboat'' effect: subscriptions insulate from traffic collapse.
 
 \subsection{Scenario 7: journalism-graveyard}
-\textbf{Parameters:} $\theta=0.05$, $m=0.10$, $\alpha=0.35$, $I=0.08$
+\textbf{Parameters:} $\theta=0.08$, $\alpha=0.60$, $I=0.08$, $m=0.08$, $\beta=15$ (default)
 
-\textbf{Initial Conditions:} \textcolor{red}{\textbf{CUSTOM:}} $C=0.25$, $A=0.50$, $Q=0.30$, $W=0.35$
+\textbf{Custom ICs:} $C=0.20$, $A=0.55$, $Q=0.15$, $W=0.10$
 
-This is the key scenario that tests \textbf{hysteresis} by starting below $C_{crit} = 0.35$.
+\textbf{Critical calculation:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.60) = 4.4$
+    \item $D_0 = \sigma(4.4 \times 0.25 - 6.0 \times (-0.02)) = \sigma(1.22) \approx 0.77$, so $W^* \approx 0.23$
+    \item $\pi_{c,0} = 0.08 \times 0.3 \times 0.55 + 0.4 \times 0.10 + 0.08 \times 0.15 = 0.065 \ll \bar{u} = 0.15$
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-\pi_c &= 0.05 \times 0.3 \times 0.50 + 0.4 \times 0.35 + 0.10 \times 0.30 \\
-&= 0.0075 + 0.14 + 0.03 = 0.1775
-\end{align*}
+\textbf{Key insight:} $\pi_{c,0} = 0.065 \ll \bar{u}$ decisively violates IR. With $\beta=15$:
+\[
+S(15 \times (0.065 - 0.15)) = S(-1.275) \approx 0.22
+\]
+This means entry rate is very low while exit rate is high. Combined with $C_0 = 0.20 < C_{crit} = 0.35$, quality decays, further reducing $\pi_c$.
 
-$\pi_c = 0.18 > \bar{u} = 0.15$, so creators would normally enter. BUT:
+\textcolor{myorange}{\textbf{Hypothesis:}} Decisive collapse. The ``can't climb back'' dynamics are now structurally plausible with deep sub-threshold ICs.
 
-Since $C = 0.25 < C_{crit} = 0.35$:
-\begin{align*}
-\text{Quality shortfall term} &= \epsilon \times \max(C_{crit} - C, 0) \\
-&= 0.15 \times (0.35 - 0.25) = 0.015
-\end{align*}
-
-Quality has \textbf{headwinds}: it decays faster. Even if $\pi_c$ is marginally profitable, quality erodes, which reduces $\pi_c$ further.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Collapse despite moderate compensation (hysteresis). \textbf{Verified.}
+\textit{Designed to demonstrate true hysteresis-style collapse.}
 
 \subsection{Scenario 8: death-by-1000-cuts}
-\textbf{Parameters:} $\theta=0.04$, $m=0.15$, $\alpha=0.20$, $I=0.07$
+\textbf{Parameters:} $\theta=0.08$, $\alpha=0.20$, $I=0.04$, $m=0.12$
 
-\textbf{Initial Conditions:} Default
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.20) = 2.8$
+    \item $D_0 = \sigma(2.8 \times 0.10 - 6.0 \times (-0.02)) = \sigma(0.40) \approx 0.60$, so $W^* \approx 0.40$
+    \item $\pi_{c,0} = 0.08 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.12 \times 0.55 = 0.076 > \bar{u}$
+\end{itemize}
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.20 = 3.2 \text{ (moderate diversion)} \\
-\pi_c &= 0.04 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.15 \times 0.55 \\
-&= 0.005 + 0.20 + 0.08 = 0.29
-\end{align*}
+\textbf{Key insight:} $D_0 \approx 0.60$ is only slightly above 0.5, producing slow decline. Very low $I=0.04$ means AI grows extremely slowly, so $D$ increases very slowly. The ``boiled frog'' scenario where decline is so gradual it's imperceptible.
 
-Initial $\pi_c = 0.29 > \bar{u}$, so no immediate crisis. But:
-- $D \approx 0.55$ (moderate)
-- $W$ slowly declines
-- $\pi_c$ slowly declines
-- Quality erodes gradually (low reinvestment $R(\pi_c)$)
-
-The decline is gradual, not sudden.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Slow decline (boiled frog). \textbf{Verified.}
+\textcolor{myorange}{\textbf{Hypothesis:}} Very slow erosion that is hard to notice until too late. \textit{Distinct from other collapse scenarios in speed due to low $I$.}
 
 \subsection{Scenario 9: marshall-plan}
-\textbf{Parameters:} $\theta=0.25$, $m=0.30$, $\alpha=0.15$, $I=0.05$
+\textbf{Parameters:} $\theta=0.42$, $\alpha=0.05$, $I=0.04$, $m=0.30$
 
-\textbf{Initial Conditions:} Default
+\textbf{Damaged ICs:} $C=0.30$, $A=0.45$, $Q=0.30$, $W=0.25$
 
-\textbf{Calculation:}
-\begin{align*}
-k_A &= 2.0 + 6.0 \times 0.15 = 2.9 \text{ (weak diversion)} \\
-D &= \sigma(2.9(0.40 - 0.25) - 3.0(0.25 - 0.10)) \\
-&= \sigma(0.435 - 0.45) = \sigma(-0.015) \approx 0.496
-\end{align*}
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.05) = 2.2$
+    \item $D_0 = \sigma(2.2 \times 0.15 - 6.0 \times 0.32) = \sigma(-1.59) \approx 0.17$, so $W^* \approx 0.83$
+    \item $\pi_{c,0} = 0.42 \times 0.3 \times 0.45 + 0.4 \times 0.25 + 0.30 \times 0.30 = 0.247 > \bar{u}$
+\end{itemize}
 
-$D \approx 0.50$ means $W$ is stable (neither growing nor declining fast).
+Since $D_0 < 0.5$, traffic will recover ($dW > 0$) from damaged $W_0=0.25$ toward $W^* \approx 0.83$.
 
-\begin{align*}
-\pi_c &= 0.25 \times 0.3 \times 0.40 + 0.4 \times 0.50 + 0.30 \times 0.55 \\
-&= 0.03 + 0.20 + 0.165 = 0.395
-\end{align*}
+\textcolor{mygreen}{\cmark} \textbf{Structurally consistent:} Very high $\theta$ and very low $\alpha$ produce low diversion. Starts in genuinely damaged state but with parameters that move $W$ upward and revenue toward viability. This is what makes it a ``policy recovery'' scenario.
 
-High $\pi_c$ drives strong entry and reinvestment. Also $C > C_{crit}$.
+\subsection{Scenario 10: boom-bust}
+\textbf{Parameters:} $\theta=0.22$, $\alpha=0.15$, $I=0.10$, $m=0.18$
 
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Recovery to sustainable coexistence. \textbf{Verified.}
+\textbf{Custom ICs:} $C=0.35$, $A=0.45$, $Q=0.45$, $W=0.45$
 
-\subsection{Scenario 10: boom-bust-cycle}
-\textbf{Parameters:} $\theta=0.12$, $m=0.25$, $\alpha=0.30$, $I=0.10$
+\textbf{Initial state analysis:}
+\begin{itemize}
+    \item $k_A = 2 + 4(0.15) = 2.6$
+    \item $D_0 = \sigma(2.6 \times 0.15 - 6.0 \times 0.12) = \sigma(-0.33) \approx 0.42$, so $W^* \approx 0.58$
+    \item $\pi_{c,0} = 0.22 \times 0.3 \times 0.45 + 0.4 \times 0.45 + 0.18 \times 0.45 = 0.291 > \bar{u}$
+    \item $W_0 = 0.45 \approx W^*$ (near traffic equilibrium)
+    \item $C_0 = 0.35 \approx C_{crit}$ (near creator threshold)
+\end{itemize}
 
-\textbf{Initial Conditions:} Default
+\textbf{Key insight:} Tuned close to the knife-edge. $W_0 \approx W_0^*$ and $C_0 \approx C_{crit}$, which is where delayed adjustments \textit{can} create overshoot patterns.
 
-\textbf{Calculation:}
+\textbf{Important:} If you truly want reliable oscillations, add one calibration lever (speed mismatch: raise $\rho_W$, lower $\rho_C$)---otherwise this remains a plausible-but-empirical regime.
 
-This scenario has intermediate values designed to produce oscillations:
-- $I = 0.10$ (moderate-high AI investment)
-- $\alpha = 0.30$ (moderate diversion)
-- $\theta = 0.12$ (not too low, not too high)
-
-The dynamics depend on speed mismatches:
-- Traffic adjusts fast ($\rho_W = 0.2$)
-- Creators adjust slower ($\rho_C = 0.15$)
-- Quality adjusts slowest
-
-This can produce overshoot/correction cycles if the feedback delays are right.
-
-\textcolor{green}{\checkmark} \textbf{Expected Outcome:} Oscillating dynamics. \textbf{Verified.}
+\textcolor{myorange}{\textbf{Hypothesis:}} Near-threshold feedback with potential oscillation dynamics. \textit{Oscillations not guaranteed without speed mismatch.}
 
 \section{Verification Summary}
 
 \begin{center}
-\begin{tabular}{llcc}
+\begin{tabular}{lll}
 \toprule
-\textbf{Scenario} & \textbf{Expected Outcome} & \textbf{Params OK?} & \textbf{IC OK?} \\
+\textbf{Scenario} & \textbf{Status} & \textbf{Notes} \\
 \midrule
-scraping-era & Gradual collapse & \textcolor{green}{\checkmark} & Default \\
-zero-click & Severe collapse & \textcolor{green}{\checkmark} & Default \\
-reddit-deal & Low-Q trap & \textcolor{green}{\checkmark} & Default \\
-spotify-news & Sustainable coexistence & \textcolor{green}{\checkmark} & Default \\
-ai-winter & Boom then stagnation & \textcolor{green}{\checkmark} & Default \\
-substack-lifeboat & Survive via subscriptions & \textcolor{green}{\checkmark} & Default \\
-journalism-graveyard & Hysteresis collapse & \textcolor{green}{\checkmark} & \textcolor{green}{Custom} \\
-death-by-1000-cuts & Slow decline & \textcolor{green}{\checkmark} & Default \\
-marshall-plan & Policy recovery & \textcolor{green}{\checkmark} & Default \\
-boom-bust-cycle & Oscillations & \textcolor{green}{\checkmark} & Default \\
+scraping-era & \textcolor{myorange}{Hypothesis} & Collapse via traffic spiral; confirm speed via sim \\
+zero-click & \textcolor{myorange}{Hypothesis} & Faster collapse than scraping-era \\
+low-quality-trap & \textcolor{myorange}{Hypothesis} & Custom ICs; stabilizes at mediocre $Q$; confirm via sim \\
+spotify-news & \textcolor{mygreen}{Consistent} & $D < 0.5$ implies traffic growth \\
+ai-winter & \textcolor{myorange}{Hypothesis} & Boom + ecosystem collapse; AI stagnation unclear \\
+substack-lifeboat & \textcolor{mygreen}{Consistent} & High $m$ provides revenue floor \\
+journalism-graveyard & \textcolor{myorange}{Hypothesis} & Deep sub-threshold ICs; collapse plausible \\
+death-by-1000-cuts & \textcolor{myorange}{Hypothesis} & Slow drift; $D_0$ only slightly above 0.5 \\
+marshall-plan & \textcolor{mygreen}{Consistent} & $D < 0.5$ from damaged state implies recovery \\
+boom-bust & \textcolor{myorange}{Hypothesis} & Near knife-edge; oscillations need speed mismatch \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{All 10 scenarios verified.} The JavaScript implementation correctly implements the v3 equations, and each scenario's parameters produce the intended dynamics.
+\section{Simulation Results with $\beta=15$}
+
+Numerical integration (RK4, converged to $\|\dot{x}\| \sim 10^{-15}$) produces the following steady states:
+
+\begin{center}
+\small
+\begin{tabular}{llccccl}
+\toprule
+\textbf{Scenario} & \textbf{Final C} & \textbf{Final W} & \textbf{Final Q} & $\pi_c$ & $D$ & \textbf{Outcome} \\
+\midrule
+scraping-era & 0.43 & 0.13 & 0.62 & 0.13 & 0.87 & Degraded \\
+zero-click & 0.22 & 0.06 & 0.49 & 0.07 & 0.94 & \textbf{Severe collapse} \\
+low-quality-trap & 0.59 & 0.13 & 0.68 & 0.17 & 0.87 & Not a trap* \\
+spotify-news & 0.99 & 0.35 & 0.79 & 0.48 & 0.65 & \textbf{Coexistence} \\
+ai-winter & 0.30 & 0.09 & 0.54 & 0.09 & 0.92 & \textbf{Severe collapse} \\
+substack-lifeboat & 0.98 & 0.12 & 0.78 & 0.42 & 0.88 & \textbf{Lifeboat works} \\
+journalism-graveyard & 0.37 & 0.11 & 0.59 & 0.11 & 0.89 & Degraded, not collapse* \\
+death-by-1000-cuts & 0.59 & 0.16 & 0.68 & 0.17 & 0.84 & Similar to trap* \\
+marshall-plan & 0.98 & 0.30 & 0.78 & 0.41 & 0.70 & \textbf{Recovery} \\
+boom-bust & 0.86 & 0.14 & 0.75 & 0.27 & 0.86 & Stable, no oscillations* \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{*Limitations:} With $\beta=15$ and current parameters:
+\begin{itemize}
+    \item \textbf{Low-quality trap} does not emerge: Q ends high, C ends mid-high
+    \item \textbf{Hysteresis collapse} (journalism-graveyard) degrades but does not collapse to C $\approx$ 0
+    \item \textbf{Boom-bust oscillations} do not occur with fixed $\rho_W$, $\rho_C$ and memoryless dynamics
+\end{itemize}
+
+Clean differentiation achieved: Scenarios 2, 5 (severe collapse) vs 4, 6, 9 (coexistence/recovery). Middle scenarios (1, 3, 7, 8, 10) converge to similar ``degraded but stable'' steady states.
+
+\section{What This Document Verifies}
+
+\begin{enumerate}
+    \item \textbf{Equation-to-code mapping:} JS implements the stated ODEs (with noted $\beta$ values).
+    \item \textbf{Parameter consistency:} Each scenario has parameters that point in the intended direction.
+    \item \textbf{Initial derivative signs:} For scenarios marked ``Consistent,'' the initial $dW$ sign matches the intended trajectory.
+\end{enumerate}
+
+\textbf{What this does NOT verify:}
+\begin{itemize}
+    \item Long-run outcomes (collapse timing, equilibrium values)
+    \item Hysteresis/path-dependence claims
+    \item Oscillation existence
+\end{itemize}
+
+These require numerical simulation of the full ODE system.
 
 \end{document}

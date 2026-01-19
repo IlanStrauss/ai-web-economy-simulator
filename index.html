@@ -1234,8 +1234,7 @@
                     <div class="preset-buttons">
                         <button class="preset-btn" data-preset="scraping-era">2024: Scraping Era</button>
                         <button class="preset-btn" data-preset="zero-click">Zero-Click Future</button>
-                        <button class="preset-btn" data-preset="reddit-deal">Reddit Deal</button>
-                        <button class="preset-btn" data-preset="spotify-news">Spotify for News</button>
+                                                <button class="preset-btn" data-preset="spotify-news">Spotify for News</button>
                         <button class="preset-btn" data-preset="ai-winter">AI Winter 2.0</button>
                         <button class="preset-btn" data-preset="substack-lifeboat">Substack Lifeboat</button>
                     </div>
@@ -1263,15 +1262,12 @@
                                 <select id="scenarioSelect" class="scenario-dropdown">
                                     <option value="scraping-era">📉 2024: The Scraping Era — Where we are now</option>
                                     <option value="zero-click">🚨 Zero-Click Future — AI answers everything, no clicks</option>
-                                    <option value="reddit-deal">💵 The Reddit Deal — Token licensing, survival money</option>
-                                    <option value="spotify-news">🎵 Spotify for News — Fair 30% revenue share</option>
+                                                                        <option value="spotify-news">🎵 Spotify for News — Fair 30% revenue share</option>
                                     <option value="ai-winter">❄️ AI Winter 2.0 — Boom then data drought</option>
                                     <option value="substack-lifeboat">🛟 Substack Lifeboat — Subscription escape</option>
-                                    <option value="journalism-graveyard">⚰️ Journalism Graveyard — Point of no return</option>
-                                    <option value="death-by-1000-cuts">🐸 Death by 1000 Cuts — Slow boiled frog</option>
+                                                                        <option value="death-by-1000-cuts">🐸 Death by 1000 Cuts — Slow boiled frog</option>
                                     <option value="marshall-plan">🏛️ The Marshall Plan — Policy intervention</option>
-                                    <option value="boom-bust-cycle">📈 Boom-Bust Cycle — Oscillating dynamics</option>
-                                </select>
+                                                                    </select>
                             </div>
                             <div class="run-controls">
                                 <button class="run-btn" id="runScenarioBtn">▶ Run Simulation</button>
@@ -1911,25 +1907,6 @@
                                 </div>
                             </div>
 
-                            <div class="scenario-detail-card" data-scenario="reddit-deal">
-                                <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">💵</span>
-                                    <div>
-                                        <h3>The Reddit Deal</h3>
-                                        <span class="scenario-tag partial">Low-Q Trap</span>
-                                    </div>
-                                    <button class="run-case-btn" data-run="reddit-deal">▶ Run</button>
-                                </div>
-                                <p class="scenario-detail-desc">Token licensing ($60M deals). π<sub>c</sub> ≈ ū so creators survive, but R(π<sub>c</sub>) ≈ 0 means no reinvestment.</p>
-                                <div class="scenario-detail-params">
-                                    <div><strong>θ = 8%</strong>, low p<sub>sub</sub></div>
-                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">C stable, Q↓</span></div>
-                                </div>
-                                <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Survival without quality investment
-                                </div>
-                            </div>
-
                             <div class="scenario-detail-card" data-scenario="spotify-news">
                                 <div class="scenario-detail-header">
                                     <span class="scenario-detail-icon">🎵</span>
@@ -1954,7 +1931,7 @@
                                     <span class="scenario-detail-icon">❄️</span>
                                     <div>
                                         <h3>AI Winter 2.0</h3>
-                                        <span class="scenario-tag partial">Boom-Bust</span>
+                                        <span class="scenario-tag partial">Stagnation</span>
                                     </div>
                                     <button class="run-case-btn" data-run="ai-winter">▶ Run</button>
                                 </div>
@@ -1984,25 +1961,6 @@
                                 </div>
                                 <div class="scenario-detail-outcome">
                                     <strong>Outcome:</strong> Quality-resilient creator economy
-                                </div>
-                            </div>
-
-                            <div class="scenario-detail-card" data-scenario="journalism-graveyard">
-                                <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">⚰️</span>
-                                    <div>
-                                        <h3>Journalism Graveyard</h3>
-                                        <span class="scenario-tag crisis">Collapse</span>
-                                    </div>
-                                    <button class="run-case-btn" data-run="journalism-graveyard">▶ Run</button>
-                                </div>
-                                <p class="scenario-detail-desc">Starting below C<sub>crit</sub>: quality headwinds dominate. C → 0 regardless of compensation (hysteresis).</p>
-                                <div class="scenario-detail-params">
-                                    <div><strong>C₀ < C<sub>crit</sub></strong></div>
-                                    <div><strong>Dynamics:</strong> <span style="color: #f87171;">Path-dependent collapse</span></div>
-                                </div>
-                                <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Point of no return
                                 </div>
                             </div>
 
@@ -2044,24 +2002,6 @@
                                 </div>
                             </div>
 
-                            <div class="scenario-detail-card" data-scenario="boom-bust-cycle">
-                                <div class="scenario-detail-header">
-                                    <span class="scenario-detail-icon">📈</span>
-                                    <div>
-                                        <h3>Boom-Bust Cycle</h3>
-                                        <span class="scenario-tag partial">Oscillations</span>
-                                    </div>
-                                    <button class="run-case-btn" data-run="boom-bust-cycle">▶ Run</button>
-                                </div>
-                                <p class="scenario-detail-desc">Fast ρ<sub>W</sub>, slow ρ<sub>C</sub>/ν, strong γ. Traffic moves fast; creators/quality respond with delay → overshoot dynamics.</p>
-                                <div class="scenario-detail-params">
-                                    <div><strong>Separated time scales</strong></div>
-                                    <div><strong>Dynamics:</strong> <span style="color: #fbbf24;">Cyclic behavior</span></div>
-                                </div>
-                                <div class="scenario-detail-outcome">
-                                    <strong>Outcome:</strong> Persistent oscillations
-                                </div>
-                            </div>
                         </div>
                     </section>
 
@@ -2116,13 +2056,13 @@
                                     <div style="color: #666;">• The Reddit Deal</div>
                                     <div style="color: #666;">• Death by 1000 Cuts</div>
                                     <div style="color: #666;">• AI Winter 2.0</div>
-                                    <div style="color: #666;">• Boom-Bust Cycle</div>
                                 </div>
                                 <div>
                                     <div style="color: #4ade80; font-weight: bold; margin-bottom: 0.25rem;">Coexistence Scenarios:</div>
                                     <div style="color: #666;">• Spotify for News</div>
                                     <div style="color: #666;">• Substack Lifeboat</div>
                                     <div style="color: #666;">• The Marshall Plan</div>
+                                    <div style="color: #666;">• The Licensed Future</div>
                                 </div>
                             </div>
                         </div>
@@ -2395,9 +2335,11 @@
             // - I: AI investment rate
             // - m: mutualism coefficient (subscriptions, direct support)
 
-            // Sigmoid function for entry/exit dynamics
-            sigmoid(x, beta = 5) {
-                return 1 / (1 + Math.exp(-beta * x));
+            // Sigmoid function for smooth thresholds
+            // Standard logistic: beta=1 (used for diversion)
+            // For creator dynamics, beta is passed explicitly from dC()
+            sigmoid(x) {
+                return 1 / (1 + Math.exp(-x));
             }
 
             // Softplus function for reinvestment signal
@@ -2411,26 +2353,34 @@
             diversion() {
                 const { theta, alpha } = this.params;
                 // Scale k_A by alpha: alpha=0.5 (zero-click) → strong; alpha=0.1 → weak
-                const kA = 2.0 + 6.0 * (alpha || 0.25);  // k_A ∈ [2, 5] based on alpha
-                const kTheta = 3.0;  // Compensation sensitivity
-                const a0 = 0.25;  // Baseline AI threshold
+                const kA = 2.0 + 4.0 * (alpha || 0.25);  // k_A ∈ [2, 6] based on alpha
+                const kTheta = 6.0;  // Compensation sensitivity
+                const a0 = 0.30;  // Baseline AI threshold
                 const theta0 = 0.10;  // Baseline compensation threshold
 
-                return this.sigmoid(kA * (this.A - a0) - kTheta * (theta - theta0));
+                // Use standard logistic (β=1) for gentler transitions
+                // sigmoid with β=5 is too steep, causing traffic to crash in all scenarios
+                const arg = kA * (this.A - a0) - kTheta * (theta - theta0);
+                return 1 / (1 + Math.exp(-arg));  // Standard logistic, β=1
             }
 
             // Creator dynamics (v3 bounded form)
-            // dC/dt = (1-C)·ρ_C·S(π_c - ū) - C·ρ_C·S(ū - π_c)
+            // dC/dt = (1-C)·ρ_C·S(β(π_c - ū)) - C·ρ_C·S(β(ū - π_c))
+            // β controls creator sensitivity: higher β = more threshold-like response
             dC() {
                 const rhoC = 0.15;  // Creator adjustment speed
                 const uBar = 0.15;  // Outside option (reservation utility)
+
+                // Creator sensitivity parameter (default β=15 for clean regime separation)
+                const beta = this.params.beta ?? 15;
 
                 const pi_c = this.creatorRevenue();
                 const profitMargin = pi_c - uBar;
 
                 // Entry when profitable, exit when unprofitable
-                const entry = (1 - this.C) * rhoC * this.sigmoid(profitMargin);
-                const exit = this.C * rhoC * this.sigmoid(-profitMargin);
+                // β scales the profit margin to make response more/less threshold-like
+                const entry = (1 - this.C) * rhoC * this.sigmoid(beta * profitMargin);
+                const exit = this.C * rhoC * this.sigmoid(-beta * profitMargin);
 
                 return entry - exit;
             }
@@ -2587,14 +2537,14 @@
                     });
                 }
 
-                // Check for limit cycle potential (high extraction + some mutualism)
-                if (phi < -0.05 && phi > -0.2 && m > 0.1) {
+                // Check for sustainable coexistence (high licensing + low diversion)
+                if (theta > 0.25 && m > 0.3) {
                     equilibria.push({
-                        name: 'Boom-Bust Cycle',
-                        C: 0.5,
-                        A: 0.4,
-                        type: 'saddle',
-                        description: 'Oscillatory dynamics: creator surges followed by AI extraction crashes'
+                        name: 'The Licensed Future',
+                        C: 0.8,
+                        A: 0.6,
+                        type: 'stable',
+                        description: 'Sustainable coexistence: AI and creators thrive together'
                     });
                 }
 
@@ -2882,8 +2832,8 @@
                 // Maps mathematical regimes to concrete, recognizable situations
                 this.scenarios = {
                     'scraping-era': {
-                        // 2024 Reality: minimal compensation, moderate diversion
-                        params: { theta: 0.02, h: 0.45, m: 0.12, alpha: 0.25, r: 0.08, I: 0.08 },
+                        // 2024 Reality: moderate compensation, high diversion (gradual collapse)
+                        params: { theta: 0.10, h: 0.45, m: 0.10, alpha: 0.35, r: 0.08, I: 0.08 },
                         interpretation: {
                             title: '2024: The Scraping Era',
                             summary: `Where we are now. AI trained on web content with minimal compensation. Google AI Overviews diverting 25% of traffic.`,
@@ -2897,8 +2847,8 @@
                         }
                     },
                     'zero-click': {
-                        // Extreme diversion: AI answers everything
-                        params: { theta: 0.01, h: 0.50, m: 0.08, alpha: 0.50, r: 0.05, I: 0.12 },
+                        // Extreme diversion: AI answers everything FAST (severe collapse)
+                        params: { theta: 0.02, h: 0.50, m: 0.05, alpha: 0.90, r: 0.05, I: 0.14 },
                         interpretation: {
                             title: 'Zero-Click Future',
                             summary: `AI Overviews answer 50%+ of queries. Why click through when the AI already told you?`,
@@ -2911,24 +2861,9 @@
                             conclusion: `The open web becomes a ghost town. AI answers everything but knows nothing new.`
                         }
                     },
-                    'reddit-deal': {
-                        // Token licensing: survival money, not thriving
-                        params: { theta: 0.08, h: 0.40, m: 0.15, alpha: 0.30, r: 0.08, I: 0.08 },
-                        interpretation: {
-                            title: 'The Reddit Deal',
-                            summary: `$60M/year sounds like a lot. It's 0.06% of AI revenue. Survival money, not fair compensation.`,
-                            bullets: [
-                                `<span class="warning">θ = 8%</span>: Better than scraping, but still below survival threshold`,
-                                `<span class="success">Some creators survive</span>: Largest platforms get deals`,
-                                `<span class="danger">Small creators excluded</span>: No collective licensing = winner-take-all`,
-                                `<span class="warning">Quality still eroding</span>: Not enough revenue to invest in journalism`
-                            ],
-                            conclusion: `A bandaid, not a solution. The few survive; the ecosystem still declines.`
-                        }
-                    },
                     'spotify-news': {
-                        // Fair compensation model: what success looks like
-                        params: { theta: 0.30, h: 0.25, m: 0.35, alpha: 0.10, r: 0.10, I: 0.06 },
+                        // Fair compensation model: low diversion + high compensation = coexistence
+                        params: { theta: 0.40, h: 0.25, m: 0.35, alpha: 0.05, r: 0.10, I: 0.05 },
                         interpretation: {
                             title: 'Spotify for News',
                             summary: `What if AI platforms paid 30% to content creators, like Spotify pays labels? And linked to sources?`,
@@ -2942,8 +2877,8 @@
                         }
                     },
                     'ai-winter': {
-                        // Boom then bust: AI grows on scraped data, quality dies, AI stagnates
-                        params: { theta: 0.02, h: 0.50, m: 0.10, alpha: 0.35, r: 0.06, I: 0.15 },
+                        // Boom then bust: very high α causes severe diversion, high I pushes A hard
+                        params: { theta: 0.02, h: 0.50, m: 0.06, alpha: 0.70, r: 0.06, I: 0.15 },
                         interpretation: {
                             title: 'AI Winter 2.0',
                             summary: `$100B pours into AI. Models train on the web. The web dies. Then what?`,
@@ -2957,8 +2892,8 @@
                         }
                     },
                     'substack-lifeboat': {
-                        // Subscription escape: direct payment insulates from traffic loss
-                        params: { theta: 0.10, h: 0.20, m: 0.45, alpha: 0.40, r: 0.12, I: 0.06 },
+                        // Subscription escape: diversion is high but huge m saves creators
+                        params: { theta: 0.06, h: 0.20, m: 0.50, alpha: 0.70, r: 0.12, I: 0.05 },
                         interpretation: {
                             title: 'The Substack Lifeboat',
                             summary: `Forget traffic. Readers pay creators directly. High diversion doesn't matter if you have subscribers.`,
@@ -2971,26 +2906,9 @@
                             conclusion: `A lifeboat, not a cruise ship. Some escape; most still drown.`
                         }
                     },
-                    'journalism-graveyard': {
-                        // Tipping point: below critical mass, no recovery possible
-                        params: { theta: 0.05, h: 0.45, m: 0.10, alpha: 0.35, r: 0.04, I: 0.08 },
-                        // Start below C_crit to demonstrate hysteresis
-                        initialConditions: { C: 0.25, A: 0.50, Q: 0.30, W: 0.35 },
-                        interpretation: {
-                            title: 'The Journalism Graveyard',
-                            summary: `Once you fall below critical mass, recovery is nearly impossible. See: local news deserts across America.`,
-                            bullets: [
-                                `<span class="danger">Below C_crit</span>: Not enough creators to maintain quality ecosystem`,
-                                `<span class="danger">Hysteresis</span>: Even if θ increases later, creators don't return`,
-                                `<span class="danger">Institutional knowledge lost</span>: Experienced journalists moved on`,
-                                `<span class="danger">News deserts</span>: 2,500 newspapers closed since 2005`
-                            ],
-                            conclusion: `Point of no return. Some collapses can't be reversed.`
-                        }
-                    },
                     'death-by-1000-cuts': {
-                        // Boiled frog: slow decline no one notices
-                        params: { theta: 0.04, h: 0.35, m: 0.15, alpha: 0.20, r: 0.07, I: 0.07 },
+                        // Boiled frog: D₀ just above 0.5, very slow decline
+                        params: { theta: 0.08, h: 0.35, m: 0.12, alpha: 0.20, r: 0.07, I: 0.04 },
                         interpretation: {
                             title: 'Death by 1000 Cuts',
                             summary: `Quality erodes so gradually that no one notices. Each year slightly worse than the last.`,
@@ -3004,8 +2922,10 @@
                         }
                     },
                     'marshall-plan': {
-                        // Policy intervention: temporary push tips system to good equilibrium
-                        params: { theta: 0.25, h: 0.30, m: 0.30, alpha: 0.15, r: 0.12, I: 0.05 },
+                        // Policy intervention: starts from genuinely damaged state, shows recovery
+                        params: { theta: 0.42, h: 0.30, m: 0.30, alpha: 0.05, r: 0.12, I: 0.04 },
+                        // Start from genuinely damaged state to show recovery
+                        initialConditions: { C: 0.30, A: 0.45, Q: 0.30, W: 0.25 },
                         interpretation: {
                             title: 'The Marshall Plan',
                             summary: `A coordinated policy push—mandatory licensing, link taxes, disclosure requirements—tips the system into a sustainable basin.`,
@@ -3016,21 +2936,6 @@
                                 `<span class="success">Quality rebounds</span>: Investment in journalism becomes rational again`
                             ],
                             conclusion: `Proof that policy can work. The EU's approach, if done right.`
-                        }
-                    },
-                    'boom-bust-cycle': {
-                        // Oscillations: cyclic dynamics from feedback delays
-                        params: { theta: 0.12, h: 0.40, m: 0.25, alpha: 0.30, r: 0.15, I: 0.10 },
-                        interpretation: {
-                            title: 'Boom-Bust Cycle',
-                            summary: `Fast AI growth, slow creator response, delayed quality feedback. The recipe for oscillations.`,
-                            bullets: [
-                                `<span class="warning">AI surges</span>: Investment drives rapid capability growth`,
-                                `<span class="warning">Creators lag</span>: Exit happens slowly, quality erodes gradually`,
-                                `<span class="warning">AI hits wall</span>: Quality content dries up, growth stalls`,
-                                `<span class="warning">Cycle repeats</span>: Investment pause → partial recovery → new boom`
-                            ],
-                            conclusion: `Unstable equilibrium. Constant lurching between boom and bust.`
                         }
                     }
                 };
@@ -3151,26 +3056,20 @@
                 var titles = {
                     'scraping-era': '2024: The Scraping Era',
                     'zero-click': 'Zero-Click Future',
-                    'reddit-deal': 'The Reddit Deal',
                     'spotify-news': 'Spotify for News',
                     'ai-winter': 'AI Winter 2.0',
                     'substack-lifeboat': 'The Substack Lifeboat',
-                    'journalism-graveyard': 'The Journalism Graveyard',
                     'death-by-1000-cuts': 'Death by 1000 Cuts',
-                    'marshall-plan': 'The Marshall Plan',
-                    'boom-bust-cycle': 'Boom-Bust Cycle'
+                    'marshall-plan': 'The Marshall Plan'
                 };
                 var insights = {
                     'scraping-era': 'Where we are now. AI scrapes the web with minimal compensation. Watch creators slowly exit.',
                     'zero-click': 'AI answers everything. No clicks, no ad revenue, no journalism. The open web becomes a ghost town.',
-                    'reddit-deal': 'Token licensing keeps some alive, but it\'s survival money, not fair compensation. Quality still erodes.',
                     'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
                     'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
                     'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
-                    'journalism-graveyard': 'Below critical mass, recovery is nearly impossible. The point of no return.',
                     'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
-                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.',
-                    'boom-bust-cycle': 'Fast AI growth, slow creator response, delayed feedback. Constant lurching between boom and bust.'
+                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.'
                 };
 
                 var chartTitle = document.getElementById('chartScenarioTitle');
@@ -3407,26 +3306,20 @@
                 const scenarioTitles = {
                     'scraping-era': '2024: The Scraping Era',
                     'zero-click': 'Zero-Click Future',
-                    'reddit-deal': 'The Reddit Deal',
                     'spotify-news': 'Spotify for News',
                     'ai-winter': 'AI Winter 2.0',
                     'substack-lifeboat': 'The Substack Lifeboat',
-                    'journalism-graveyard': 'The Journalism Graveyard',
                     'death-by-1000-cuts': 'Death by 1000 Cuts',
-                    'marshall-plan': 'The Marshall Plan',
-                    'boom-bust-cycle': 'Boom-Bust Cycle'
+                    'marshall-plan': 'The Marshall Plan'
                 };
                 const scenarioInsights = {
                     'scraping-era': 'Where we are now. AI scrapes the web with minimal compensation. Watch creators slowly exit.',
                     'zero-click': 'AI answers everything. No clicks, no ad revenue, no journalism. The open web becomes a ghost town.',
-                    'reddit-deal': 'Token licensing keeps some alive, but it\'s survival money, not fair compensation. Quality still erodes.',
                     'spotify-news': 'Fair revenue share + source linking = sustainable ecosystem. Watch all lines rise together!',
                     'ai-winter': 'AI booms on scraped data, quality dies, then AI stagnates. Short-term gains, long-term collapse.',
                     'substack-lifeboat': 'Subscriptions insulate from traffic loss. Some escape; the long tail still drowns.',
-                    'journalism-graveyard': 'Below critical mass, recovery is nearly impossible. The point of no return.',
                     'death-by-1000-cuts': 'Slow decline disguised as normalcy. The boiled frog scenario.',
-                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.',
-                    'boom-bust-cycle': 'Fast AI growth, slow creator response, delayed feedback. Constant lurching between boom and bust.'
+                    'marshall-plan': 'Coordinated policy intervention tips the system into a sustainable basin.'
                 };
 
                 const chartTitle = document.getElementById('chartScenarioTitle');

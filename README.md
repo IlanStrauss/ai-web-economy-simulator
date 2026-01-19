@@ -16,7 +16,7 @@ An interactive simulation modeling how AI platforms and web content creators int
 
 ## Technical Documentation
 
-**[Model Equations (LaTeX)](model-equations-v3.tex)** — Full mathematical specification including:
+**[Model Equations (PDF)](model-equations-v3.pdf)** | [LaTeX source](model-equations-v3.tex) — Full mathematical specification including:
 - State variables and parameter definitions
 - Core differential equations (bounded gain-loss forms)
 - One-mechanism-per-layer causal structure

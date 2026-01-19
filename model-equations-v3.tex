@@ -182,6 +182,10 @@ The bounded quality dynamics are:
 There is no direct $\theta$ term in $dQ/dt$. The effect of low compensation on quality flows through the chain: low $\theta$ $\rightarrow$ low $\pi_c$ $\rightarrow$ low $R$ $\rightarrow$ quality doesn't improve $\rightarrow$ and low $\pi_c$ $\rightarrow$ creator exit $\rightarrow$ $C < C_{crit}$ $\rightarrow$ quality declines.
 \end{remark}
 
+\begin{remark}
+The $\max(\cdot, 0)$ terms introduce non-differentiability at $C = C_{crit}$, making the system piecewise-smooth. For simulation this is unproblematic; for rigorous stability analysis, these can be replaced with softplus approximations.
+\end{remark}
+
 \subsection{AI Platform Dynamics}
 
 AI platforms grow with investment and content availability. Quality enters here via the \textbf{data advantage channel}: better original content improves AI training and grounding.
@@ -267,7 +271,7 @@ $\lambda_0$ & Baseline quality decay & Depreciation rate & 1/time \\
 \multicolumn{4}{l}{\textit{AI dynamics}} \\
 $I$ & External investment rate & Exogenous inflow & 1/time \\
 $r_A$ & AI growth rate & Endogenous scaling & 1/time \\
-$\gamma$ & Quality premium & Data advantage strength & dimensionless \\
+$\gamma$ & Data advantage strength & AI quality dependence & dimensionless \\
 $\delta_A$ & AI depreciation rate & Competition/obsolescence & 1/time \\
 \midrule
 \multicolumn{4}{l}{\textit{IC constraint parameters}} \\

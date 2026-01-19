@@ -16,11 +16,11 @@ An interactive simulation modeling how AI platforms and web content creators int
 
 ## Technical Documentation
 
-**[Model Equations (LaTeX)](model-equations.tex)** — Full mathematical specification including:
+**[Model Equations (PDF)](Simulator_Economy_Equations_v1.pdf)** — Full mathematical specification including:
 - State variables and parameter definitions
 - Core differential equations (Lotka-Volterra dynamics)
 - Mechanism design constraints (IR/IC)
 - Equilibrium analysis and stability conditions
 - Critical threshold derivations
 
-To compile the PDF: `pdflatex model-equations.tex`
+LaTeX source: [model-equations.tex](model-equations.tex)

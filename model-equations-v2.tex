@@ -167,15 +167,15 @@ The bounded quality dynamics are:
 
 \begin{equation}
 \boxed{
-\frac{dQ}{dt} = (1-Q) \cdot \nu \cdot R(\pi_c) + \epsilon \cdot (C - C_{crit}) - Q \cdot \lambda_0
+\frac{dQ}{dt} = (1-Q)\Big[\nu \cdot R(\pi_c) + \epsilon \cdot \max(C - C_{crit}, 0)\Big] - Q\Big[\lambda_0 + \epsilon \cdot \max(C_{crit} - C, 0)\Big]
 }
 \end{equation}
 
 \textbf{Interpretation:}
 \begin{itemize}
-    \item $(1-Q) \cdot \nu \cdot R(\pi_c)$: Quality improves when creators can reinvest (bounded by $(1-Q)$)
-    \item $\epsilon \cdot (C - C_{crit})$: Quality requires critical mass of creators; below $C_{crit}$, this term is negative
-    \item $Q \cdot \lambda_0$: Baseline quality decay without active maintenance
+    \item $(1-Q)\nu R(\pi_c)$: Reinvestment-driven quality improvements, bounded as $Q \to 1$
+    \item $(1-Q)\epsilon\max(C - C_{crit}, 0)$: Critical mass upside only applies when quality is not already maxed
+    \item $-Q[\lambda_0 + \epsilon\max(C_{crit} - C, 0)]$: Decay and critical mass shortfall only reduce quality in proportion to existing quality (prevents $Q < 0$)
 \end{itemize}
 
 \begin{remark}
@@ -224,12 +224,14 @@ This constraint is enforced by the entry/exit dynamics (Eq.\ 3). When $\pi_c < \
 \begin{definition}[Quality Incentive Constraint]
 High-quality content is incentive compatible when the quality premium exceeds additional costs:
 \begin{equation}
-\text{IC}: \quad \theta \cdot p_L \cdot A \cdot \gamma + p_{sub} \geq \Delta c
+\text{IC}: \quad \big(\theta \cdot p_L \cdot A \cdot \gamma + p_{sub}\big) \cdot \Delta Q \geq \Delta c
 \end{equation}
-where $\Delta c = c_{high} - c_{low}$ is the cost difference between high and low quality production.
+where $\Delta c = c_{high} - c_{low}$ is the cost difference between high and low quality production, and $\Delta Q$ is the quality increment from low to high.
 \end{definition}
 
-When IC is violated, the reinvestment signal $R(\pi_c)$ is low, and quality improvement stalls or reverses.
+Under the $[0,1]$ normalization, we take $\Delta Q = 1$ for the low-to-high quality shift.
+
+When IC is violated, creators rationally choose low quality, reducing $Q$ (and thus $p_{sub} \cdot Q$ in $\pi_c$), which in turn lowers $R(\pi_c)$ and slows quality improvement.
 
 \section{Parameters}
 
@@ -267,6 +269,10 @@ $I$ & External investment rate & Exogenous inflow & 1/time \\
 $r_A$ & AI growth rate & Endogenous scaling & 1/time \\
 $\gamma$ & Quality premium & Data advantage strength & dimensionless \\
 $\delta_A$ & AI depreciation rate & Competition/obsolescence & 1/time \\
+\midrule
+\multicolumn{4}{l}{\textit{IC constraint parameters}} \\
+$\Delta Q$ & Quality increment (low to high) & Normalization & dimensionless (=1) \\
+$\Delta c$ & Cost difference ($c_{high} - c_{low}$) & IC threshold & \$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -285,18 +291,25 @@ Traffic share equals one minus diversion propensity.
 
 \textbf{Creator equilibrium:} Setting $dC/dt = 0$:
 \begin{equation}
-S(\pi_c^* - \bar{u}) = S(\bar{u} - \pi_c^*) \quad \Rightarrow \quad \pi_c^* = \bar{u}
+(1-C^*)S(\pi_c^* - \bar{u}) = C^* S(\bar{u} - \pi_c^*)
 \end{equation}
-At interior equilibrium, creator revenue equals the outside option.
+Using $S(\bar{u} - \pi_c) = 1 - S(\pi_c - \bar{u})$ for the logistic, the interior steady-state condition is:
+\begin{equation}
+C^* = S(\pi_c^* - \bar{u})
+\end{equation}
+Equivalently: $\pi_c^* = \bar{u} + \frac{1}{\beta}\ln\left(\frac{C^*}{1-C^*}\right)$.
+
+At interior equilibrium, creator participation equals the sigmoid of profitability relative to the outside option.
 
 \textbf{AI equilibrium:} Setting $dA/dt = 0$:
 \begin{equation}
-A^* = \frac{I + r_A A^* (1 + \gamma Q^*)}{I + r_A A^* (1 + \gamma Q^*) + \delta_A}
+(1-A^*)\big(I + r_A A^* (1 + \gamma Q^*)\big) = A^* \delta_A
 \end{equation}
-This is an implicit equation; for small $I$, we get approximately:
+This is implicit in $A^*$. A first-order approximation when $A$ is small:
 \begin{equation}
-A^* \approx \sqrt{\frac{I}{\delta_A}} \cdot \sqrt{1 + \gamma Q^*}
+A^* \approx \frac{I}{\delta_A} \quad \text{(first-order, small-}A\text{ approximation)}
 \end{equation}
+Dependence on $Q$ enters through the endogenous term $r_A A(1+\gamma Q)$ at higher order.
 
 \subsection{Equilibrium Types}
 
